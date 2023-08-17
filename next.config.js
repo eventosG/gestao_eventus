@@ -1,12 +1,8 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-    serverComponentsExternalPackages: ["mongoose"],
-  },
   images: {
-    domains: ['lh3.googleusercontent.com'],
+    domains: ['lh3.googleusercontent.com', 'ecommerce-systems.s3.amazonaws.com'],
   },
   webpack(config) {
     config.experiments = {

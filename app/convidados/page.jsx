@@ -301,7 +301,7 @@ function Convidados() {
     setVisibleEditar(false);
     setProcessando(true);
     try {
-      const response = await fetch(`api/padrinho/${iDD2}`, {
+      const response = await fetch(`api/padrinho/${iDD2}`, { 
           method: 'PATCH',
           body: JSON.stringify({
             mensagem,

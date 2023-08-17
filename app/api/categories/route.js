@@ -1,9 +1,10 @@
 import mongooseConnect from "@lib/mongoose";
-import { Product } from "@models/Products";
+import { Category } from "@models/Category";
+
 export const GET = async () => {
     try {
         await mongooseConnect();
-        const eventos = await Product.find();
+        const eventos = await Category.find().populate('parent');
         return new Response(JSON.stringify(eventos), {
             status: 200
         })
