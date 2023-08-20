@@ -2,6 +2,8 @@ import React from 'react';
 import '../styles/globals.css';
 import Nav from '../components/Nav';
 import Provider from '../components/Provider';
+import Head from "next/head";
+import Script from 'next/script';
 
 export const metadata = {
     title: "Gestão de Eventos",
@@ -11,6 +13,10 @@ export const metadata = {
 function RootLayout({children}) {
   return (
     <html lang='pt'>
+        <Head>
+            <Script src='/vendor/snow.js' defer />
+            <Script src='/mensagem/mensagem.js' defer />           
+        </Head>   
         <body>
             <Provider>
                 <div className='main'>
