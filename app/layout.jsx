@@ -13,10 +13,9 @@ export const metadata = {
 function RootLayout({children}) {
   return (
     <html lang='pt'>
-        <Head>
-            <Script src='/vendor/snow.js' defer />
-            <Script src='/mensagem/mensagem.js' defer />           
-        </Head>   
+        <Script src='/mensagem/mensagem.js' defer />     
+        <Script src='/vendor/snow.js' defer />
+
         <body>
             <Provider>
                 <div className='main'>
