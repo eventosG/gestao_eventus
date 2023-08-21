@@ -82,10 +82,13 @@ function Convites() {
                 )}
                 <Grid>
                   <div>
-                    {conviteSelect.length > 0 && conviteSelect.map((conv) => <>Convite Selecionado: {conv.modelo} | Confirmados: {convidadosConfirmados} | Preço Total: {parseInt(convidadosConfirmados)*parseInt(conv.preco)},00 Mt 
+                    <h1 className='text-center'>Convites</h1>
+                    {conviteSelect.length > 0 && conviteSelect.map((conv) => 
+                    <>Convite Selecionado: {conv.modelo} | Confirmados: {convidadosConfirmados} | Preço Total: {parseInt(convidadosConfirmados)*parseInt(conv.preco)},00 Mt 
                     <Button onClick={() => deletePadrinho(conv._id)} bordered color="gradient" auto>
-                  Remover
-                  </Button></>)}
+                      Remover
+                    </Button>
+                  </>)}
                     
                   </div>
                 </Grid>
