@@ -272,9 +272,9 @@ function Dashboard() {
       </Grid.Container>
       </div> 
       )}
-    <Button onPress={() => setVisible(true)} bordered color="gradient" auto>
+    {/* <Button onPress={() => setVisible(true)} bordered color="gradient" auto>
                   + Cronograma
-                </Button>
+                </Button> */}
     <Grid.Container gap={2}>
       <Grid>
         <Collapse.Group shadow>
@@ -365,7 +365,7 @@ function Dashboard() {
             Confirmar
           </Button>
         </Modal.Footer>
-      </Modal>
+    </Modal>
       <Modal
         closeButton
         aria-labelledby="modal-title"
