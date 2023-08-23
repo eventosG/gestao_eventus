@@ -170,31 +170,34 @@ function page() {
       </Row>
       <Spacer y={1} />
       <div className="text-center font-bold underline underline-offset-8 uppercase mb-4">Selecção de Serviços</div>
-      <div className="flex gap-4 justify-center mb-4">
-        <Checkbox color="warning">Transporte</Checkbox>
+     <div className="flex flex-row">
+        <div className="flex flex-col justify-center mb-4">
+        <Checkbox color="warning"><p className='text-sm'>Transporte</p></Checkbox>
+        <Checkbox color="warning">Garçom</Checkbox>
         <Checkbox color="warning">Fotografia e Vídeo</Checkbox>
         <Checkbox color="warning">Catering</Checkbox>
         <Checkbox color="warning">Bolos e Sobremesas</Checkbox>
       </div> 
-      <div className="flex gap-4 justify-center mb-4">
+      <div className="flex flex-col justify-center mb-4">
         <Checkbox color="warning">Mestre de Ceremônia</Checkbox>
+        <Checkbox color="warning">Streaming</Checkbox>
         <Checkbox color="warning">Salão e Local de Celebração</Checkbox>
         <Checkbox color="warning">Líquidos</Checkbox>
         <Checkbox color="warning">Vestuário</Checkbox>
       </div> 
-      <div className="flex gap-4 justify-center mb-4">
+      <div className="flex flex-col justify-center mb-4">
         <Checkbox color="warning">Musica e Manifestações Culturais</Checkbox>
         <Checkbox color="warning">Convites</Checkbox>
         <Checkbox color="warning">Lua-de-mel</Checkbox>
         <Checkbox color="warning">Protocolos</Checkbox>
         <Checkbox color="warning">Brindes</Checkbox>
       </div> 
-      <div className="flex gap-4 justify-center mb-4">
+      <div className="flex flex-col justify-center mb-4">
         <Checkbox color="warning">Cabelo e Mekeup</Checkbox>
-        <Checkbox color="warning">Convites</Checkbox>
         <Checkbox color="warning">Jóias e Bijuterias</Checkbox>
         <Checkbox color="warning">Buquê e Flores</Checkbox>
       </div> 
+     </div>      
       <Spacer y={1} />
       <div className="text-center font-bold underline underline-offset-8 uppercase">Road Map</div>
         <Button onPress={() => setVisible(true)} bordered color="gradient" auto>

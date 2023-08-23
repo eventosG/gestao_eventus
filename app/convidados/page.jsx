@@ -983,7 +983,7 @@ function Convidados() {
           </Text>
         </Modal.Header>
         <Modal.Body>
-          <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Link do Convite: http://localhost:3000/confirmarPresenca/{iDDD}</span>
+          <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Link do Convite: https://www.hiventus.com/confirmarPresenca/{iDDD}</span>
           <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Mesa: {mesa}</span>
           <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Grupo: {grupo}</span>
         </Modal.Body>
