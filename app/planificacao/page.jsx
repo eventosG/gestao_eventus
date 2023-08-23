@@ -9,20 +9,42 @@ import { IconButton } from '@app/convidados/IconButton';
 import { EditIcon } from "@app/convidados/EditIcon";
 import { DeleteIcon } from "@app/convidados/DeleteIcon";
 let USDollar = new Intl.NumberFormat('en-US');
-
+var precoTotal = 0;
 function page() {
   const {data: session } = useSession();
   const [evento, setEvento] = useState([]);
   const [cronograma, setCronograma] = useState([]);
+  const [selecionadosLista, setselecionadosLista] = useState([]);
   const [convidados, setConvidados] = useState(0);
+  const [totalP, setTatalP] = useState(0);
   const [visibleRemover, setVisibleRemover] = useState(false);
   const [visibleEditar, setVisibleEditar] = useState(false);
+  const [transporteVal, setTransporteVal] = useState(false);
+  const [garcomVal, setGarcomVal] = useState(false);
+  const [fotoVideoVal, setFotoVideoVal] = useState(false);
+  const [cateringVal, setcateringVal] = useState(false);
+  const [bolosSobremesasVal, setbolosSobremesasVal] = useState(false);
+  const [mcVal, setMcVal] = useState(false);
+  const [streamingVal, setStreamingVal] = useState(false);
+  const [localSelebracaoVal, setlocalSelebracaoVal] = useState(false);
+  const [liquidoVal, setliquidoVal] = useState(false);
+  const [brindesVal, setbrindesVal] = useState(false);
+  const [culturalVal, setculturalVal] = useState(false);
+  const [convitesVal, setconvitesVal] = useState(false);
+  const [luaMelVal, setLuaMelVal] = useState(false);
+  const [protocolosVal, setprotocolosVal] = useState(false);
+  const [vestuariosVal, setvestuariosVal] = useState(false);
+  const [mekeUpVal, setmekeUpVal] = useState(false);
+  const [joiasVal, setjoiasVal] = useState(false);
+  const [floresVal, setfloresVal] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
   const [titulo, setTitulo] = useState('');
   const [idd4, setIDD4] = useState('');
   const [data, setData] = useState('');
   const [corpo, setCorpo] = useState('');
   const [convidadosConfirmados, setConvidadosConfirmados] = useState(0);
   const [visible, setVisible] = useState(false);
+  const [visibleServicos, setVisibleServicos] = useState(false);
   const [processando, setProcessando] = useState(false);
   const router = useRouter();
 
@@ -46,8 +68,214 @@ function page() {
     if(session?.user.id) fetchPosts();
   },[session?.user.id]);
 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch(`/api/users/${session?.user.id}/posts`);
+      const data = await response.json();
+      console.log(data)
+      setEvento(data);
+    }
+    if(session?.user.id) fetchPosts();
+  },[session?.user.id]);
+
+  useEffect(() => {
+    var listaVolatel = [];
+    setIsSelected(false);
+    if(!isSelected) setTatalP(0);
+    
+    if(transporteVal || garcomVal || fotoVideoVal ||
+      cateringVal ||
+      bolosSobremesasVal ||
+      mcVal ||
+      streamingVal ||
+      localSelebracaoVal ||
+      liquidoVal ||
+      brindesVal ||
+      culturalVal ||
+      convitesVal ||
+      luaMelVal ||
+      protocolosVal ||
+      vestuariosVal ||
+      mekeUpVal ||
+      joiasVal ||
+      floresVal) setIsSelected(true);
+      precoTotal = 0;  
+      if(transporteVal){
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Transporte",
+          preco: "3000"
+        })
+      }
+      if(garcomVal){
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Garçom",
+          preco: "3000"
+        })
+      }
+      if(fotoVideoVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Fotografia e Video",
+          preco: "3000"
+        })
+      }
+      if(cateringVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Catering",
+          preco: "3000"
+        })
+      }
+      if(bolosSobremesasVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Bolos e Sobremesas",
+          preco: "3000"
+        })
+      }
+      if(mcVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "MC",
+          preco: "3000"
+        })
+      }
+      if(streamingVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Streaming",
+          preco: "3000"
+        })
+      }
+      if(localSelebracaoVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Local de Selebração",
+          preco: "3000"
+        })
+      }
+      if(liquidoVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Liquidos",
+          preco: "3000"
+        })
+      }
+      if(brindesVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Brindes",
+          preco: "3000"
+        })
+      }
+      if(culturalVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Musica e Man. Cultural",
+          preco: "3000"
+        })
+      }
+      if(convitesVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Convites",
+          preco: "3000"
+        })
+      }
+      if(luaMelVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Lua-de-Mel",
+          preco: "3000"
+        })
+      }
+      if(protocolosVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Protocolo",
+          preco: "3000"
+        })
+      }
+      if(vestuariosVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Vestuario",
+          preco: "3000"
+        })
+      }
+      if(mekeUpVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Cabelo e MekeUp",
+          preco: "3000"
+        })
+      }
+      if(joiasVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Jóias e Bijuterias",
+          preco: "3000"
+        })
+      }
+      if(floresVal) {
+        precoTotal += 3000;
+        listaVolatel.push({
+          nomeServico: "Buquê e Flores",
+          preco: "3000"
+        })
+      }
+      setTatalP(precoTotal);
+      setselecionadosLista(listaVolatel);
+  },[
+    transporteVal,
+    garcomVal,
+    fotoVideoVal,
+    cateringVal,
+    bolosSobremesasVal,
+    mcVal,
+    streamingVal,
+    localSelebracaoVal,
+    liquidoVal,
+    brindesVal,
+    culturalVal,
+    convitesVal,
+    luaMelVal,
+    protocolosVal,
+    vestuariosVal,
+    mekeUpVal,
+    joiasVal,
+    floresVal
+  ]);
+
   const closeHandler = () => {
     setVisible(false);
+  };
+  const closeHandlerServicos = () => {
+    setVisibleServicos(false);
+  };
+  const confirmarServicos = () => {
+    precoTotal = 0;    
+    if(transporteVal) precoTotal += 3000;
+    if(garcomVal) precoTotal += 3000;
+    if(fotoVideoVal) precoTotal += 3000;
+    if(cateringVal) precoTotal += 3000;
+    if(bolosSobremesasVal) precoTotal += 3000;
+    if(mcVal) precoTotal += 3000;
+    if(streamingVal) precoTotal += 3000;
+    if(localSelebracaoVal) precoTotal += 3000;
+    if(liquidoVal) precoTotal += 3000;
+    if(brindesVal) precoTotal += 3000;
+    if(culturalVal) precoTotal += 3000;
+    if(convitesVal) precoTotal += 3000;
+    if(luaMelVal) precoTotal += 3000;
+    if(protocolosVal) precoTotal += 3000;
+    if(vestuariosVal) precoTotal += 3000;
+    if(mekeUpVal) precoTotal += 3000;
+    if(joiasVal) precoTotal += 3000;
+    if(floresVal) precoTotal += 3000;
+    setTatalP(precoTotal);
   };
 
   function removerConograma(iD) {
@@ -135,16 +363,16 @@ function page() {
         </Col>
         <Col>
           <Card>
-          <div className='justify-center items-center'>
+          <div className='justify-center items-center' onClick={() => setVisibleServicos(true)}>
             <Card.Body>
             <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
             <Text h6 size={12} css={{ m: 0 }}>
               Serv. Solicitados
               </Text>
               <Text h6 size={12} css={{ m: 0 }}>
-                  {USDollar.format(0)}.00 Mt
+                  {USDollar.format(totalP)}.00 Mt
                 </Text>
-              <Progress size="sm" value={70} color="warning" />
+              <Progress size="sm" value={(totalP/54000)*100} color="warning" />
             </span> 
             </Card.Body>
             </div>
@@ -170,34 +398,82 @@ function page() {
       </Row>
       <Spacer y={1} />
       <div className="text-center font-bold underline underline-offset-8 uppercase mb-4">Selecção de Serviços</div>
-     <div className="flex flex-row">
-        <div className="flex flex-col justify-center mb-4">
-        <Checkbox color="warning"><p className='text-sm'>Transporte</p></Checkbox>
-        <Checkbox color="warning">Garçom</Checkbox>
-        <Checkbox color="warning">Fotografia e Vídeo</Checkbox>
-        <Checkbox color="warning">Catering</Checkbox>
-        <Checkbox color="warning">Bolos e Sobremesas</Checkbox>
+     <div className="flex flex-row gap-4">
+        <div className="flex flex-col gap-2 justify-center mb-4">
+        <Checkbox color="warning" onChange={(e) => setTransporteVal(e)}>
+          <p className='text-sm'>Transporte</p>
+        </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setGarcomVal(e)}>
+          <p className='text-sm'>Garçom</p>
+        </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setFotoVideoVal(e)}>
+          <p className='text-sm'>Fotografia e Vídeo</p>
+        </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setcateringVal(e)}>
+          <p className='text-sm'>Catering</p>
+        </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setbolosSobremesasVal(e)}>
+          <p className='text-sm'>Bolos e Sobremesas</p>
+        </Checkbox>
       </div> 
-      <div className="flex flex-col justify-center mb-4">
-        <Checkbox color="warning">Mestre de Ceremônia</Checkbox>
-        <Checkbox color="warning">Streaming</Checkbox>
-        <Checkbox color="warning">Salão e Local de Celebração</Checkbox>
-        <Checkbox color="warning">Líquidos</Checkbox>
-        <Checkbox color="warning">Vestuário</Checkbox>
+      <div className="flex flex-col gap-2 justify-center mb-4">
+        <Checkbox color="warning" onChange={(e) => setMcVal(e)}>
+          <p className='text-sm'>Mestre de Ceremônia</p>
+        </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setStreamingVal(e)}>
+          <p className='text-sm'>Streaming</p>
+        </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setlocalSelebracaoVal(e)}>
+          <p className='text-sm'>Local de Celebração</p>
+        </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setliquidoVal(e)}>
+          <p className='text-sm'>Líquidos</p>
+          </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setbrindesVal(e)}>
+          <p className='text-sm'>Brindes</p>
+          </Checkbox>        
       </div> 
-      <div className="flex flex-col justify-center mb-4">
-        <Checkbox color="warning">Musica e Manifestações Culturais</Checkbox>
-        <Checkbox color="warning">Convites</Checkbox>
-        <Checkbox color="warning">Lua-de-mel</Checkbox>
-        <Checkbox color="warning">Protocolos</Checkbox>
-        <Checkbox color="warning">Brindes</Checkbox>
+      <div className="flex flex-col gap-2 justify-center mb-4">
+        <Checkbox color="warning" onChange={(e) => setculturalVal(e)}>
+          <p className='text-sm'>Musica e Manifestações Culturais</p>
+          </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setconvitesVal(e)}>
+          <p className='text-sm'>Convites</p>
+          </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setLuaMelVal(e)}>
+          <p className='text-sm'>Lua-de-mel</p>
+          </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setprotocolosVal(e)}>
+          <p className='text-sm'>Protocolos</p>
+          </Checkbox>        
       </div> 
-      <div className="flex flex-col justify-center mb-4">
-        <Checkbox color="warning">Cabelo e Mekeup</Checkbox>
-        <Checkbox color="warning">Jóias e Bijuterias</Checkbox>
-        <Checkbox color="warning">Buquê e Flores</Checkbox>
+      <div className="flex flex-col gap-2 justify-center mb-4">
+        <Checkbox color="warning" onChange={(e) => setvestuariosVal(e)}>
+          <p className='text-sm'>Vestuário</p>
+          </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setmekeUpVal(e)}>
+          <p className='text-sm'>Cabelo e Mekeup</p>
+          </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setjoiasVal(e)}>
+          <p className='text-sm'>Jóias e Bijuterias</p>
+          </Checkbox>
+        <Checkbox color="warning" onChange={(e) => setfloresVal(e)}>
+          <p className='text-sm'>Buquê e Flores</p>
+          </Checkbox>
       </div> 
-     </div>      
+     </div>
+     {isSelected ? (
+     <>
+      <button type={"button"} onClick={confirmarServicos} className="black_btn">
+          Confirmar
+      </button>
+     </>
+     ):(
+     <>
+      <p>Nenhum Serviço Selecciona</p>
+     </>
+     )}
+     
       <Spacer y={1} />
       <div className="text-center font-bold underline underline-offset-8 uppercase">Road Map</div>
         <Button onPress={() => setVisible(true)} bordered color="gradient" auto>
@@ -290,6 +566,51 @@ function page() {
           </Button>
           <Button auto onPress={saveCronograma}>
             Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        closeButton
+        aria-labelledby="modal-title"
+        open={visibleServicos}
+        onClose={closeHandlerServicos}
+      >
+        <Modal.Header>
+          <Text id="modal-title" size={18}>
+            <Text b size={18}>
+              Serviços Solicitados
+            </Text>
+          </Text>
+        </Modal.Header>
+        <Modal.Body>
+          <div className='flex flex-row justify-between'>
+            <div><p className='font-bold'>Serviços Seleccionados</p></div>
+            <div><p className='font-bold'>Preço</p></div>
+          </div>
+          <div className='flex flex-row justify-between'>
+            <div>              
+              {selecionadosLista.length > 0 && selecionadosLista.map((serv) => (
+                <p>{serv.nomeServico}</p>
+              ))}
+            </div>
+            <div>
+            {selecionadosLista.length > 0 && selecionadosLista.map((serv) => (
+                <p>{USDollar.format(serv.preco)}</p>
+              ))}
+            </div>
+          </div>
+          <div className='flex flex-row justify-between'>
+            <div>              
+              <p>.</p>
+            </div>
+            <div>
+              <p>Total: {USDollar.format(totalP)}.00 Mt</p>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button auto flat color="error" onPress={closeHandlerServicos}>
+            OK
           </Button>
         </Modal.Footer>
       </Modal>
