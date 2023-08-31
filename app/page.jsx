@@ -1,25 +1,56 @@
+'use client';
 import React from "react";
-import Feed from "../components/Feed";
+import Gallery from "../components/Gallery";
+import {Image} from "@nextui-org/react";
+import {Card, CardBody, Link} from "@nextui-org/react";
 
 
 
 function Home() {
   return (
     <section className="w-full flex-center flex-col">
-        <h1 className="head_text text-center">
-            Gestão de Eventos
-            <br className="max-md:hidden" />
-            <span className="orange_gradient text-center"> Uma nova forma de festejar</span>
-        </h1>
-        <p className="desc text-center">Bem-vindo à nossa página de gestão de eventos! 
-        Aqui, oferecemos orientações e recursos para ajudá-lo a planejar e executar eventos 
-        com excelência e segurança. Nossa equipe está comprometida em fornecer diretrizes 
-        atualizadas e melhores práticas para garantir que seu evento seja um sucesso. 
-        Desde a escolha do local adequado até a comunicação eficaz com os participantes, 
-        estamos aqui para oferecer suporte em todas as etapas do processo. Contamos com 
-        soluções inovadoras e adaptáveis para atender às necessidades específicas do seu evento. 
-        Vamos trabalhar juntos para criar experiências inesquecíveis!</p>
-      <Feed />
+      <Gallery />
+      <div className='flex flex-row gap-4 mt-4'>
+      <button type="button" onClick={() => {}} className="black_btn">Planificação</button>
+      <button type="button" onClick={() => {}} className="black_btn">Serviços/Produtos</button>
+      <button type="button" onClick={() => {}} className="black_btn">Convidados</button>
+      <button type="button" onClick={() => {}} className="black_btn">Convites</button>
+      <button type="button" onClick={() => {}} className="black_btn">Streaming</button>
+      <button type="button" onClick={() => {}} className="black_btn">Inspiração</button>
+      <button type="button" onClick={() => {}} className="black_btn">Facturação</button>
+      <button type="button" onClick={() => {}} className="black_btn">Cronograma</button>
+      <button type="button" onClick={() => {}} className="black_btn">Dicas</button>
+      </div>
+      <div class="flex mt-4 gap-4">
+        <div class="flex-initial w-64 glassmorphism">
+          02
+        </div>
+        <div class="flex flex-row gap-4 w-46 glassmorphism">
+          <Image
+          isBlurred
+          width={200}
+          height={200}
+          src="https://nextui-docs-v2.vercel.app/images/album-cover.png"
+          alt="NextUI Album Cover"
+          classNames="mt-5"
+        />
+        <div>
+          <p>
+          <Link href="#" color="warning"><p className="text-4xl">Casamentos</p></Link>
+          </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+          Tempore culpa, vitae doloremque placeat iusto quae consequatur 
+          recusandae sed tempora rerum, reiciendis perspiciatis? 
+          Porro laboriosam iste quos necessitatibus quis dolore quo.
+        </p> 
+        <div className="flex justify-end">
+          <button type="button" onClick={() => {}} className="black_btn">Ver detalher</button>
+        </div>
+        </div>
+             
+        </div>
+      </div>
     </section>
   )
 }

@@ -329,7 +329,12 @@ function page() {
   }
   return (
     <Profile>
+      <div className="flex flex-row">
+        <button type={"button"} onClick={() => {}} className="black_btn">
+          + Evento
+        </button>
       <div className="text-center font-bold text-2xl mb-4">Planificação</div>
+      </div>
       <div className="text-center font-bold underline underline-offset-8 uppercase mb-4">Orçamentação</div>
       <div className="flex flex-row justify-between">
         <p className="font-bold mb-4">Orçamento Disponivel</p>        
