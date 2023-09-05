@@ -8,6 +8,7 @@ import { Mail } from '@app/convidados/Mail';
 import { IconButton } from '@app/convidados/IconButton';
 import { EditIcon } from "@app/convidados/EditIcon";
 import { DeleteIcon } from "@app/convidados/DeleteIcon";
+import Form from "@components/Form";
 let USDollar = new Intl.NumberFormat('en-US');
 var precoTotal = 0;
 function page() {
@@ -47,12 +48,43 @@ function page() {
   const [visibleServicos, setVisibleServicos] = useState(false);
   const [processando, setProcessando] = useState(false);
   const router = useRouter();
-
+  const [submitting, setSubmitting] = useState(false);
+  const [evento2, setEvento2] = useState({
+    nomeNoiva: '',
+    nomeNoivo: '',
+    localEvento: '',
+    dataEvento: '',
+    orcamentoInicial: '',
+})
+const createEvento = async (e) => {
+  e.preventDefault();
+  setSubmitting(true); 
+  try {
+      const response = await fetch('api/eventos/new', {
+          method: 'POST',
+          body: JSON.stringify({
+              nomeNoiva: evento.nomeNoiva,
+              nomeNoivo: evento.nomeNoivo,
+              localEvento: evento.localEvento,
+              dataEvento: evento.dataEvento,
+              orcamentoInicial: evento.orcamentoInicial,
+              userId: session?.user.id,
+          })
+      })
+      if (response.ok) {
+          router.push('/dashboard/dasPage');
+      }
+  } catch (error) {
+      console.log(error);
+  } finally {
+      setSubmitting(false);
+  }
+}
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/users/${session?.user.id}/posts`);
       const data = await response.json();
-      console.log(data)
+      console.log("Eventos:",data.length)
       setEvento(data);
     }
     if(session?.user.id) fetchPosts();
@@ -329,9 +361,16 @@ function page() {
   // Agua
   return (
     <Profile>
-      {evento.length > 0 ? (
+      {evento.length === 0 ? (
       <>
-        <div className="text-center font-bold text-2xl mb-4">Planificação</div>
+        <div className="text-center font-bold text-2xl mb-4">Formulário</div>
+        <Form 
+        type="Criar Evento"
+        evento={evento}
+        setEvento={setEvento2}
+        submitting={submitting}
+        handleSubmit={createEvento}
+    />
       </>
       ):(
         <>

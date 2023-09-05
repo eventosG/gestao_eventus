@@ -10,6 +10,7 @@ function Form(
   handleSubmit}
   ) {
     const [tipoEvento, setTipoEvento] = useState(false);
+    const [eventosSelect, setEventosSelect] = useState("Casamento");
   return (
     <section className='w-full max-w-full flex-start flex-col'>
       <h1 className='head_text text-left'><span className='orange_gradient'>{type} Evento</span></h1>
@@ -20,13 +21,29 @@ function Form(
       Eventos oferece inúmeras vantagens que podem facilitar e aprimorar todo o processo.
       </p>
       <div className='flex-end mx-3 mt-5 gap-4'>
-          <button 
+      <select 
+          name="cars"
+          value={eventosSelect}
+          onChange={(ev) => setEventosSelect(ev.target.value)}
+          id="cars"
+          className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
+          >
+           <option value="Casamento">Casamento</option>
+           <option value="Lobolo">Lobolo</option>
+           <option value="Anelamento">Anelamento</option>
+           <option value="Despedida de Solteiro">Despedida de Solteiro</option>
+           <option value="Aniversário">Aniversário</option>
+           <option value="Baptismo">Baptismo</option>
+           <option value="Graduação">Graduação</option>
+           <option value="Sociais">Sociais</option>
+          </select>
+          {/* <button 
           onClick={() => setTipoEvento((prev) => !prev)}
             type='button'
             className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
           >
             {tipoEvento ? (<>Casamento</>):(<>Outros Eventos</>)}
-          </button>
+          </button> */}
       </div>
       
       {tipoEvento ? (
