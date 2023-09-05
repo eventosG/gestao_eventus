@@ -67,7 +67,6 @@ function page() {
     }
     if(session?.user.id) fetchPosts();
   },[session?.user.id]);
-
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/users/${session?.user.id}/posts`);
@@ -318,7 +317,7 @@ function page() {
           })
       })
       if (response.ok) {
-          router.push('/dashboard');
+          router.push('/dashboard'); 
       }
   } catch (error) {
       console.log(error); 
@@ -329,197 +328,206 @@ function page() {
   }
   return (
     <Profile>
-      <div className="flex flex-row">
-        <button type={"button"} onClick={() => {}} className="black_btn">
-          + Evento
-        </button>
-      <div className="text-center font-bold text-2xl mb-4">Planificação</div>
-      </div>
-      <div className="text-center font-bold underline underline-offset-8 uppercase mb-4">Orçamentação</div>
-      <div className="flex flex-row justify-between">
-        <p className="font-bold mb-4">Orçamento Disponivel</p>        
-        <p className="font-bold mb-4">Orçamento Real</p>
-        <button type={"button"} onClick={() => {}} className="black_btn">
-          Calculadora
-        </button>
-      </div>
-      <Row gap={1}>
-        <Col>
-          <Card>
-          <div className='justify-center items-center'>
-            <Card.Body>
-            <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
-            {evento.length > 0 && evento.map((event) => (
-              <>
-                <Text h6 size={12} css={{ m: 0 }}>
-                  Orçamento Inicial
-                </Text>
-                <Text h6 size={12} css={{ m: 0 }}>
-                  {USDollar.format(event.orcamentoInicial)}.00 Mt
-                </Text>
-              </>              
-            ))}
-            
-              <Progress size="sm" value={100} color="warning" />
-            </span>              
-            </Card.Body>
-            </div>
-          </Card>
-        </Col>
-        <Col>
-          <Card>
-          <div className='justify-center items-center' onClick={() => setVisibleServicos(true)}>
-            <Card.Body>
-            <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
-            <Text h6 size={12} css={{ m: 0 }}>
-              Serv. Solicitados
-              </Text>
-              <Text h6 size={12} css={{ m: 0 }}>
-                  {USDollar.format(totalP)}.00 Mt
-                </Text>
-              <Progress size="sm" value={(totalP/54000)*100} color="warning" />
-            </span> 
-            </Card.Body>
-            </div>
-          </Card>
-        </Col>
-        <Col>
-          <Card>
-          <div className='justify-center items-center'>
-            <Card.Body>
-            <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
-            <Text h6 size={12} css={{ m: 0 }}>
-              Conv. Confirmados
-              </Text>
-              <Text h6 size={12} css={{ m: 0 }}>
-              {convidadosConfirmados}/{convidados}
-              </Text>
-              <Progress size="sm" value={25} color="warning" />
-            </span> 
-            </Card.Body>
-            </div>
-          </Card>
-        </Col>
-      </Row>
-      <Spacer y={1} />
-      <div className="text-center font-bold underline underline-offset-8 uppercase mb-4">Selecção de Serviços</div>
-     <div className="flex flex-row gap-4">
-        <div className="flex flex-col gap-2 justify-center mb-4">
-        <Checkbox color="warning" onChange={(e) => setTransporteVal(e)}>
-          <p className='text-sm'>Transporte</p>
-        </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setGarcomVal(e)}>
-          <p className='text-sm'>Garçom</p>
-        </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setFotoVideoVal(e)}>
-          <p className='text-sm'>Fotografia e Vídeo</p>
-        </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setcateringVal(e)}>
-          <p className='text-sm'>Catering</p>
-        </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setbolosSobremesasVal(e)}>
-          <p className='text-sm'>Bolos e Sobremesas</p>
-        </Checkbox>
-      </div> 
-      <div className="flex flex-col gap-2 justify-center mb-4">
-        <Checkbox color="warning" onChange={(e) => setMcVal(e)}>
-          <p className='text-sm'>Mestre de Ceremônia</p>
-        </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setStreamingVal(e)}>
-          <p className='text-sm'>Streaming</p>
-        </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setlocalSelebracaoVal(e)}>
-          <p className='text-sm'>Local de Celebração</p>
-        </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setliquidoVal(e)}>
-          <p className='text-sm'>Líquidos</p>
-          </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setbrindesVal(e)}>
-          <p className='text-sm'>Brindes</p>
-          </Checkbox>        
-      </div> 
-      <div className="flex flex-col gap-2 justify-center mb-4">
-        <Checkbox color="warning" onChange={(e) => setculturalVal(e)}>
-          <p className='text-sm'>Musica e Manifestações Culturais</p>
-          </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setconvitesVal(e)}>
-          <p className='text-sm'>Convites</p>
-          </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setLuaMelVal(e)}>
-          <p className='text-sm'>Lua-de-mel</p>
-          </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setprotocolosVal(e)}>
-          <p className='text-sm'>Protocolos</p>
-          </Checkbox>        
-      </div> 
-      <div className="flex flex-col gap-2 justify-center mb-4">
-        <Checkbox color="warning" onChange={(e) => setvestuariosVal(e)}>
-          <p className='text-sm'>Vestuário</p>
-          </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setmekeUpVal(e)}>
-          <p className='text-sm'>Cabelo e Mekeup</p>
-          </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setjoiasVal(e)}>
-          <p className='text-sm'>Jóias e Bijuterias</p>
-          </Checkbox>
-        <Checkbox color="warning" onChange={(e) => setfloresVal(e)}>
-          <p className='text-sm'>Buquê e Flores</p>
-          </Checkbox>
-      </div> 
-     </div>
-     {isSelected ? (
-     <>
-      <button type={"button"} onClick={confirmarServicos} className="black_btn">
-          Confirmar
-      </button>
-     </>
-     ):(
-     <>
-      <p>Nenhum Serviço Selecciona</p>
-     </>
-     )}
-     
-      <Spacer y={1} />
-      <div className="text-center font-bold underline underline-offset-8 uppercase">Road Map</div>
-        <Button onPress={() => setVisible(true)} bordered color="gradient" auto>
-          + RaodMap
-        </Button>
-        <Grid.Container gap={2}>
-      <Grid>
-        <Collapse.Group shadow>
-          {cronograma.length > 0 && cronograma.map((crono) => (
-            <Collapse title={crono.titulo}>
-              <Row justify="center" align="center">
-              <Col css={{ d: "flex" }}>
-                <Tooltip content="Editar Cronograma">
-                  <IconButton onClick={() => editarCronograma(crono._id)}>
-                    <EditIcon size={20} fill="#979797" />
-                  </IconButton>
-                </Tooltip>
-              </Col>
-              <Col css={{ d: "flex" }}>
-                <Tooltip
-                  content="Remover Cronograma"
-                  color="error"
-                  onClick={() => removerConograma(crono._id)}
-                >
-                  <IconButton>
-                    <DeleteIcon size={20} fill="#FF0080" />
-                  </IconButton>
-                </Tooltip>
-              </Col>
-            </Row>
-              <Text>
-                Data: {crono.data}
-              </Text>
-              <Text>
-                {crono.corpo}
-              </Text>
-            </Collapse>
-          ))}          
-        </Collapse.Group>
-      </Grid>
-    </Grid.Container>
+      {evento.length > 0 ? (
+      <>
+        <div className="text-center font-bold text-2xl mb-4">Planificação</div>
+      </>
+      ):(
+        <>
+        <div className="flex flex-row">
+                <button type={"button"} onClick={() => {}} className="black_btn">
+                  + Evento
+                </button>
+              <div className="text-center font-bold text-2xl mb-4">Planificação</div>
+              </div>
+              <div className="text-center font-bold underline underline-offset-8 uppercase mb-4">Orçamentação</div>
+              <div className="flex flex-row justify-between">
+                <p className="font-bold mb-4">Orçamento Disponivel</p>        
+                <p className="font-bold mb-4">Orçamento Real</p>
+                <button type={"button"} onClick={() => {}} className="black_btn">
+                  Calculadora
+                </button>
+              </div>
+              <Row gap={1}>
+                <Col>
+                  <Card>
+                  <div className='justify-center items-center'>
+                    <Card.Body>
+                    <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
+                    {evento.length > 0 && evento.map((event) => (
+                      <>
+                        <Text h6 size={12} css={{ m: 0 }}>
+                          Orçamento Inicial
+                        </Text>
+                        <Text h6 size={12} css={{ m: 0 }}>
+                          {USDollar.format(event.orcamentoInicial)}.00 Mt
+                        </Text>
+                      </>              
+                    ))}
+                    
+                      <Progress size="sm" value={100} color="warning" />
+                    </span>              
+                    </Card.Body>
+                    </div>
+                  </Card>
+                </Col>
+                <Col>
+                  <Card>
+                  <div className='justify-center items-center' onClick={() => setVisibleServicos(true)}>
+                    <Card.Body>
+                    <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
+                    <Text h6 size={12} css={{ m: 0 }}>
+                      Serv. Solicitados
+                      </Text>
+                      <Text h6 size={12} css={{ m: 0 }}>
+                          {USDollar.format(totalP)}.00 Mt
+                        </Text>
+                      <Progress size="sm" value={(totalP/54000)*100} color="warning" />
+                    </span> 
+                    </Card.Body>
+                    </div>
+                  </Card>
+                </Col>
+                <Col>
+                  <Card>
+                  <div className='justify-center items-center'>
+                    <Card.Body>
+                    <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
+                    <Text h6 size={12} css={{ m: 0 }}>
+                      Conv. Confirmados
+                      </Text>
+                      <Text h6 size={12} css={{ m: 0 }}>
+                      {convidadosConfirmados}/{convidados}
+                      </Text>
+                      <Progress size="sm" value={25} color="warning" />
+                    </span> 
+                    </Card.Body>
+                    </div>
+                  </Card>
+                </Col>
+              </Row>
+              <Spacer y={1} />
+              <div className="text-center font-bold underline underline-offset-8 uppercase mb-4">Selecção de Serviços</div>
+             <div className="flex flex-row gap-4">
+                <div className="flex flex-col gap-2 justify-center mb-4">
+                <Checkbox color="warning" onChange={(e) => setTransporteVal(e)}>
+                  <p className='text-sm'>Transporte</p>
+                </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setGarcomVal(e)}>
+                  <p className='text-sm'>Garçom</p>
+                </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setFotoVideoVal(e)}>
+                  <p className='text-sm'>Fotografia e Vídeo</p>
+                </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setcateringVal(e)}>
+                  <p className='text-sm'>Catering</p>
+                </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setbolosSobremesasVal(e)}>
+                  <p className='text-sm'>Bolos e Sobremesas</p>
+                </Checkbox>
+              </div> 
+              <div className="flex flex-col gap-2 justify-center mb-4">
+                <Checkbox color="warning" onChange={(e) => setMcVal(e)}>
+                  <p className='text-sm'>Mestre de Ceremônia</p>
+                </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setStreamingVal(e)}>
+                  <p className='text-sm'>Streaming</p>
+                </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setlocalSelebracaoVal(e)}>
+                  <p className='text-sm'>Local de Celebração</p>
+                </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setliquidoVal(e)}>
+                  <p className='text-sm'>Líquidos</p>
+                  </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setbrindesVal(e)}>
+                  <p className='text-sm'>Brindes</p>
+                  </Checkbox>        
+              </div> 
+              <div className="flex flex-col gap-2 justify-center mb-4">
+                <Checkbox color="warning" onChange={(e) => setculturalVal(e)}>
+                  <p className='text-sm'>Musica e Manifestações Culturais</p>
+                  </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setconvitesVal(e)}>
+                  <p className='text-sm'>Convites</p>
+                  </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setLuaMelVal(e)}>
+                  <p className='text-sm'>Lua-de-mel</p>
+                  </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setprotocolosVal(e)}>
+                  <p className='text-sm'>Protocolos</p>
+                  </Checkbox>        
+              </div> 
+              <div className="flex flex-col gap-2 justify-center mb-4">
+                <Checkbox color="warning" onChange={(e) => setvestuariosVal(e)}>
+                  <p className='text-sm'>Vestuário</p>
+                  </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setmekeUpVal(e)}>
+                  <p className='text-sm'>Cabelo e Mekeup</p>
+                  </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setjoiasVal(e)}>
+                  <p className='text-sm'>Jóias e Bijuterias</p>
+                  </Checkbox>
+                <Checkbox color="warning" onChange={(e) => setfloresVal(e)}>
+                  <p className='text-sm'>Buquê e Flores</p>
+                  </Checkbox>
+              </div> 
+             </div>
+             {isSelected ? (
+             <>
+              <button type={"button"} onClick={confirmarServicos} className="black_btn">
+                  Confirmar
+              </button>
+             </>
+             ):(
+             <>
+              <p>Nenhum Serviço Selecciona</p>
+             </>
+             )}
+             
+              <Spacer y={1} />
+              <div className="text-center font-bold underline underline-offset-8 uppercase">Road Map</div>
+                <Button onPress={() => setVisible(true)} bordered color="gradient" auto>
+                  + RaodMap
+                </Button>
+                <Grid.Container gap={2}>
+              <Grid>
+                <Collapse.Group shadow>
+                  {cronograma.length > 0 && cronograma.map((crono) => (
+                    <Collapse title={crono.titulo}>
+                      <Row justify="center" align="center">
+                      <Col css={{ d: "flex" }}>
+                        <Tooltip content="Editar Cronograma">
+                          <IconButton onClick={() => editarCronograma(crono._id)}>
+                            <EditIcon size={20} fill="#979797" />
+                          </IconButton>
+                        </Tooltip>
+                      </Col>
+                      <Col css={{ d: "flex" }}>
+                        <Tooltip
+                          content="Remover Cronograma"
+                          color="error"
+                          onClick={() => removerConograma(crono._id)}
+                        >
+                          <IconButton>
+                            <DeleteIcon size={20} fill="#FF0080" />
+                          </IconButton>
+                        </Tooltip>
+                      </Col>
+                    </Row>
+                      <Text>
+                        Data: {crono.data}
+                      </Text>
+                      <Text>
+                        {crono.corpo}
+                      </Text>
+                    </Collapse>
+                  ))}          
+                </Collapse.Group>
+              </Grid>
+            </Grid.Container>
+        </>
+      )}
+      
       <Modal
         closeButton
         aria-labelledby="modal-title"
