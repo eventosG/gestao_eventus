@@ -9,7 +9,7 @@ import { IconButton } from '@app/convidados/IconButton';
 import { EditIcon } from "@app/convidados/EditIcon";
 import { DeleteIcon } from "@app/convidados/DeleteIcon";
 import { Chart as ChartJs, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import Doughnut from 'react-chartjs-2';
 import Form from "@components/Form";
 let USDollar = new Intl.NumberFormat('en-US');
 ChartJs.register(
