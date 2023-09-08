@@ -8,36 +8,41 @@ import { Mail } from '@app/convidados/Mail';
 import { IconButton } from '@app/convidados/IconButton';
 import { EditIcon } from "@app/convidados/EditIcon";
 import { DeleteIcon } from "@app/convidados/DeleteIcon";
-import { Chart as ChartJs, ArcElement, Tooltip, Legend } from 'chart.js';
-import Doughnut from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 import Form from "@components/Form";
 let USDollar = new Intl.NumberFormat('en-US');
-ChartJs.register(
-  ArcElement,
-  Tooltip,
-  Legend
-);
 var precoTotal = 0;
 function page() {
   const data2 = {
-    labels: [
-      'Serviço 1',
-      'Serviço 2',
-      'Serviço 3',
-      'Serviço 4'
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [
+      {
+        label: 'Serviços',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
     ],
-    datasets: [{
-      label: 'Orçamento',
-      data: [300, 50, 100, 150],
-      backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(53, 94, 59)',
-        'rgb(255, 205, 86)'
-      ],
-      hoverOffset: 4
-    }]
   };
+  
   const options = {}
   const {data: session } = useSession();
   const [evento, setEvento] = useState([]);
@@ -751,9 +756,7 @@ const createEvento = async (e) => {
                         </button>  
                       </div>
                       <div className='mt-4'>
-                        <Doughnut data={data2} options={options}>
-
-                        </Doughnut>
+                        <Pie data={data2} />
                       </div>                   
                     </span> 
                     </Card.Body>
