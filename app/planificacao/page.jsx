@@ -1,17 +1,44 @@
 'use client';
 import Profile from '@app/profile/page';
 import React, { useState, useEffect } from 'react';
-import { Container, Checkbox, Tooltip, Textarea, Modal, Input, Loading, Button, Card, Row, Text, Avatar, Grid, Spacer, Col, Progress, Collapse } from "@nextui-org/react";
+import { Container, Checkbox, Textarea, Modal, Input, Loading, Button, Card, Row, Text, Avatar, Grid, Spacer, Col, Progress, Collapse } from "@nextui-org/react";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Mail } from '@app/convidados/Mail';
 import { IconButton } from '@app/convidados/IconButton';
 import { EditIcon } from "@app/convidados/EditIcon";
 import { DeleteIcon } from "@app/convidados/DeleteIcon";
+import { Chart as ChartJs, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 import Form from "@components/Form";
 let USDollar = new Intl.NumberFormat('en-US');
+ChartJs.register(
+  ArcElement,
+  Tooltip,
+  Legend
+);
 var precoTotal = 0;
 function page() {
+  const data2 = {
+    labels: [
+      'Serviço 1',
+      'Serviço 2',
+      'Serviço 3',
+      'Serviço 4'
+    ],
+    datasets: [{
+      label: 'Orçamento',
+      data: [300, 50, 100, 150],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(53, 94, 59)',
+        'rgb(255, 205, 86)'
+      ],
+      hoverOffset: 4
+    }]
+  };
+  const options = {}
   const {data: session } = useSession();
   const [evento, setEvento] = useState([]);
   const [cronograma, setCronograma] = useState([]);
@@ -25,7 +52,7 @@ function page() {
   const [fotoVideoVal, setFotoVideoVal] = useState(false);
   const [cateringVal, setcateringVal] = useState(false);
   const [bolosSobremesasVal, setbolosSobremesasVal] = useState(false);
-  const [mcVal, setMcVal] = useState(false);
+  const [mcVal, setMcVal] = useState(false); 
   const [streamingVal, setStreamingVal] = useState(false);
   const [localSelebracaoVal, setlocalSelebracaoVal] = useState(false);
   const [liquidoVal, setliquidoVal] = useState(false);
@@ -40,6 +67,7 @@ function page() {
   const [floresVal, setfloresVal] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   const [titulo, setTitulo] = useState('');
+  const [planificacaoTT, setPlanificacaoTT] = useState(true);
   const [idd4, setIDD4] = useState('');
   const [data, setData] = useState('');
   const [corpo, setCorpo] = useState('');
@@ -358,10 +386,17 @@ const createEvento = async (e) => {
       router.push('/dashboard');
     }
   }
+  function servicosSolicitados() {
+    setPlanificacaoTT(false)
+  }
+  function servicosPlanificacao() {
+    setPlanificacaoTT(true)
+  }
   // Agua
   return (
     <Profile>
-      {evento.length === 0 ? (
+      {/* {evento.length === 0 ? ( */}
+      {false ? (
       <>
         <div className="text-center font-bold text-2xl mb-4">Formulário</div>
         <Form 
@@ -374,6 +409,9 @@ const createEvento = async (e) => {
       </>
       ):(
         <>
+          {
+          planificacaoTT ? (
+            <>
         <div className="flex flex-row">
                 <button type={"button"} onClick={() => {}} className="black_btn">
                   + Evento
@@ -413,7 +451,7 @@ const createEvento = async (e) => {
                 </Col>
                 <Col>
                   <Card>
-                  <div className='justify-center items-center' onClick={() => setVisibleServicos(true)}>
+                  <div className='justify-center items-center' onClick={() => servicosSolicitados()}>
                     <Card.Body>
                     <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
                     <Text h6 size={12} css={{ m: 0 }}>
@@ -565,6 +603,167 @@ const createEvento = async (e) => {
                 </Collapse.Group>
               </Grid>
             </Grid.Container>
+        </>
+          ):(
+          <>
+          <Text onClick={() => servicosPlanificacao()} className='text-center' h6 size={24} css={{ m: 0 }}>Serviços Solicitados</Text>   
+          <Row gap={1}>
+                <Col>
+                  <Card>
+                  <div className='justify-center items-center'>
+                    <Card.Body>
+                      <Text h6 size={12} css={{ m: 0 }}>
+                        .
+                      </Text>           
+                    </Card.Body>
+                    </div>
+                  </Card>
+                </Col>
+                <Col>
+                  <Card>
+                  <div onClick={() => servicosSolicitados()}>
+                    <Card.Body>
+                    <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
+                      <div className="flex justify-between content-between">
+                        <div>
+                        <button 
+                          type="button"
+                          onClick={() => {}}
+                          className="black_btn"
+                          >
+                            Baixar
+                        </button>
+                        </div>
+                        <div>
+                        <button 
+                          type="button"
+                          onClick={() => {}}
+                          className="black_btn"
+                          >
+                            Imprimir
+                        </button>
+                        </div>  
+                      </div>                      
+                    </span> 
+                    </Card.Body>
+                    </div>
+                  </Card>
+                </Col>
+          </Row>
+          <Row gap={1} className="mt-4">
+                <Col>
+                  <Card>
+                  <div onClick={() => servicosSolicitados()}>
+                    <Card.Body>
+                    <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
+                      <div className="text-center">
+                        <Text h6 size={18} css={{ m: 0 }}>
+                        Orçamento
+                        </Text>
+                      </div>                      
+                      <div className="flex flex-row justify-between content-between mt-4 gap-4">
+                        <div>
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            Disponivel
+                          </Text>
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            0.00 Mt
+                          </Text>    
+                        </div>  
+                        <div>
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            Final
+                          </Text> 
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            0.00 Mt
+                          </Text>   
+                        </div>  
+                        <div>  
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            Minimo
+                          </Text>
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            0.00 Mt
+                          </Text>   
+                        </div>  
+                        <div>
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            Excedente
+                          </Text>
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            0.00 Mt
+                          </Text>   
+                        </div>  
+                      </div>                  
+                    </span> 
+                    </Card.Body>
+                    </div>
+                  </Card>
+                </Col>
+          </Row>
+          <Row gap={1} className="mt-4">
+                <Col>
+                  <Card>
+                  <div>
+                    <Card.Body>
+                    <span className='font-satoshi font-semibold text-base text-center text-gray-700 p-1'>
+                      <Text h6 size={18} css={{ m: 0 }}>
+                        Produtos e Serviços
+                      </Text>                        
+                    </span>                               
+                    </Card.Body>
+                    </div>
+                  </Card>
+                </Col>
+                <Col>
+                  <Card>
+                  <div onClick={() => servicosSolicitados()}>
+                    <Card.Body>
+                    <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
+                      <div className="text-center">
+                        <Text h6 size={18} css={{ m: 0 }}>
+                          Nome do Produto/Serviço
+                        </Text>
+                      </div>                      
+                      <div className="flex flex-row justify-between content-between mt-4 gap-4">
+                      <div>
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            Final
+                          </Text> 
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            0.00 Mt
+                          </Text>   
+                        </div>  
+                        <div>  
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            Minimo
+                          </Text>
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            0.00 Mt
+                          </Text>   
+                        </div>  
+                        <button 
+                          type="button"
+                          onClick={() => {}}
+                          className="black_btn"
+                          >
+                            Remover
+                        </button>  
+                      </div>
+                      <div className='mt-4'>
+                        <Doughnut data={data2} options={options}>
+
+                        </Doughnut>
+                      </div>                   
+                    </span> 
+                    </Card.Body>
+                    </div>
+                  </Card>
+                </Col>
+          </Row>
+          </>
+          )
+        }
         </>
       )}
       
