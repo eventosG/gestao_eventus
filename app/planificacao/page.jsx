@@ -1,52 +1,45 @@
 'use client';
 import Profile from '@app/profile/page';
 import React, { useState, useEffect } from 'react';
-import { Container, Checkbox, Textarea, Modal, Input, Loading, Button, Card, Row, Text, Avatar, Grid, Spacer, Col, Progress, Collapse } from "@nextui-org/react";
+import {CardHeader, CardBody, CardFooter, Link, Image} from "@nextui-org/react";
+import { Divider, Checkbox, Textarea, Modal, Input, Tooltip, Loading, Button, Card, Row, Text, Avatar, Grid, Spacer, Col, Progress, Collapse } from "@nextui-org/react";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Mail } from '@app/convidados/Mail';
 import { IconButton } from '@app/convidados/IconButton';
 import { EditIcon } from "@app/convidados/EditIcon";
 import { DeleteIcon } from "@app/convidados/DeleteIcon";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
-
+import { Chart as ChartJS, ArcElement, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+import { toast } from 'react-toastify';
 ChartJS.register(ArcElement, Tooltip, Legend);
 import Form from "@components/Form";
 let USDollar = new Intl.NumberFormat('en-US');
 var precoTotal = 0;
 function page() {
   const data2 = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [
-      {
-        label: 'Serviços',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1,
-      },
+    labels: [
+      'Red',
+      'Blue',
+      'Yellow'
     ],
+    datasets: [{
+      label: 'My First Dataset',
+      data: [300, 50, 100],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
+      ],
+      hoverOffset: 4
+    }]
   };
   
   const options = {}
   const {data: session } = useSession();
   const [evento, setEvento] = useState([]);
   const [cronograma, setCronograma] = useState([]);
+  const [servicosSeleccionados, setServicosSeleccionados] = useState([]);
   const [selecionadosLista, setselecionadosLista] = useState([]);
   const [convidados, setConvidados] = useState(0);
   const [totalP, setTatalP] = useState(0);
@@ -132,6 +125,74 @@ const createEvento = async (e) => {
     }
     if(session?.user.id) fetchPosts();
   },[session?.user.id]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch(`/api/listaServicos/${session?.user.id}`);
+      const data = await response.json();
+      console.log("Serviços Seleccionados",data)
+      data.map((servico) => {
+        console.log(servico.nomeServico);
+        if (servico.nomeServico === "Transporte") {
+          setTransporteVal(true);
+        }
+        if (servico.nomeServico === "Garçom") {
+          setGarcomVal(true);
+        }
+        if (servico.nomeServico === "Fotografia e Vídeo") {
+          setFotoVideoVal(true);
+        }
+        if (servico.nomeServico === "Catering") {
+          setcateringVal(true);
+        }
+        if (servico.nomeServico === "Bolos e Sobremesas") {
+          setbolosSobremesasVal(true);
+        }
+        if (servico.nomeServico === "Mestre de Ceremônia") {
+          setMcVal(true);
+        }
+        if (servico.nomeServico === "Streaming") {
+          setStreamingVal(true);
+        }
+        if (servico.nomeServico === "Local de Celebração") {
+          setlocalSelebracaoVal(true);
+        }
+        if (servico.nomeServico === "Líquidos") {
+          setliquidoVal(true);
+        }
+        if (servico.nomeServico === "Brindes") {
+          setbrindesVal(true);
+        }
+        if (servico.nomeServico === "Musica e Manifestações Culturais") {
+          setculturalVal(true);
+        }
+        if (servico.nomeServico === "Convites") {
+          setconvitesVal(true);
+        }
+        if (servico.nomeServico === "Lua-de-mel") {
+          setLuaMelVal(true);
+        }
+        if (servico.nomeServico === "Protocolos") {
+          setprotocolosVal(true);
+        }
+        if (servico.nomeServico === "Vestuário") {
+          setvestuariosVal(true);
+        }
+        if (servico.nomeServico === "Cabelo e Mekeup") {
+          setmekeUpVal(true);
+        }
+        if (servico.nomeServico === "Jóias e Bijuterias") {
+          setjoiasVal(true);
+        }
+        if (servico.nomeServico === "Buquê e Flores") {
+          setfloresVal(true);
+        }
+      })
+      setServicosSeleccionados(data);
+    }
+    if(session?.user.id) fetchPosts();
+  },[session?.user.id]);
+
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/users/${session?.user.id}/posts`);
@@ -168,126 +229,156 @@ const createEvento = async (e) => {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Transporte",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(255, 99, 132)"
         })
       }
       if(garcomVal){
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Garçom",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(54, 162, 235)"
         })
       }
       if(fotoVideoVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Fotografia e Video",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(54, 162, 235)"
         })
       }
       if(cateringVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Catering",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(0,255,0)"
         })
       }
       if(bolosSobremesasVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Bolos e Sobremesas",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(0,255,255)"
         })
       }
       if(mcVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "MC",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(0,255,255)"
         })
       }
+      // navy
       if(streamingVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Streaming",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(0,205,255)" 
         })
       }
+      // peach puff
       if(localSelebracaoVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Local de Selebração",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(255,218,185)"
         })
       }
+      // azure
       if(liquidoVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Liquidos",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(240,255,255)"
         })
       }
+      // maroon
       if(brindesVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Brindes",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(128,0,0)"
         })
       }
+      // crimson
       if(culturalVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Musica e Man. Cultural",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(220,20,60)"
         })
       }
+      // gold
       if(convitesVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Convites",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(255,215,0)"
         })
       }
+      // dark green
       if(luaMelVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Lua-de-Mel",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(0,100,0)"
         })
       }
+      // light sea green
       if(protocolosVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Protocolo",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(32,178,170)"
         })
       }
+      // snow
       if(vestuariosVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Vestuario",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(255,250,250)"
         })
       }
+      // 	chocolate
       if(mekeUpVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Cabelo e MekeUp",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(210,105,30)"
         })
       }
+      // rosy brown
       if(joiasVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Jóias e Bijuterias",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(188,143,143)"
         })
       }
+      // light steel blue
       if(floresVal) {
         precoTotal += 3000;
         listaVolatel.push({
           nomeServico: "Buquê e Flores",
-          preco: "3000"
+          preco: "3000",
+          cor: "rgb(176,196,222)"
         })
       }
       setTatalP(precoTotal);
@@ -319,27 +410,358 @@ const createEvento = async (e) => {
   const closeHandlerServicos = () => {
     setVisibleServicos(false);
   };
-  const confirmarServicos = () => {
+  const confirmarServicos = async () => {
+    toast.info('Adicionando Serviços!', {
+      position: toast.POSITION.TOP_RIGHT
+  });
     precoTotal = 0;    
-    if(transporteVal) precoTotal += 3000;
-    if(garcomVal) precoTotal += 3000;
-    if(fotoVideoVal) precoTotal += 3000;
-    if(cateringVal) precoTotal += 3000;
-    if(bolosSobremesasVal) precoTotal += 3000;
-    if(mcVal) precoTotal += 3000;
-    if(streamingVal) precoTotal += 3000;
-    if(localSelebracaoVal) precoTotal += 3000;
-    if(liquidoVal) precoTotal += 3000;
-    if(brindesVal) precoTotal += 3000;
-    if(culturalVal) precoTotal += 3000;
-    if(convitesVal) precoTotal += 3000;
-    if(luaMelVal) precoTotal += 3000;
-    if(protocolosVal) precoTotal += 3000;
-    if(vestuariosVal) precoTotal += 3000;
-    if(mekeUpVal) precoTotal += 3000;
-    if(joiasVal) precoTotal += 3000;
-    if(floresVal) precoTotal += 3000;
+    if(transporteVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Transporte",
+              preco: "3000",
+              cor: "rgb(255, 99, 132)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(garcomVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Garçom",
+              preco: "3000",
+              cor: "rgb(54, 162, 235)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(fotoVideoVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Fotografia e Vídeo",
+              preco: "3000",
+              cor: "rgb(54, 162, 235)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(cateringVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Catering",
+              preco: "3000",
+              cor: "rgb(0,255,0)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(bolosSobremesasVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Bolos e Sobremesas",
+              preco: "3000",
+              cor: "rgb(0,255,255)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(mcVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Mestre de Ceremônia",
+              preco: "3000",
+              cor: "rgb(0,255,255)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(streamingVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Streaming",
+              preco: "3000",
+              cor: "rgb(0,205,255)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(localSelebracaoVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Local de Celebração",
+              preco: "3000",
+              cor: "rgb(255,218,185)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(liquidoVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Líquidos",
+              preco: "3000",
+              cor: "rgb(240,255,255)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(brindesVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Brindes",
+              preco: "3000",
+              cor: "rgb(128,0,0)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(culturalVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Musica e Manifestações Culturais",
+              preco: "3000",
+              cor: "rgb(220,20,60)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(convitesVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Convites",
+              preco: "3000",
+              cor: "rgb(255,215,0)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(luaMelVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Lua-de-Mel",
+              preco: "3000",
+              cor: "rgb(0,100,0)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(protocolosVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Protocolos",
+              preco: "3000",
+              cor: "rgb(32,178,170)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(vestuariosVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Vestuário",
+              preco: "3000",
+              cor: "rgb(255,250,250)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(mekeUpVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Cabelo e Mekeup",
+              preco: "3000",
+              cor: "rgb(210,105,30)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(joiasVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Jóias e Bijuterias",
+              preco: "3000",
+              cor: "rgb(188,143,143)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
+    if(floresVal) {
+      precoTotal += 3000;
+      try {
+        const response = await fetch('api/listaServicos/new', {
+            method: 'POST',
+            body: JSON.stringify({
+              nomeServico: "Buquê e Flores",
+              preco: "3000",
+              cor: "rgb(176,196,222)",
+              userId: session?.user.id,
+            })
+        })
+    } catch (error) {
+      toast.error('Erro ao adicionar serviços!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+      }finally {
+      }
+    }
     setTatalP(precoTotal);
+    
+    toast.success('Serviços Adicionados Com Sucesso!', {
+      position: toast.POSITION.TOP_RIGHT
+  });
   };
 
   function removerConograma(iD) {
@@ -399,7 +821,7 @@ const createEvento = async (e) => {
   }
   // Agua
   return (
-    <Profile>
+    <Profile>      
       {/* {evento.length === 0 ? ( */}
       {false ? (
       <>
@@ -612,32 +1034,24 @@ const createEvento = async (e) => {
           ):(
           <>
           <Text onClick={() => servicosPlanificacao()} className='text-center' h6 size={24} css={{ m: 0 }}>Serviços Solicitados</Text>   
-          <Row gap={1}>
-                <Col>
-                  <Card>
-                  <div className='justify-center items-center'>
-                    <Card.Body>
-                      <Text h6 size={12} css={{ m: 0 }}>
-                        .
-                      </Text>           
-                    </Card.Body>
-                    </div>
-                  </Card>
-                </Col>
+          <Row gap={1}  className="w-48">                
                 <Col>
                   <Card>
                   <div onClick={() => servicosSolicitados()}>
                     <Card.Body>
                     <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
                       <div className="flex justify-between content-between">
-                        <div>
-                        <button 
-                          type="button"
-                          onClick={() => {}}
-                          className="black_btn"
-                          >
-                            Baixar
-                        </button>
+                        <div className='flex flex-row gap-4'>
+                          <button 
+                            type="button"
+                            onClick={() => {}}
+                            className="black_btn"
+                            >
+                              Baixar  
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                              </svg>
+                          </button>                          
                         </div>
                         <div>
                         <button 
@@ -645,7 +1059,10 @@ const createEvento = async (e) => {
                           onClick={() => {}}
                           className="black_btn"
                           >
-                            Imprimir
+                            Imprimir       
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
+                            </svg>
                         </button>
                         </div>  
                       </div>                      
@@ -656,6 +1073,26 @@ const createEvento = async (e) => {
                 </Col>
           </Row>
           <Row gap={1} className="mt-4">
+                <Col>
+                  <Card>
+                  <div>
+                    <Card.Body>
+                    <span className='font-satoshi font-semibold text-base text-center text-gray-700 p-1'>
+                      <Text h6 size={18} css={{ m: 0 }}>
+                        Produtos e Serviços
+                      </Text>
+                      {servicosSeleccionados.length > 0 && servicosSeleccionados.map((servico) => 
+                      <>
+                      <Card className="max-w-[400px]">
+                       <p>{servico.nomeServico}</p>
+                      </Card>
+                      </>
+                      ) }                 
+                    </span>                               
+                    </Card.Body>
+                    </div>
+                  </Card>
+                </Col>
                 <Col>
                   <Card>
                   <div onClick={() => servicosSolicitados()}>
@@ -701,62 +1138,18 @@ const createEvento = async (e) => {
                         </div>  
                       </div>                  
                     </span> 
-                    </Card.Body>
+                    <div className="text-center">
+                      <small>O orçamento disponível pode ser editado quando julgar necessário!</small>
                     </div>
-                  </Card>
-                </Col>
-          </Row>
-          <Row gap={1} className="mt-4">
-                <Col>
-                  <Card>
-                  <div>
-                    <Card.Body>
-                    <span className='font-satoshi font-semibold text-base text-center text-gray-700 p-1'>
-                      <Text h6 size={18} css={{ m: 0 }}>
-                        Produtos e Serviços
-                      </Text>                        
-                    </span>                               
-                    </Card.Body>
-                    </div>
-                  </Card>
-                </Col>
-                <Col>
-                  <Card>
-                  <div onClick={() => servicosSolicitados()}>
-                    <Card.Body>
-                    <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
+                    <Divider className="my-4" />
+                    <span className='font-satoshi font-semibold text-base text-gray-700 p-1 my-4'>
                       <div className="text-center">
                         <Text h6 size={18} css={{ m: 0 }}>
-                          Nome do Produto/Serviço
+                          Distribuição de custos
                         </Text>
-                      </div>                      
-                      <div className="flex flex-row justify-between content-between mt-4 gap-4">
-                      <div>
-                          <Text h6 size={12} css={{ m: 0 }}>
-                            Final
-                          </Text> 
-                          <Text h6 size={12} css={{ m: 0 }}>
-                            0.00 Mt
-                          </Text>   
-                        </div>  
-                        <div>  
-                          <Text h6 size={12} css={{ m: 0 }}>
-                            Minimo
-                          </Text>
-                          <Text h6 size={12} css={{ m: 0 }}>
-                            0.00 Mt
-                          </Text>   
-                        </div>  
-                        <button 
-                          type="button"
-                          onClick={() => {}}
-                          className="black_btn"
-                          >
-                            Remover
-                        </button>  
                       </div>
                       <div className='mt-4'>
-                        <Pie data={data2} />
+                        <Doughnut data={data2} />
                       </div>                   
                     </span> 
                     </Card.Body>
