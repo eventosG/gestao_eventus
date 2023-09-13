@@ -2,43 +2,29 @@
 import Profile from '@app/profile/page';
 import React, { useState, useEffect } from 'react';
 import {CardHeader, CardBody, CardFooter, Link, Image} from "@nextui-org/react";
-import { Divider, Checkbox, Textarea, Modal, Input, Tooltip, Loading, Button, Card, Row, Text, Avatar, Grid, Spacer, Col, Progress, Collapse } from "@nextui-org/react";
+import { Divider, Checkbox, Textarea, Modal, Input, Loading, Button, Card, Row, Text, Avatar, Grid, Spacer, Col, Progress, Collapse } from "@nextui-org/react";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Mail } from '@app/convidados/Mail';
 import { IconButton } from '@app/convidados/IconButton';
 import { EditIcon } from "@app/convidados/EditIcon";
 import { DeleteIcon } from "@app/convidados/DeleteIcon";
-import { Chart as ChartJS, ArcElement, Legend } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { toast } from 'react-toastify';
 ChartJS.register(ArcElement, Tooltip, Legend);
 import Form from "@components/Form";
 let USDollar = new Intl.NumberFormat('en-US');
 var precoTotal = 0;
-function page() {
-  const data2 = {
-    labels: [
-      'Red',
-      'Blue',
-      'Yellow'
-    ],
-    datasets: [{
-      label: 'My First Dataset',
-      data: [300, 50, 100],
-      backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
-      ],
-      hoverOffset: 4
-    }]
-  };
-  
+function page() { 
   const options = {}
   const {data: session } = useSession();
   const [evento, setEvento] = useState([]);
+  const [servicosLista, setServicosLista] = useState([]);
+  const [precosLista, setPrecosLista] = useState([]);
+  const [coresLista, setCoresLista] = useState([]);
   const [cronograma, setCronograma] = useState([]);
+  const [totalMinimo, setTotalMinimo] = useState(0);
   const [servicosSeleccionados, setServicosSeleccionados] = useState([]);
   const [selecionadosLista, setselecionadosLista] = useState([]);
   const [convidados, setConvidados] = useState(0);
@@ -82,6 +68,15 @@ function page() {
     dataEvento: '',
     orcamentoInicial: '',
 })
+const data2 = {
+  labels: servicosLista,
+  datasets: [{
+    label: 'Serviços',
+    data: precosLista,
+    backgroundColor: coresLista,
+    hoverOffset: 4
+  }]
+};
 const createEvento = async (e) => {
   e.preventDefault();
   setSubmitting(true); 
@@ -127,12 +122,20 @@ const createEvento = async (e) => {
   },[session?.user.id]);
 
   useEffect(() => {
+    var nomes = [];
+    var precos = [];
+    var cores = [];
+    var totalMinimoV = 0;
     const fetchPosts = async () => {
       const response = await fetch(`/api/listaServicos/${session?.user.id}`);
       const data = await response.json();
       console.log("Serviços Seleccionados",data)
       data.map((servico) => {
         console.log(servico.nomeServico);
+        nomes.push(servico.nomeServico);
+        precos.push(servico.preco);
+        cores.push(servico.cor);
+        totalMinimoV += parseFloat(servico.preco)
         if (servico.nomeServico === "Transporte") {
           setTransporteVal(true);
         }
@@ -189,6 +192,10 @@ const createEvento = async (e) => {
         }
       })
       setServicosSeleccionados(data);
+      setServicosLista(nomes);
+      setPrecosLista(precos);
+      setCoresLista(cores);
+      setTotalMinimo(totalMinimoV)
     }
     if(session?.user.id) fetchPosts();
   },[session?.user.id]);
@@ -1000,7 +1007,7 @@ const createEvento = async (e) => {
                   {cronograma.length > 0 && cronograma.map((crono) => (
                     <Collapse title={crono.titulo}>
                       <Row justify="center" align="center">
-                      <Col css={{ d: "flex" }}>
+                      {/* <Col css={{ d: "flex" }}>
                         <Tooltip content="Editar Cronograma">
                           <IconButton onClick={() => editarCronograma(crono._id)}>
                             <EditIcon size={20} fill="#979797" />
@@ -1017,7 +1024,7 @@ const createEvento = async (e) => {
                             <DeleteIcon size={20} fill="#FF0080" />
                           </IconButton>
                         </Tooltip>
-                      </Col>
+                      </Col> */}
                     </Row>
                       <Text>
                         Data: {crono.data}
@@ -1077,17 +1084,40 @@ const createEvento = async (e) => {
                   <Card>
                   <div>
                     <Card.Body>
-                    <span className='font-satoshi font-semibold text-base text-center text-gray-700 p-1'>
-                      <Text h6 size={18} css={{ m: 0 }}>
+                    <span className='font-satoshi text-base text-gray-700 p-1'>
+                      <Text className='font-satoshi font-semibold text-base text-center text-gray-700 p-1' h6 size={18} css={{ m: 0 }}>
                         Produtos e Serviços
                       </Text>
                       {servicosSeleccionados.length > 0 && servicosSeleccionados.map((servico) => 
                       <>
                       <Card className="max-w-[400px]">
-                       <p>{servico.nomeServico}</p>
-                      </Card>
+                        <div className="flex flex-row justify-between content-between m-4 gap-4">
+                          <div>
+                            <Text h6 size={12} css={{ m: 0 }}>
+                              {servico.nomeServico}
+                            </Text>  
+                          </div>  
+                          <div>
+                            <Text h6 size={12} css={{ m: 0 }}>
+                              {servico.preco},00
+                            </Text>  
+                          </div>
+                        </div>                                         
+                      </Card>                      
                       </>
-                      ) }                 
+                      ) }
+                      <div className="flex flex-row justify-between content-between m-4 font-satoshi font-semibold text-gray-700 p-1">
+                          <div>
+                            <Text h6 size={14} css={{ m: 0 }}>
+                              Total:
+                            </Text>  
+                          </div>  
+                          <div>
+                            <Text h6 size={14} css={{ m: 0 }}>
+                            {totalMinimo},00
+                            </Text>  
+                          </div>
+                        </div>            
                     </span>                               
                     </Card.Body>
                     </div>
@@ -1125,7 +1155,7 @@ const createEvento = async (e) => {
                             Minimo
                           </Text>
                           <Text h6 size={12} css={{ m: 0 }}>
-                            0.00 Mt
+                            {totalMinimo}
                           </Text>   
                         </div>  
                         <div>
@@ -1143,6 +1173,46 @@ const createEvento = async (e) => {
                     </div>
                     <Divider className="my-4" />
                     <span className='font-satoshi font-semibold text-base text-gray-700 p-1 my-4'>
+                    <Card className="max-w-[400px]">
+                        <div className="flex justify-center content-center m-4 gap-4">
+                          <div>
+                            <Text h6 size={12} css={{ m: 0 }}>
+                              Nome do Bem ou Serviço
+                            </Text>  
+                          </div>  
+                          <div>
+                          <div className="flex flex-row justify-between content-between mt-4 gap-4">
+                            <div>
+                              <Text h6 size={12} css={{ m: 0 }}>
+                                Custo min. estimado
+                              </Text>
+                              <Text h6 size={12} css={{ m: 0 }}>
+                                0.00 Mt
+                              </Text>    
+                            </div>  
+                            <div>
+                              <Text h6 size={12} css={{ m: 0 }}>
+                                Custo Final
+                              </Text> 
+                              <Text h6 size={12} css={{ m: 0 }}>
+                                0.00 Mt
+                              </Text>   
+                            </div>  
+                            <div>  
+                            <button 
+                              type="button"
+                              onClick={() => {}}
+                              className="black_btn"
+                              >     
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                </svg>
+                            </button> 
+                            </div>
+                          </div>  
+                          </div>
+                        </div>                                         
+                      </Card> 
                       <div className="text-center">
                         <Text h6 size={18} css={{ m: 0 }}>
                           Distribuição de custos
