@@ -16,6 +16,9 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 import Form from "@components/Form";
 let USDollar = new Intl.NumberFormat('en-US');
 var precoTotal = 0;
+
+var contagemVolaterl = 0;
+
 function page() { 
   const options = {}
   const {data: session } = useSession();
@@ -30,6 +33,7 @@ function page() {
   const [convidados, setConvidados] = useState(0);
   const [totalP, setTatalP] = useState(0);
   const [visibleRemover, setVisibleRemover] = useState(false);
+  const [detalheProduto, setdetalheProduto] = useState(false);
   const [visibleEditar, setVisibleEditar] = useState(false);
   const [transporteVal, setTransporteVal] = useState(false);
   const [garcomVal, setGarcomVal] = useState(false);
@@ -50,11 +54,16 @@ function page() {
   const [joiasVal, setjoiasVal] = useState(false);
   const [floresVal, setfloresVal] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
+  const [seleccionarTudo, setseleccionarTudo] = useState(false);
   const [titulo, setTitulo] = useState('');
   const [planificacaoTT, setPlanificacaoTT] = useState(true);
   const [idd4, setIDD4] = useState('');
   const [data, setData] = useState('');
   const [corpo, setCorpo] = useState('');
+  const [servico, setServico] = useState('');
+  const [custoEstimado, setcustoEstimado] = useState('');
+  const [custoFinal, setcustoFinal] = useState('');
+  const [custoStatus, setcustoStatus] = useState('');
   const [convidadosConfirmados, setConvidadosConfirmados] = useState(0);
   const [visible, setVisible] = useState(false);
   const [visibleServicos, setVisibleServicos] = useState(false);
@@ -201,6 +210,87 @@ const createEvento = async (e) => {
   },[session?.user.id]);
 
   useEffect(() => {
+    var nomes = [];
+    var precos = [];
+    var cores = [];
+    var totalMinimoV = 0;
+    const fetchPosts = async () => {
+      const response = await fetch(`/api/listaServicos/${session?.user.id}`);
+      const data = await response.json();
+      console.log("Serviços Seleccionados",data)
+      console.log("Serviços Seleccionados",contagemVolaterl)
+      data.map((servico) => {
+        console.log(servico.nomeServico);
+        nomes.push(servico.nomeServico);
+        precos.push(servico.preco);
+        cores.push(servico.cor);
+        totalMinimoV += parseFloat(servico.preco)
+        if (servico.nomeServico === "Transporte") {
+          setTransporteVal(true);
+        }
+        if (servico.nomeServico === "Garçom") {
+          setGarcomVal(true);
+        }
+        if (servico.nomeServico === "Fotografia e Vídeo") {
+          setFotoVideoVal(true);
+        }
+        if (servico.nomeServico === "Catering") {
+          setcateringVal(true);
+        }
+        if (servico.nomeServico === "Bolos e Sobremesas") {
+          setbolosSobremesasVal(true);
+        }
+        if (servico.nomeServico === "Mestre de Ceremônia") {
+          setMcVal(true);
+        }
+        if (servico.nomeServico === "Streaming") {
+          setStreamingVal(true);
+        }
+        if (servico.nomeServico === "Local de Celebração") {
+          setlocalSelebracaoVal(true);
+        }
+        if (servico.nomeServico === "Líquidos") {
+          setliquidoVal(true);
+        }
+        if (servico.nomeServico === "Brindes") {
+          setbrindesVal(true);
+        }
+        if (servico.nomeServico === "Musica e Manifestações Culturais") {
+          setculturalVal(true);
+        }
+        if (servico.nomeServico === "Convites") {
+          setconvitesVal(true);
+        }
+        if (servico.nomeServico === "Lua-de-mel") {
+          setLuaMelVal(true);
+        }
+        if (servico.nomeServico === "Protocolos") {
+          setprotocolosVal(true);
+        }
+        if (servico.nomeServico === "Vestuário") {
+          setvestuariosVal(true);
+        }
+        if (servico.nomeServico === "Cabelo e Mekeup") {
+          setmekeUpVal(true);
+        }
+        if (servico.nomeServico === "Jóias e Bijuterias") {
+          setjoiasVal(true);
+        }
+        if (servico.nomeServico === "Buquê e Flores") {
+          setfloresVal(true);
+        }
+      })
+      setServicosSeleccionados(data);
+      setServicosLista(nomes);
+      setPrecosLista(precos);
+      setCoresLista(cores);
+      setTotalMinimo(totalMinimoV)
+      setPlanificacaoTT(true)
+    }
+    if(session?.user.id) fetchPosts();
+  },[contagemVolaterl]);
+
+  useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/users/${session?.user.id}/posts`);
       const data = await response.json();
@@ -234,6 +324,7 @@ const createEvento = async (e) => {
       precoTotal = 0;  
       if(transporteVal){
         precoTotal += 3000;
+        setTransporteVal(true);
         listaVolatel.push({
           nomeServico: "Transporte",
           preco: "3000",
@@ -242,6 +333,7 @@ const createEvento = async (e) => {
       }
       if(garcomVal){
         precoTotal += 3000;
+        setGarcomVal(true);
         listaVolatel.push({
           nomeServico: "Garçom",
           preco: "3000",
@@ -250,6 +342,7 @@ const createEvento = async (e) => {
       }
       if(fotoVideoVal) {
         precoTotal += 3000;
+        setFotoVideoVal(true);
         listaVolatel.push({
           nomeServico: "Fotografia e Video",
           preco: "3000",
@@ -258,6 +351,7 @@ const createEvento = async (e) => {
       }
       if(cateringVal) {
         precoTotal += 3000;
+        setcateringVal(true);
         listaVolatel.push({
           nomeServico: "Catering",
           preco: "3000",
@@ -266,6 +360,7 @@ const createEvento = async (e) => {
       }
       if(bolosSobremesasVal) {
         precoTotal += 3000;
+        setbolosSobremesasVal(true);
         listaVolatel.push({
           nomeServico: "Bolos e Sobremesas",
           preco: "3000",
@@ -274,6 +369,7 @@ const createEvento = async (e) => {
       }
       if(mcVal) {
         precoTotal += 3000;
+        setMcVal(true);
         listaVolatel.push({
           nomeServico: "MC",
           preco: "3000",
@@ -283,6 +379,7 @@ const createEvento = async (e) => {
       // navy
       if(streamingVal) {
         precoTotal += 3000;
+        setStreamingVal(true);
         listaVolatel.push({
           nomeServico: "Streaming",
           preco: "3000",
@@ -292,6 +389,7 @@ const createEvento = async (e) => {
       // peach puff
       if(localSelebracaoVal) {
         precoTotal += 3000;
+        setlocalSelebracaoVal(true);
         listaVolatel.push({
           nomeServico: "Local de Selebração",
           preco: "3000",
@@ -301,6 +399,7 @@ const createEvento = async (e) => {
       // azure
       if(liquidoVal) {
         precoTotal += 3000;
+        setPrecosLista(true);
         listaVolatel.push({
           nomeServico: "Liquidos",
           preco: "3000",
@@ -310,6 +409,7 @@ const createEvento = async (e) => {
       // maroon
       if(brindesVal) {
         precoTotal += 3000;
+        setbrindesVal(true);
         listaVolatel.push({
           nomeServico: "Brindes",
           preco: "3000",
@@ -319,6 +419,7 @@ const createEvento = async (e) => {
       // crimson
       if(culturalVal) {
         precoTotal += 3000;
+        setculturalVal(true);
         listaVolatel.push({
           nomeServico: "Musica e Man. Cultural",
           preco: "3000",
@@ -328,6 +429,7 @@ const createEvento = async (e) => {
       // gold
       if(convitesVal) {
         precoTotal += 3000;
+        setconvitesVal(true);
         listaVolatel.push({
           nomeServico: "Convites",
           preco: "3000",
@@ -337,6 +439,7 @@ const createEvento = async (e) => {
       // dark green
       if(luaMelVal) {
         precoTotal += 3000;
+        setLuaMelVal(true);
         listaVolatel.push({
           nomeServico: "Lua-de-Mel",
           preco: "3000",
@@ -346,6 +449,7 @@ const createEvento = async (e) => {
       // light sea green
       if(protocolosVal) {
         precoTotal += 3000;
+        setprotocolosVal(true);
         listaVolatel.push({
           nomeServico: "Protocolo",
           preco: "3000",
@@ -355,6 +459,7 @@ const createEvento = async (e) => {
       // snow
       if(vestuariosVal) {
         precoTotal += 3000;
+        setvestuariosVal(true);
         listaVolatel.push({
           nomeServico: "Vestuario",
           preco: "3000",
@@ -364,6 +469,7 @@ const createEvento = async (e) => {
       // 	chocolate
       if(mekeUpVal) {
         precoTotal += 3000;
+        setmekeUpVal(true);
         listaVolatel.push({
           nomeServico: "Cabelo e MekeUp",
           preco: "3000",
@@ -373,6 +479,7 @@ const createEvento = async (e) => {
       // rosy brown
       if(joiasVal) {
         precoTotal += 3000;
+        setjoiasVal(true);
         listaVolatel.push({
           nomeServico: "Jóias e Bijuterias",
           preco: "3000",
@@ -382,6 +489,7 @@ const createEvento = async (e) => {
       // light steel blue
       if(floresVal) {
         precoTotal += 3000;
+        setfloresVal(true);
         listaVolatel.push({
           nomeServico: "Buquê e Flores",
           preco: "3000",
@@ -439,6 +547,7 @@ const createEvento = async (e) => {
         position: toast.POSITION.TOP_RIGHT
     });
       }finally {
+        
       }
     }
     if(garcomVal) {
@@ -816,8 +925,8 @@ const createEvento = async (e) => {
   } catch (error) {
       console.log(error); 
     }finally {
-      setProcessando(false);
-      router.push('/dashboard');
+      // setProcessando(false);
+      // router.push('/dashboard');
     }
   }
   function servicosSolicitados() {
@@ -825,6 +934,94 @@ const createEvento = async (e) => {
   }
   function servicosPlanificacao() {
     setPlanificacaoTT(true)
+  }
+  useEffect(() => {
+    console.log(mekeUpVal);    
+  },[mekeUpVal]);
+
+  function seleccaoTudo() {
+    setseleccionarTudo(true)
+    setTransporteVal(false)
+    setGarcomVal(false)
+    setFotoVideoVal(false)
+    setcateringVal(false)
+    setbolosSobremesasVal(false)
+    setMcVal(false)
+    setStreamingVal(false)
+    setlocalSelebracaoVal(false)
+    setliquidoVal(false)
+    setbrindesVal(false)
+    setculturalVal(false)
+    setconvitesVal(false)
+    setLuaMelVal(false)
+    setprotocolosVal(false)
+    setvestuariosVal(false)
+    setmekeUpVal(false)
+    setjoiasVal(false)
+    setfloresVal(false)
+  }
+  function removerTudo() {
+    setseleccionarTudo(false)
+    setTransporteVal(true)
+    setGarcomVal(true)
+    setFotoVideoVal(true)
+    setcateringVal(true)
+    setbolosSobremesasVal(true)
+    setMcVal(true)
+    setStreamingVal(true)
+    setlocalSelebracaoVal(true)
+    setliquidoVal(true)
+    setbrindesVal(true)
+    setculturalVal(true)
+    setconvitesVal(true)
+    setLuaMelVal(true)
+    setprotocolosVal(true)
+    setvestuariosVal(true)
+    setmekeUpVal(true)
+    setjoiasVal(true)
+    setfloresVal(true)
+  }
+  async function removerServicoProduto(id, servico) {
+    console.log("ID do produto:",id);
+    toast.info('Removendo: ' + servico, {
+      position: toast.POSITION.TOP_RIGHT
+  });
+    try {
+      const response = await fetch(`api/listaServicos/${id}`, {
+          method: 'DELETE',
+          
+      })
+      } catch (error) {
+          toast.error(`Erro ao remover ${servico}!`, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+        }finally {
+          toast.success(`${servico} Removido com Sucesso!`, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+        contagemVolaterl += 1;
+        setPlanificacaoTT(false)
+        }
+  }
+  function productSelec(id) {
+    setdetalheProduto(true);
+    const fetchPosts = async () => {
+      const response = await fetch(`/api/listaServicos/${session?.user.id}`);
+      const data = await response.json();
+      data.map((servico) => {
+        if (servico._id === id) {
+          setTransporteVal(true);
+          setServico(servico.nomeServico);
+          setcustoEstimado(servico.preco);
+          setcustoFinal("0");
+          setcustoStatus("Não Pago");
+        }
+      })
+    }
+    if(session?.user.id) fetchPosts();
+  }
+  function productClose() {
+    setdetalheProduto(false)
   }
   // Agua
   return (
@@ -920,78 +1117,158 @@ const createEvento = async (e) => {
               </Row>
               <Spacer y={1} />
               <div className="text-center font-bold underline underline-offset-8 uppercase mb-4">Selecção de Serviços</div>
+              {
+                seleccionarTudo ? (
+                <>
+                  <button type={"button"} onClick={removerTudo} className="black_btn m-4">
+                      Remover Tudo
+                  </button>
+                </>
+                ):(
+                <>
+                  <button type={"button"} onClick={seleccaoTudo} className="black_btn m-4">
+                      Seleccionar Tudo
+                  </button>
+                </>
+                )
+              }  
+              
+             {isSelected ? (
+             <>
              <div className="flex flex-row gap-4">
                 <div className="flex flex-col gap-2 justify-center mb-4">
-                <Checkbox color="warning" onChange={(e) => setTransporteVal(e)}>
+                <Checkbox defaultSelected={transporteVal} color="warning" onChange={(e) => setTransporteVal(e)}>
                   <p className='text-sm'>Transporte</p>
                 </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setGarcomVal(e)}>
+                <Checkbox defaultSelected={garcomVal} color="warning" onChange={(e) => setGarcomVal(e)}>
                   <p className='text-sm'>Garçom</p>
                 </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setFotoVideoVal(e)}>
+                <Checkbox defaultSelected={fotoVideoVal} color="warning" onChange={(e) => setFotoVideoVal(e)}>
                   <p className='text-sm'>Fotografia e Vídeo</p>
                 </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setcateringVal(e)}>
+                <Checkbox defaultSelected={cateringVal} color="warning" onChange={(e) => setcateringVal(e)}>
                   <p className='text-sm'>Catering</p>
                 </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setbolosSobremesasVal(e)}>
+                <Checkbox defaultSelected={bolosSobremesasVal} color="warning" onChange={(e) => setbolosSobremesasVal(e)}>
                   <p className='text-sm'>Bolos e Sobremesas</p>
                 </Checkbox>
               </div> 
               <div className="flex flex-col gap-2 justify-center mb-4">
-                <Checkbox color="warning" onChange={(e) => setMcVal(e)}>
+                <Checkbox defaultSelected={mcVal} color="warning" onChange={(e) => setMcVal(e)}>
                   <p className='text-sm'>Mestre de Ceremônia</p>
                 </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setStreamingVal(e)}>
+                <Checkbox defaultSelected={streamingVal} color="warning" onChange={(e) => setStreamingVal(e)}>
                   <p className='text-sm'>Streaming</p>
                 </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setlocalSelebracaoVal(e)}>
+                <Checkbox defaultSelected={localSelebracaoVal} color="warning" onChange={(e) => setlocalSelebracaoVal(e)}>
                   <p className='text-sm'>Local de Celebração</p>
                 </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setliquidoVal(e)}>
+                <Checkbox defaultSelected={liquidoVal} color="warning" onChange={(e) => setliquidoVal(e)}>
                   <p className='text-sm'>Líquidos</p>
                   </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setbrindesVal(e)}>
+                <Checkbox  defaultSelected={brindesVal} color="warning" onChange={(e) => setbrindesVal(e)}>
                   <p className='text-sm'>Brindes</p>
                   </Checkbox>        
               </div> 
               <div className="flex flex-col gap-2 justify-center mb-4">
-                <Checkbox color="warning" onChange={(e) => setculturalVal(e)}>
+                <Checkbox defaultSelected={culturalVal} color="warning" onChange={(e) => setculturalVal(e)}>
                   <p className='text-sm'>Musica e Manifestações Culturais</p>
                   </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setconvitesVal(e)}>
+                <Checkbox defaultSelected={convitesVal} color="warning" onChange={(e) => setconvitesVal(e)}>
                   <p className='text-sm'>Convites</p>
                   </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setLuaMelVal(e)}>
+                <Checkbox defaultSelected={luaMelVal} color="warning" onChange={(e) => setLuaMelVal(e)}>
                   <p className='text-sm'>Lua-de-mel</p>
                   </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setprotocolosVal(e)}>
+                <Checkbox defaultSelected={protocolosVal} color="warning" onChange={(e) => setprotocolosVal(e)}>
                   <p className='text-sm'>Protocolos</p>
                   </Checkbox>        
               </div> 
               <div className="flex flex-col gap-2 justify-center mb-4">
-                <Checkbox color="warning" onChange={(e) => setvestuariosVal(e)}>
+                <Checkbox defaultSelected={vestuariosVal} color="warning" onChange={(e) => setvestuariosVal(e)}>
                   <p className='text-sm'>Vestuário</p>
                   </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setmekeUpVal(e)}>
+                <Checkbox defaultSelected={mekeUpVal} color="warning" onChange={(e) => setmekeUpVal(e)}>
                   <p className='text-sm'>Cabelo e Mekeup</p>
                   </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setjoiasVal(e)}>
+                <Checkbox defaultSelected={joiasVal} color="warning" onChange={(e) => setjoiasVal(e)}>
                   <p className='text-sm'>Jóias e Bijuterias</p>
                   </Checkbox>
-                <Checkbox color="warning" onChange={(e) => setfloresVal(e)}>
+                <Checkbox defaultSelected={floresVal} color="warning" onChange={(e) => setfloresVal(e)}>
                   <p className='text-sm'>Buquê e Flores</p>
                   </Checkbox>
               </div> 
              </div>
-             {isSelected ? (
-             <>
               <button type={"button"} onClick={confirmarServicos} className="black_btn">
                   Confirmar
               </button>
              </>
              ):(
              <>
+             <div className="flex flex-row gap-4">
+                <div className="flex flex-col gap-2 justify-center mb-4">
+                <Checkbox defaultSelected={transporteVal} color="warning" onChange={(e) => setTransporteVal(e)}>
+                  <p className='text-sm'>Transporte</p>
+                </Checkbox>
+                <Checkbox defaultSelected={garcomVal} color="warning" onChange={(e) => setGarcomVal(e)}>
+                  <p className='text-sm'>Garçom</p>
+                </Checkbox>
+                <Checkbox defaultSelected={fotoVideoVal} color="warning" onChange={(e) => setFotoVideoVal(e)}>
+                  <p className='text-sm'>Fotografia e Vídeo</p>
+                </Checkbox>
+                <Checkbox defaultSelected={cateringVal} color="warning" onChange={(e) => setcateringVal(e)}>
+                  <p className='text-sm'>Catering</p>
+                </Checkbox>
+                <Checkbox defaultSelected={bolosSobremesasVal} color="warning" onChange={(e) => setbolosSobremesasVal(e)}>
+                  <p className='text-sm'>Bolos e Sobremesas</p>
+                </Checkbox>
+              </div> 
+              <div className="flex flex-col gap-2 justify-center mb-4">
+                <Checkbox defaultSelected={mcVal} color="warning" onChange={(e) => setMcVal(e)}>
+                  <p className='text-sm'>Mestre de Ceremônia</p>
+                </Checkbox>
+                <Checkbox defaultSelected={streamingVal} color="warning" onChange={(e) => setStreamingVal(e)}>
+                  <p className='text-sm'>Streaming</p>
+                </Checkbox>
+                <Checkbox defaultSelected={localSelebracaoVal} color="warning" onChange={(e) => setlocalSelebracaoVal(e)}>
+                  <p className='text-sm'>Local de Celebração</p>
+                </Checkbox>
+                <Checkbox defaultSelected={liquidoVal} color="warning" onChange={(e) => setliquidoVal(e)}>
+                  <p className='text-sm'>Líquidos</p>
+                  </Checkbox>
+                <Checkbox  defaultSelected={brindesVal} color="warning" onChange={(e) => setbrindesVal(e)}>
+                  <p className='text-sm'>Brindes</p>
+                  </Checkbox>        
+              </div> 
+              <div className="flex flex-col gap-2 justify-center mb-4">
+                <Checkbox defaultSelected={culturalVal} color="warning" onChange={(e) => setculturalVal(e)}>
+                  <p className='text-sm'>Musica e Manifestações Culturais</p>
+                  </Checkbox>
+                <Checkbox defaultSelected={convitesVal} color="warning" onChange={(e) => setconvitesVal(e)}>
+                  <p className='text-sm'>Convites</p>
+                  </Checkbox>
+                <Checkbox defaultSelected={luaMelVal} color="warning" onChange={(e) => setLuaMelVal(e)}>
+                  <p className='text-sm'>Lua-de-mel</p>
+                  </Checkbox>
+                <Checkbox defaultSelected={protocolosVal} color="warning" onChange={(e) => setprotocolosVal(e)}>
+                  <p className='text-sm'>Protocolos</p>
+                  </Checkbox>        
+              </div> 
+              <div className="flex flex-col gap-2 justify-center mb-4">
+                <Checkbox defaultSelected={vestuariosVal} color="warning" onChange={(e) => setvestuariosVal(e)}>
+                  <p className='text-sm'>Vestuário</p>
+                  </Checkbox>
+                <Checkbox defaultSelected={mekeUpVal} color="warning" onChange={(e) => setmekeUpVal(e)}>
+                  <p className='text-sm'>Cabelo e Mekeup</p>
+                  </Checkbox>
+                <Checkbox defaultSelected={joiasVal} color="warning" onChange={(e) => setjoiasVal(e)}>
+                  <p className='text-sm'>Jóias e Bijuterias</p>
+                  </Checkbox>
+                <Checkbox defaultSelected={floresVal} color="warning" onChange={(e) => setfloresVal(e)}>
+                  <p className='text-sm'>Buquê e Flores</p>
+                  </Checkbox>
+              </div> 
+             </div>
               <p>Nenhum Serviço Selecciona</p>
              </>
              )}
@@ -1078,7 +1355,7 @@ const createEvento = async (e) => {
                     </div>
                   </Card>
                 </Col>
-          </Row>
+          </Row>          
           <Row gap={1} className="mt-4">
                 <Col>
                   <Card>
@@ -1093,14 +1370,27 @@ const createEvento = async (e) => {
                       <Card className="max-w-[400px]">
                         <div className="flex flex-row justify-between content-between m-4 gap-4">
                           <div>
-                            <Text h6 size={12} css={{ m: 0 }}>
+                            <Text h6 size={12} css={{ m: 0 }} onClick={() => productSelec(servico._id)}>
                               {servico.nomeServico}
                             </Text>  
                           </div>  
-                          <div>
-                            <Text h6 size={12} css={{ m: 0 }}>
-                              {servico.preco},00
-                            </Text>  
+                          <div className="flex flex-row gap-4">
+                            <div>
+                              <Text h6 size={12} css={{ m: 0 }}>
+                                {servico.preco},00
+                              </Text>  
+                            </div>
+                            <div>
+                              <button
+                                  type="button"
+                                  title="Remover"
+                                  onClick={() => removerServicoProduto(servico._id, servico.nomeServico)}
+                                  >     
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-3 h-3">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                              </button> 
+                            </div>
                           </div>
                         </div>                                         
                       </Card>                      
@@ -1123,9 +1413,114 @@ const createEvento = async (e) => {
                     </div>
                   </Card>
                 </Col>
-                <Col>
+                <Col>                  
+                  {detalheProduto ? (
+                  <>
+                    <Card>
+                      <div onClick={() => servicosSolicitados()}>
+                        <Card.Body>
+                          <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
+                            <div className="text-right">
+                                <Text h6 size={18} css={{ m: 0 }} onClick={() => productClose()}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                  </svg>
+                                </Text>
+                              </div> 
+                              <div className="text-center">
+                                <Text h6 size={18} css={{ m: 0 }}>
+                                  {servico}
+                                </Text>
+                              </div>                      
+                            <div className="flex flex-row justify-between content-between mt-4 gap-4">
+                              <div>  
+                                <Text h6 size={12} css={{ m: 0 }}>
+                                  P. Minimo
+                                </Text>
+                                <Text h6 size={12} css={{ m: 0 }}>
+                                  {custoEstimado},00 Mt
+                                </Text>   
+                              </div> 
+                              <div>
+                                <Text h6 size={12} css={{ m: 0 }}>
+                                  P. Final
+                                </Text> 
+                                <Text h6 size={12} css={{ m: 0 }}>
+                                  0,00 Mt
+                                </Text>   
+                              </div>                           
+                              <div>
+                                <button  onClick={() => {}} title="Editar" type="button">
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                  </svg> 
+                                </button>                            
+                              </div>  
+                            </div>                  
+                          </span>
+                        </Card.Body>
+                      </div>
+                    </Card>
+                    <div className='mt-4'></div>
+                    <Card>
+                      <div onClick={() => servicosSolicitados()}>
+                        <Card.Body>
+                          <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>                     
+                            <div className="flex flex-row justify-between content-between mt-4 gap-4">
+                              <div>  
+                                <Text h6 size={12} css={{ m: 0 }}>
+                                  Serviço
+                                </Text>
+                                <Text h6 size={12} css={{ m: 0 }}>
+                                  {servico}
+                                </Text>
+                              </div> 
+                              <div>
+                                <Text h6 size={12} css={{ m: 0 }}>
+                                  Custo Estimado
+                                </Text> 
+                                <Text h6 size={12} css={{ m: 0 }}>
+                                  {custoEstimado}
+                                </Text>   
+                              </div>                           
+                              <div>
+                                <Text h6 size={12} css={{ m: 0 }}>
+                                  Custo Final
+                                </Text> 
+                                <Text h6 size={12} css={{ m: 0 }}>
+                                  {custoFinal}
+                                </Text>   
+                              </div>                           
+                              <div>
+                                <Text h6 size={12} css={{ m: 0 }}>
+                                  Status
+                                </Text> 
+                                <Text h6 size={12} css={{ m: 0 }}>
+                                  {custoStatus}
+                                </Text>   
+                              </div>  
+                            </div>                  
+                          </span>
+                        </Card.Body>
+                      </div>
+                      <div className="flex flex-row justify-between content-between m-4 font-satoshi font-semibold text-gray-700 p-1">
+                          <div>
+                            <Text h6 size={14} css={{ m: 0 }}>
+                              Total:
+                            </Text>  
+                          </div>  
+                          <div>
+                            <Text h6 size={14} css={{ m: 0 }}>
+                              0,00 Mt
+                            </Text>  
+                          </div>
+                        </div>     
+                    </Card>                   
+                  </>
+                  ):(
+                  <>
                   <Card>
-                  <div onClick={() => servicosSolicitados()}>
+                    <div onClick={() => servicosSolicitados()}>
                     <Card.Body>
                     <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
                       <div className="text-center">
@@ -1173,46 +1568,6 @@ const createEvento = async (e) => {
                     </div>
                     <Divider className="my-4" />
                     <span className='font-satoshi font-semibold text-base text-gray-700 p-1 my-4'>
-                    <Card className="max-w-[400px]">
-                        <div className="flex justify-center content-center m-4 gap-4">
-                          <div>
-                            <Text h6 size={12} css={{ m: 0 }}>
-                              Nome do Bem ou Serviço
-                            </Text>  
-                          </div>  
-                          <div>
-                          <div className="flex flex-row justify-between content-between mt-4 gap-4">
-                            <div>
-                              <Text h6 size={12} css={{ m: 0 }}>
-                                Custo min. estimado
-                              </Text>
-                              <Text h6 size={12} css={{ m: 0 }}>
-                                0.00 Mt
-                              </Text>    
-                            </div>  
-                            <div>
-                              <Text h6 size={12} css={{ m: 0 }}>
-                                Custo Final
-                              </Text> 
-                              <Text h6 size={12} css={{ m: 0 }}>
-                                0.00 Mt
-                              </Text>   
-                            </div>  
-                            <div>  
-                            <button 
-                              type="button"
-                              onClick={() => {}}
-                              className="black_btn"
-                              >     
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                </svg>
-                            </button> 
-                            </div>
-                          </div>  
-                          </div>
-                        </div>                                         
-                      </Card> 
                       <div className="text-center">
                         <Text h6 size={18} css={{ m: 0 }}>
                           Distribuição de custos
@@ -1224,8 +1579,10 @@ const createEvento = async (e) => {
                     </span> 
                     </Card.Body>
                     </div>
-                  </Card>
-                </Col>
+                  </Card>                    
+                  </>
+                  )}
+              </Col>
           </Row>
           </>
           )

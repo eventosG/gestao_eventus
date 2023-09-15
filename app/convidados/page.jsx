@@ -336,12 +336,12 @@ function Convidados() {
       if (response.ok) {
           router.push('/convidados');
       }
-  } catch (error) {
-      console.log(error);
-    }finally {
-      setProcessando(false);
-      router.push('/convidados');
-    }
+      } catch (error) {
+          console.log(error);
+        }finally {
+          setProcessando(false);
+          router.push('/convidados');
+        }
   }
   function editarConvidado(iD) {
     padrinhos.map((padrinho) => {
