@@ -1312,6 +1312,134 @@ const createEvento = async (e) => {
                     </Collapse>
                   ))}          
                 </Collapse.Group>
+                <div className="timeline">
+                  <div className="containerTimeLine left-container">
+                  <Image 
+                    src={"/assets/images/logoeventos.png"}
+                    alt={"Gestao de Eventos Logo"}
+                    width={30}
+                    height={30}
+                    className='timelineImage'
+                    />
+                    <div className="text-box">
+                      <h2>Despedida de Solteiro</h2>
+                      <small>
+                        02 de Novembro - 03 de Novembro
+                      </small>
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
+                        <span className="left-container-arrow"></span>
+                    </div>
+                  </div>
+                  <div className="containerTimeLine right-container">
+                    <Image 
+                    src={"/assets/images/logoeventos.png"}
+                    alt={"Gestao de Eventos Logo"}
+                    width={30}
+                    height={30}
+                    className='timelineImage2'   
+                    />
+                    <div className="text-box">
+                      <h2>Apresentação</h2>
+                      <small>
+                        04 de Novembro - 05 de Novembro
+                      </small>
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
+                        <span className="right-container-arrow"></span>
+                    </div>
+                  </div>
+                  <div className="containerTimeLine left-container">
+                    <Image 
+                    src={"/assets/images/logoeventos.png"}
+                    alt={"Gestao de Eventos Logo"}
+                    width={30}
+                    height={30}
+                    className='timelineImage'
+                    />
+                    <div className="text-box">
+                      <h2>Lobolo</h2>
+                      <small>
+                        06 de Novembro - 07 de Novembro
+                      </small>
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
+                        <span className="left-container-arrow"></span>
+                    </div>
+                  </div>
+                  <div className="containerTimeLine right-container">
+                    <Image 
+                    src={"/assets/images/logoeventos.png"}
+                    alt={"Gestao de Eventos Logo"}
+                    width={30}
+                    height={30}
+                    className='timelineImage2'
+                    />
+                    <div className="text-box">
+                      <h2>Lobolo</h2>
+                      <small>
+                        08 de Novembro - 09 de Novembro
+                      </small>
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
+                        <span className="right-container-arrow"></span>
+                    </div>
+                  </div>
+                  <div className="containerTimeLine left-container">
+                  <Image 
+                    src={"/assets/images/logoeventos.png"}
+                    alt={"Gestao de Eventos Logo"}
+                    width={30}
+                    height={30}
+                    className='timelineImage'
+                    />
+                    <div className="text-box">
+                      <h2>Alphabet Inc.</h2>
+                      <small>
+                      10 de Novembro - 11 de Novembro
+                      </small>
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
+                        <span className="left-container-arrow"></span>
+                    </div>
+                  </div>
+                  <div className="containerTimeLine right-container">
+                  <Image 
+                    src={"/assets/images/logoeventos.png"}
+                    alt={"Gestao de Eventos Logo"}
+                    width={30}
+                    height={30}
+                    className='timelineImage2'
+                    />
+                    <div className="text-box">
+                      <h2>Alphabet Inc.</h2>
+                      <small>
+                      02 de Novembro - 02 de Novembro
+                      </small>
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
+                        <span className="right-container-arrow"></span>
+                    </div>
+                  </div>
+                  <div className="containerTimeLine left-container">
+                  <Image 
+                    src={"/assets/images/logoeventos.png"}
+                    alt={"Gestao de Eventos Logo"}
+                    width={30}
+                    height={30}
+                    className='timelineImage'
+                    />
+                    <div className="text-box">
+                      <h2>Alphabet Inc.</h2>
+                      <small>
+                      02 de Novembro - 02 de Novembro
+                      </small>
+                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
+                        <span className="left-container-arrow"></span>
+                    </div>
+                  </div>
+                </div>
               </Grid>
             </Grid.Container>
         </>
