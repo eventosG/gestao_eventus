@@ -12,4 +12,4 @@ export const GET = async (request, { params }) => {
     } catch (error) {
         return new Response('Error', {status:500})
     }
-}
+} 

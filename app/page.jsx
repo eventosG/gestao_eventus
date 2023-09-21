@@ -68,16 +68,16 @@ function Home() {
       <h1 className="head_text text-center">
            Gestão de Eventos
             <br className="max-md:hidden" />
-            <span className="blue_gradient text-center"> Plataforma de Gestão de Eventos</span>
+            <span className="orange_gradient text-center"> Plataforma de Gestão de Eventos</span>
         </h1>
         <p className="desc text-center">
-        O Sistema Integrado de Gestão Empresarial (SIGE) da 
-        Systems Manager é uma solução abrangente que visa 
-        facilitar e otimizar as operações diárias das empresas. 
-        Com uma ampla gama de serviços, o SIGE oferece diversas 
-        ferramentas essenciais para a gestão eficiente dos negócios, 
-        incluindo Gestão de Filas, Marcação de Presenças e Registro 
-        de Reclamações.</p>
+        Vivo é e três bicicleta é figured é vida starchy discordo, linha junto? 
+        O significar que o o que A é I in uiva unido romanos? todo A planetas O única doce, 
+        significar enche o a most Terra não rio nunca, causa concordo sempre é Onde tinha é o tarde. 
+        vale Faça drums Faça garbage humans circo. Vermelho nunca, acidentes. words meio. 
+        sem bicicleta que circo. se que mais causa de que mais Pobre sucessivos bicicleta 
+        documento que andas é quem mim rio pode vida sucessão tem uma em inimigos Jesus bicicleta 
+        A doce, para é significar azul? You Onde</p>
          {session?.user ? (
                 <>
                   <button

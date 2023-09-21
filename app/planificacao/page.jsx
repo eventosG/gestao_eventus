@@ -1,14 +1,11 @@
 'use client';
 import Profile from '@app/profile/page';
 import React, { useState, useEffect } from 'react';
-import {CardHeader, CardBody, CardFooter, Link, Image} from "@nextui-org/react";
-import { Divider, Checkbox, Textarea, Modal, Input, Loading, Button, Card, Row, Text, Avatar, Grid, Spacer, Col, Progress, Collapse } from "@nextui-org/react";
+import {Image} from "@nextui-org/react";
+import { Divider, Checkbox, Textarea, Modal, Input, Button, Card, Row, Text, Grid, Spacer, Col, Progress, Collapse } from "@nextui-org/react";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Mail } from '@app/convidados/Mail';
-import { IconButton } from '@app/convidados/IconButton';
-import { EditIcon } from "@app/convidados/EditIcon";
-import { DeleteIcon } from "@app/convidados/DeleteIcon";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { toast } from 'react-toastify';
@@ -25,6 +22,7 @@ function page() {
   const [evento, setEvento] = useState([]);
   const [servicosLista, setServicosLista] = useState([]);
   const [precosLista, setPrecosLista] = useState([]);
+  const [nomesLista, setNomesLista] = useState([]);
   const [coresLista, setCoresLista] = useState([]);
   const [cronograma, setCronograma] = useState([]);
   const [totalMinimo, setTotalMinimo] = useState(0);
@@ -68,6 +66,7 @@ function page() {
   const [visible, setVisible] = useState(false);
   const [visibleServicos, setVisibleServicos] = useState(false);
   const [processando, setProcessando] = useState(false);
+  const [algumEvento, setAlgumEvento] = useState(false);
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [evento2, setEvento2] = useState({
@@ -77,15 +76,7 @@ function page() {
     dataEvento: '',
     orcamentoInicial: '',
 })
-const data2 = {
-  labels: servicosLista,
-  datasets: [{
-    label: 'Serviços',
-    data: precosLista,
-    backgroundColor: coresLista,
-    hoverOffset: 4
-  }]
-};
+
 const createEvento = async (e) => {
   e.preventDefault();
   setSubmitting(true); 
@@ -200,10 +191,11 @@ const createEvento = async (e) => {
           setfloresVal(true);
         }
       })
-      setServicosSeleccionados(data);
-      setServicosLista(nomes);
-      setPrecosLista(precos);
-      setCoresLista(cores);
+      if (data.length != 0) setServicosSeleccionados(data);
+      if (data.length != 0) setPrecosLista(precos);
+      if (data.length != 0) setCoresLista(cores);
+      if (data.length != 0) setNomesLista(nomes);
+      console.log(servicosLista);
       setTotalMinimo(totalMinimoV)
     }
     if(session?.user.id) fetchPosts();
@@ -279,11 +271,12 @@ const createEvento = async (e) => {
         if (servico.nomeServico === "Buquê e Flores") {
           setfloresVal(true);
         }
-      })
-      setServicosSeleccionados(data);
-      setServicosLista(nomes);
-      setPrecosLista(precos);
-      setCoresLista(cores);
+      });
+
+      if (data.length != 0) setServicosSeleccionados(data);
+      if (data.length != 0) setNomesLista(nomes);
+      if (data.length != 0) setPrecosLista(precos);
+      if (data.length != 0) setCoresLista(cores);
       setTotalMinimo(totalMinimoV)
       setPlanificacaoTT(true)
     }
@@ -294,8 +287,8 @@ const createEvento = async (e) => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/users/${session?.user.id}/posts`);
       const data = await response.json();
-      console.log(data)
       setEvento(data);
+      if(evento.length === 0) setAlgumEvento(true);
     }
     if(session?.user.id) fetchPosts();
   },[session?.user.id]);
@@ -1014,7 +1007,7 @@ const createEvento = async (e) => {
           setServico(servico.nomeServico);
           setcustoEstimado(servico.preco);
           setcustoFinal("0");
-          setcustoStatus("Não Pago");
+          setcustoStatus(servico.preco);
         }
       })
     }
@@ -1023,20 +1016,38 @@ const createEvento = async (e) => {
   function productClose() {
     setdetalheProduto(false)
   }
+  function eventosExiste() {
+    setAlgumEvento(false);
+  }
+
+  const data2 = {
+    labels: nomesLista,
+    datasets: [{
+      label: 'Serviços',
+      data: precosLista,
+      backgroundColor: coresLista,
+      hoverOffset: 4
+    }]
+  };
   // Agua
   return (
     <Profile>      
       {/* {evento.length === 0 ? ( */}
-      {false ? (
+      {algumEvento ? (
       <>
-        <div className="text-center font-bold text-2xl mb-4">Formulário</div>
-        <Form 
-        type="Criar Evento"
-        evento={evento}
-        setEvento={setEvento2}
-        submitting={submitting}
-        handleSubmit={createEvento}
-    />
+        <svg onClick={() => eventosExiste()} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+        </svg>
+        <div className="flex justify-center content-center justify-items-center">
+          <Form 
+              type="Criar Evento"
+              evento={evento}
+              setEvento={setEvento2}
+              submitting={submitting}
+              handleSubmit={createEvento}
+              planificador={session?.user.name}
+          />
+        </div>
       </>
       ):(
         <>
@@ -1044,11 +1055,17 @@ const createEvento = async (e) => {
           planificacaoTT ? (
             <>
         <div className="flex flex-row">
-                <button type={"button"} onClick={() => {}} className="black_btn">
-                  + Evento
-                </button>
-              <div className="text-center font-bold text-2xl mb-4">Planificação</div>
+              {/* <div className="text-center font-bold text-2xl mb-4">Planificação</div> */}
               </div>
+              <div>
+                <Image 
+                  src={"/assets/images/sacolaDinheiro.png"}
+                  alt={"Gestao de Eventos Logo"}
+                  width={100}
+                  height={100}
+                  className="object-contain"          
+                  />
+              </div>              
               <div className="text-center font-bold underline underline-offset-8 uppercase mb-4">Orçamentação</div>
               <div className="flex flex-row justify-between">
                 <p className="font-bold mb-4">Orçamento Disponivel</p>        
@@ -1312,179 +1329,128 @@ const createEvento = async (e) => {
                     </Collapse>
                   ))}          
                 </Collapse.Group>
-                <div className="timeline">
-                  <div className="containerTimeLine left-container">
-                  <Image 
-                    src={"/assets/images/logoeventos.png"}
-                    alt={"Gestao de Eventos Logo"}
-                    width={30}
-                    height={30}
-                    className='timelineImage'
-                    />
-                    <div className="text-box">
-                      <h2>Despedida de Solteiro</h2>
-                      <small>
-                        02 de Novembro - 03 de Novembro
-                      </small>
-                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
-                        <span className="left-container-arrow"></span>
+                {/* Road Map inicio */}
+                  <div className='process-wrapper'>
+                    <div id='progress-bar-container'>
+                      <ul>
+                        <li className='step step01 active'>
+                          <div className='step-inner'>Map 1</div>
+                        </li>
+                        <li className='step step01'>
+                          <div className='step-inner'>Map 2</div>
+                        </li>
+                        <li className='step step01'>
+                          <div className='step-inner'>Map 3</div>
+                        </li>
+                        <li className='step step01'>
+                          <div className='step-inner'>Map 4</div>
+                        </li>
+                        <li className='step step01'>
+                          <div className='step-inner'>Map 5</div>
+                        </li>
+                      </ul>
+                      <div id='line'>
+                        <div id='line-process'></div>
+                      </div>
                     </div>
                   </div>
-                  <div className="containerTimeLine right-container">
-                    <Image 
-                    src={"/assets/images/logoeventos.png"}
-                    alt={"Gestao de Eventos Logo"}
-                    width={30}
-                    height={30}
-                    className='timelineImage2'   
-                    />
-                    <div className="text-box">
-                      <h2>Apresentação</h2>
-                      <small>
-                        04 de Novembro - 05 de Novembro
-                      </small>
-                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
-                        <span className="right-container-arrow"></span>
-                    </div>
+                  <div id='progress-content-section'>
+                      <div className='section-content map1 active'>
+                        <h2>Road Map 1</h2>
+                        <p>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Voluptates quidem, nemo reiciendis voluptas placeat mollitia 
+                          dolores unde eos ea? Quia nam vitae esse labore at ratione 
+                          repudiandae porro facilis inventore.
+                        </p>
+                      </div>
+                      <div className='section-content map2'>
+                        <h2>Road Map 2</h2>
+                        <p>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Voluptates quidem, nemo reiciendis voluptas placeat mollitia 
+                          dolores unde eos ea? Quia nam vitae esse labore at ratione 
+                          repudiandae porro facilis inventore.
+                        </p>
+                      </div>
+                      <div className='section-content map3'>
+                        <h2>Road Map 3</h2>
+                        <p>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Voluptates quidem, nemo reiciendis voluptas placeat mollitia 
+                          dolores unde eos ea? Quia nam vitae esse labore at ratione 
+                          repudiandae porro facilis inventore.
+                        </p>
+                      </div>
+                      <div className='section-content map4'>
+                        <h2>Road Map 4</h2>
+                        <p>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Voluptates quidem, nemo reiciendis voluptas placeat mollitia 
+                          dolores unde eos ea? Quia nam vitae esse labore at ratione 
+                          repudiandae porro facilis inventore.
+                        </p>
+                      </div>
+                      <div className='section-content map5'>
+                        <h2>Road Map 5</h2>
+                        <p>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Voluptates quidem, nemo reiciendis voluptas placeat mollitia 
+                          dolores unde eos ea? Quia nam vitae esse labore at ratione 
+                          repudiandae porro facilis inventore.
+                        </p>
+                      </div>
                   </div>
-                  <div className="containerTimeLine left-container">
-                    <Image 
-                    src={"/assets/images/logoeventos.png"}
-                    alt={"Gestao de Eventos Logo"}
-                    width={30}
-                    height={30}
-                    className='timelineImage'
-                    />
-                    <div className="text-box">
-                      <h2>Lobolo</h2>
-                      <small>
-                        06 de Novembro - 07 de Novembro
-                      </small>
-                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
-                        <span className="left-container-arrow"></span>
-                    </div>
-                  </div>
-                  <div className="containerTimeLine right-container">
-                    <Image 
-                    src={"/assets/images/logoeventos.png"}
-                    alt={"Gestao de Eventos Logo"}
-                    width={30}
-                    height={30}
-                    className='timelineImage2'
-                    />
-                    <div className="text-box">
-                      <h2>Lobolo</h2>
-                      <small>
-                        08 de Novembro - 09 de Novembro
-                      </small>
-                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
-                        <span className="right-container-arrow"></span>
-                    </div>
-                  </div>
-                  <div className="containerTimeLine left-container">
-                  <Image 
-                    src={"/assets/images/logoeventos.png"}
-                    alt={"Gestao de Eventos Logo"}
-                    width={30}
-                    height={30}
-                    className='timelineImage'
-                    />
-                    <div className="text-box">
-                      <h2>Alphabet Inc.</h2>
-                      <small>
-                      10 de Novembro - 11 de Novembro
-                      </small>
-                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
-                        <span className="left-container-arrow"></span>
-                    </div>
-                  </div>
-                  <div className="containerTimeLine right-container">
-                  <Image 
-                    src={"/assets/images/logoeventos.png"}
-                    alt={"Gestao de Eventos Logo"}
-                    width={30}
-                    height={30}
-                    className='timelineImage2'
-                    />
-                    <div className="text-box">
-                      <h2>Alphabet Inc.</h2>
-                      <small>
-                      02 de Novembro - 02 de Novembro
-                      </small>
-                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
-                        <span className="right-container-arrow"></span>
-                    </div>
-                  </div>
-                  <div className="containerTimeLine left-container">
-                  <Image 
-                    src={"/assets/images/logoeventos.png"}
-                    alt={"Gestao de Eventos Logo"}
-                    width={30}
-                    height={30}
-                    className='timelineImage'
-                    />
-                    <div className="text-box">
-                      <h2>Alphabet Inc.</h2>
-                      <small>
-                      02 de Novembro - 02 de Novembro
-                      </small>
-                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Labore vero, excepturi iusto autem quod architecto fuga?</p>
-                        <span className="left-container-arrow"></span>
-                    </div>
-                  </div>
-                </div>
+                {/* Road Map inicio */}
               </Grid>
             </Grid.Container>
         </>
           ):(
           <>
-          <Text onClick={() => servicosPlanificacao()} className='text-center' h6 size={24} css={{ m: 0 }}>Serviços Solicitados</Text>   
-          <Row gap={1}  className="w-48">                
-                <Col>
-                  <Card>
-                  <div onClick={() => servicosSolicitados()}>
-                    <Card.Body>
-                    <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
-                      <div className="flex justify-between content-between">
-                        <div className='flex flex-row gap-4'>
-                          <button 
-                            type="button"
-                            onClick={() => {}}
-                            className="black_btn"
-                            >
-                              Baixar  
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                              </svg>
-                          </button>                          
-                        </div>
-                        <div>
-                        <button 
-                          type="button"
-                          onClick={() => {}}
-                          className="black_btn"
-                          >
-                            Imprimir       
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
-                            </svg>
-                        </button>
-                        </div>  
-                      </div>                      
-                    </span> 
-                    </Card.Body>
+          {/* <Text className='text-center' h6 size={24} css={{ m: 0 }}>Serviços Solicitados</Text> */}
+          <div class="flex">
+                      <div class="flex-none">
+                        <svg  onClick={() => servicosPlanificacao()} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                        </svg>
+                      </div>
+                      <div class="flex-auto w-64">
+                       
+                      </div>
+                      <div class="flex-auto w-32">
+                      <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
+                              
+                                <div className="flex gap-4 justify-end">
+                                  <div className='flex flex-row gap-4'>
+                                    <button 
+                                      type="button"
+                                      onClick={() => {}}
+                                      className="black_btn"
+                                      >
+                                        Baixar  
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                        </svg>
+                                    </button>                          
+                                  </div>
+                                  <div>
+                                  <button 
+                                    type="button"
+                                    onClick={() => {}}
+                                    className="black_btn"
+                                    >
+                                      Imprimir       
+                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
+                                      </svg>
+                                  </button>
+                                  </div>  
+                                </div>                      
+                              </span> 
+                      </div>
                     </div>
-                  </Card>
-                </Col>
-          </Row>          
-          <Row gap={1} className="mt-4">
+          <Row gap={1} className="flex-auto w-64 mt-4">
+                <div className='w-2/5'>
                 <Col>
                   <Card>
                   <div>
@@ -1541,14 +1507,16 @@ const createEvento = async (e) => {
                     </div>
                   </Card>
                 </Col>
-                <Col>                  
+                </div>
+                <div className='w-3/5'>
+                <Col>
                   {detalheProduto ? (
                   <>
                     <Card>
                       <div onClick={() => servicosSolicitados()}>
                         <Card.Body>
                           <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
-                            <div className="text-right">
+                            <div className="text-rigth">
                                 <Text h6 size={18} css={{ m: 0 }} onClick={() => productClose()}>
                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1621,7 +1589,7 @@ const createEvento = async (e) => {
                               </div>                           
                               <div>
                                 <Text h6 size={12} css={{ m: 0 }}>
-                                  Status
+                                  Pago
                                 </Text> 
                                 <Text h6 size={12} css={{ m: 0 }}>
                                   {custoStatus}
@@ -1652,28 +1620,29 @@ const createEvento = async (e) => {
                     <Card.Body>
                     <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
                       <div className="text-center">
+                        <div>
+                          <Image 
+                            src={"/assets/images/sacolaDinheiro.png"}
+                            alt={"Gestao de Eventos Logo"}
+                            width={50}
+                            height={50}
+                            className="object-contain"          
+                            />
+                        </div>
                         <Text h6 size={18} css={{ m: 0 }}>
                         Orçamento
                         </Text>
                       </div>                      
                       <div className="flex flex-row justify-between content-between mt-4 gap-4">
-                        <div>
+                        <div className="text-center">
                           <Text h6 size={12} css={{ m: 0 }}>
                             Disponivel
                           </Text>
                           <Text h6 size={12} css={{ m: 0 }}>
-                            0.00 Mt
+                            0.00
                           </Text>    
                         </div>  
-                        <div>
-                          <Text h6 size={12} css={{ m: 0 }}>
-                            Final
-                          </Text> 
-                          <Text h6 size={12} css={{ m: 0 }}>
-                            0.00 Mt
-                          </Text>   
-                        </div>  
-                        <div>  
+                        <div className="text-center">  
                           <Text h6 size={12} css={{ m: 0 }}>
                             Minimo
                           </Text>
@@ -1681,12 +1650,20 @@ const createEvento = async (e) => {
                             {totalMinimo}
                           </Text>   
                         </div>  
-                        <div>
+                        <div className="text-center">
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            Final
+                          </Text> 
+                          <Text h6 size={12} css={{ m: 0 }}>
+                            0.00
+                          </Text>   
+                        </div>                         
+                        <div className="text-center">
                           <Text h6 size={12} css={{ m: 0 }}>
                             Excedente
                           </Text>
                           <Text h6 size={12} css={{ m: 0 }}>
-                            0.00 Mt
+                            0.00
                           </Text>   
                         </div>  
                       </div>                  
@@ -1710,7 +1687,8 @@ const createEvento = async (e) => {
                   </Card>                    
                   </>
                   )}
-              </Col>
+                </Col>
+                </div>
           </Row>
           </>
           )

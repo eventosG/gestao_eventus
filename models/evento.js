@@ -8,7 +8,7 @@ const EventoSchema = new Schema ({
     nomeNoiva: {type: String},
     nomeNoivo: {type: String, require: true},
     localEvento: {type: String, require: true},
-    dataEvento: {type: String, require: true},
+    dataEvento: {type: String, require: true}, 
     orcamentoInicial: {type: String, require: true},
 })
 

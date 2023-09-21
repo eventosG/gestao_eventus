@@ -1,5 +1,5 @@
 'use client';
-
+import { Divider } from "@nextui-org/react";
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import React from 'react'
@@ -10,10 +10,8 @@ function Profile({children}) {
   const router = useRouter();
   const pathname = usePathname()
   return (
-    <div className='min-h-screen flex gap-2'> 
-      <aside className='glassmorphism'>
-        <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Menu</span>
-        <nav className='flex flex-col gap-2'>
+    <div className='min-h-screen flex flex-col gap-2'> 
+        <nav className='flex flex-row gap-2'>
           <Link href={"/dashboard"} className={pathname.includes('/dashboard') ? activeLink : inactiveLink}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
@@ -39,12 +37,12 @@ function Profile({children}) {
             </svg>
             Convites
           </Link>
-          <Link href={"/meusEventos"} className={pathname.includes('/meusEventos') ? activeLink : inactiveLink}>
+          {/* <Link href={"/meusEventos"} className={pathname.includes('/meusEventos') ? activeLink : inactiveLink}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
             </svg>
             Meus Eventos
-          </Link>
+          </Link> */}
           <Link href={"/planificacao"} className={pathname.includes('/planificacao') ? activeLink : inactiveLink}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
@@ -76,8 +74,8 @@ function Profile({children}) {
             Cronograma
           </Link>
         </nav>
-      </aside>
-      <div className='glassmorphism items-center justify-center flex-grow'>
+        <Divider className="my-4" />
+      <div className='glassmorphism items-center justify-center flex-grow mt-4'>
       {children}
       </div>
       

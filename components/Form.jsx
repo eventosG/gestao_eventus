@@ -7,11 +7,27 @@ function Form(
   evento,
   setEvento,
   submitting,
-  handleSubmit}
+  handleSubmit,
+  planificador}
   ) {
     const [tipoEvento, setTipoEvento] = useState(false);
     const [eventosSelect, setEventosSelect] = useState("Casamento");
     const [eventosSelect2, setEventosSelect2] = useState("Quê Es?");
+    const [planificadorEvento, setPlanificadorEvento] = useState("");
+    const [nomePlanificador, setNomePlanificador] = useState(planificador);
+    const [contactoPlanificador, setContactoPlanificador] = useState("");
+    const [nomeNoiva, setNomeNoiva] = useState("");
+    const [nomeNoivo, setNomeNoivo] = useState("");
+    const [contactoNoiva, setContactoNoiva] = useState("");
+    const [contactoNoivo, setContactoNoivo] = useState("");
+    const [numeroCasaQuarteirao, setNumeroCasaQuarteirao] = useState("");
+    const [avenidaRua, setAvenidaRua] = useState("");
+    const [pontoReferencia, setPontoReferencia] = useState("");
+    const [temaEvento, setTemaEvento] = useState("");
+    const [orcamentoInicial, setOrcamentoInicial] = useState("");
+    const [coresEvento, setCoresEvento] = useState("");
+    const [convidadosPrevistos, setConvidadosPrevistos] = useState("");
+    const [dataEvento, setDataEvento] = useState("");
     const [bodas, setBodas] = useState(false);
     const [casamentoNormal, setCasamentoNormal] = useState(true);
     const [estado, setEstado] = useState(true);
@@ -184,9 +200,14 @@ function Form(
       console.log("Evento Seleccionado", eventosSelect);      
     }
   return (
-    <section className='w-full max-w-full flex-start flex-col'>
-      <h1 className='head_text text-left'><span className='orange_gradient'>{type}</span></h1>
-      <p className='desc text-left max-w-md'>
+    <section className='w-full flex-center flex-col'>
+      <div className="flex flex-col justify-center content-center">
+      <h1 className='head_text text-center'>
+        <span className='orange_gradient'>
+          {type}
+        </span>
+      </h1>
+      <p className='desc text-center'>
       Gerenciar um evento pode ser uma tarefa complexa e desafiadora, 
       envolvendo diversos aspectos, desde o planejamento inicial até a 
       execução e avaliação final. Nesse contexto, a plataforma de Gestão de 
@@ -207,7 +228,7 @@ function Form(
            <option value="Aniversário">Aniversário</option>
            <option value="Graduação">Graduação</option>
            <option value="Sociais">Sociais</option>
-          </select>
+      </select>
           {/* <button 
           onClick={() => setTipoEvento((prev) => !prev)}
             type='button'
@@ -238,21 +259,21 @@ function Form(
             </label>
         <span className='font-normal'>Quem és?</span>
         <select name="cars2" id="cars2" className='form_input'>
-          <option value="Planificador(a)">Planificador(a)</option>
-          <option value="Noivo(a)">Noivo(a)</option>
+          <option value="Planificador(a)" onClick={() => setPlanificadorEvento("Planificador(a)")}>Planificador(a)</option>
+          <option value="Noivo(a)" onClick={() => setPlanificadorEvento("Noivo(a)")}>Noivo(a)</option>
         </select>
         
         <div className='flex flex-row gap-4'>
           <input 
-            value={evento.nomeNoivo}
-            onChange={(e) => setEvento({ ...evento, nomeNoivo: e.target.value })}
+            value={nomePlanificador}
+            onChange={(e) => setNomePlanificador(e.target.value)}
             placeholder='Nome'
             required
             className='form_input'
           />
           <input 
-            value={evento.nomeNoivo}
-            onChange={(e) => setEvento({ ...evento, nomeNoivo: e.target.value })}
+            value={contactoPlanificador}
+            onChange={(e) => setContactoPlanificador(e.target.value)}
             placeholder='Contacto com whatsapp'
             required
             type='text'
@@ -262,16 +283,16 @@ function Form(
         <span className='font-normal'>Nome dos Noivos</span>
          <div className='flex flex-row gap-4'>
           <input 
-            value={evento.nomeNoivo}
-            onChange={(e) => setEvento({ ...evento, nomeNoivo: e.target.value })}
+            value={nomeNoiva}
+            onChange={(e) => setNomeNoiva(e.target.value)}
             placeholder='Nome da Noiva'
             type='text'
             required
             className='form_input'
           />
           <input 
-            value={evento.nomeNoivo}
-            onChange={(e) => setEvento({ ...evento, nomeNoivo: e.target.value })}
+            value={nomeNoivo}
+            onChange={(e) => setNomeNoivo(e.target.value)}
             placeholder='Nome do Noivo'
             required
             type='text'
@@ -280,16 +301,16 @@ function Form(
         </div>
         <div className='flex flex-row gap-4'>
           <input
-            value={evento.nomeNoivo}
-            onChange={(e) => setEvento({ ...evento, nomeNoivo: e.target.value })}
+            value={contactoNoiva}
+            onChange={(e) => setContactoNoiva(e.target.value)}
             placeholder='Contacto da Noiva'
             type='number'
             required
             className='form_input'
           />
           <input
-            value={evento.nomeNoivo}
-            onChange={(e) => setEvento({ ...evento, nomeNoivo: e.target.value })}
+            value={contactoNoivo}
+            onChange={(e) => setContactoNoivo(e.target.value)}
             placeholder='Contacto do Noivo'
             required
             type='number'
@@ -310,8 +331,8 @@ function Form(
               {bairroCMaputoKaMpfumu.map((provincia) => <option value={provincia}>{provincia}</option>)}
             </select>
             <input 
-          value={evento.localEvento}
-          onChange={(e) => setEvento({ ...evento, localEvento: e.target.value })}
+          value={numeroCasaQuarteirao}
+          onChange={(e) => setNumeroCasaQuarteirao(e.target.value)}
           placeholder='Número de Quarteirão e Casa'
           required
           className='form_input'
@@ -319,15 +340,15 @@ function Form(
         </div>
          <div className='flex flex-row gap-4'>
          <input 
-          value={evento.localEvento}
-          onChange={(e) => setEvento({ ...evento, localEvento: e.target.value })}
+          value={avenidaRua}
+          onChange={(e) => setAvenidaRua(e.target.value)}
           placeholder='Avenida/Rua'
           required
           className='form_input'
         />
             <input 
-          value={evento.localEvento}
-          onChange={(e) => setEvento({ ...evento, localEvento: e.target.value })}
+          value={pontoReferencia}
+          onChange={(e) => setPontoReferencia(e.target.value)}
           placeholder='Ponto de Referência'
           required
           className='form_input'
@@ -336,23 +357,23 @@ function Form(
         <span className='font-normal'>Data do Evento</span>
         <input 
           type='date'
-          value={evento.dataEvento}
-          onChange={(e) => setEvento({ ...evento, dataEvento: e.target.value })}
+          value={dataEvento}
+          onChange={(e) => setDataEvento(e.target.value)}
           placeholder='Data do Evento'
           required
           className='form_input'
         />
         <span className='font-normal'>Tema do Casamento</span>
         <input
-          value={evento.orcamentoInicial}
-          onChange={(e) => setEvento({ ...evento, orcamentoInicial: e.target.value })}
+          value={temaEvento}
+          onChange={(e) => setTemaEvento(e.target.value)}
           placeholder='(Opcinal)'
           className='form_input'
         />
         <span className='font-normal'>Orçamento</span>
         <input
-          value={evento.orcamentoInicial}
-          onChange={(e) => setEvento({ ...evento, orcamentoInicial: e.target.value })}
+          value={orcamentoInicial}
+          onChange={(e) => setOrcamentoInicial(e.target.value)}
           placeholder='Orçamento Inicial'
           type="number"
           required
@@ -1560,6 +1581,8 @@ function Form(
           </>      
       </form>
       )} 
+      </div>
+      
     </section>
   )
 }

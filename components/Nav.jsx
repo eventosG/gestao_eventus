@@ -33,22 +33,50 @@ function Nav() {
         {/* Destop Navigation */}
         <div className="sm:flex hidden">
             {session?.user ? (
-                <div className="flex gap-3 md:gap-5">
-                    {/* <Link href={"/create-prompt"} className="black_btn">
-                        Criar Evento
-                    </Link> */}
-                    <button type={"button"} onClick={signOut} className="outline_btn">
-                        Sign Out
-                    </button>
-                    <Link href={"/profile"}>
-                        <Image 
-                        alt="Profilo Pic" 
-                        src={session?.user.image}
-                        width={37}
-                        height={37}
+                <div className="flex z-40">
+                    <Image 
+                    alt="Profilo Pic" 
+                    src={session?.user.image}
+                    width={37}
+                    height={37}
+                    onClick={() => setToggleDropdown((prev) => !prev)}
+                    />
 
-                        />
-                    </Link>
+                    {toggleDropdown && (
+                        <div className="dropdownDesktop">
+                            <Link 
+                            href={"/profile"}
+                            className="dropdown_link"
+                            onClick={() => setToggleDropdown(false)}
+                            >
+                            Perfil
+                            </Link>
+                            <Link 
+                            href={"#"}
+                            className="dropdown_link"
+                            onClick={() => setToggleDropdown(false)}
+                            >
+                            Criar Evento
+                            </Link>
+                            <Link 
+                            href={"#"}
+                            className="dropdown_link"
+                            onClick={() => setToggleDropdown(false)}
+                            >
+                            Meus Eventos
+                            </Link>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setToggleDropdown(false);
+                                    signOut();
+                                }}
+                                className="mt-5 w-full black_btn"
+                            >
+                                Sign Out
+                            </button>
+                        </div>
+                    )}
                 </div>
             ): (
                 <>
@@ -68,7 +96,7 @@ function Nav() {
         {/* Mobile Navigation */}
         <div className="sm:hidden flex relative">
             {session?.user ? (
-                <div className="flex">
+                <div className="flex z-40">
                     <Image 
                     alt="Profilo Pic" 
                     src={session?.user.image}
