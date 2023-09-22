@@ -1,11 +1,11 @@
 'use client';
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { Divider } from "@nextui-org/react";
 
 import React from 'react'
 import Link from "next/link";
 import Image from "next/image";
-import Provider from "./Provider";
 
 function Nav() {
     const {data: session } = useSession();
@@ -44,14 +44,30 @@ function Nav() {
 
                     {toggleDropdown && (
                         <div className="dropdownDesktop">
-                            <h3>{session?.user.email}</h3>
-                            <Link 
-                            href={"/profile"}
-                            className="dropdown_link"
-                            onClick={() => setToggleDropdown(false)}
-                            >
-                            Perfil
-                            </Link>
+                            
+                                <Link 
+                                    href={"/profile"}
+                                    className="dropdown_link"
+                                    onClick={() => setToggleDropdown(false)}
+                                    >
+                                        <div className="flex flex-col text-center justify-center content-center mt-4 items-center">
+                                    <h3>{session?.user.email}</h3>
+                                    <Image 
+                                        alt="Profilo Pic" 
+                                        src={session?.user.image}
+                                        className="flex mt-4"
+                                        width={60}
+                                        height={60}
+                                        onClick={() => setToggleDropdown((prev) => !prev)}
+                                        />
+                                    <h1>Olá, {session?.user.name}</h1>
+                                    </div>
+                                    </Link>
+                                
+                                <Divider className="my-4" />
+                            
+                            
+                            
                             <Link 
                             href={"#"}
                             className="dropdown_link"
