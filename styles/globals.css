@@ -426,10 +426,10 @@
 }
 
 .dropdown {
-  @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end;
+  @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-start items-start;
 }
 .dropdownDesktop {
-  @apply absolute right-0 top-12 mt-3 w-14 p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end;
+  @apply absolute right-0 top-12 mt-3 w-14 p-5 rounded-lg bg-white min-w-fit flex flex-col gap-2 justify-start items-start;
 }
 
 .dropdown_link {

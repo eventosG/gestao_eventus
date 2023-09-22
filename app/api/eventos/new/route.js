@@ -2,17 +2,53 @@ import { connectToDB } from "@utils/database";
 import Evento from "@models/evento";
 
 export const POST = async (req, res) => {
-    const { nomeNoiva, nomeNoivo, localEvento, dataEvento, orcamentoInicial, userId } = await req.json();
+    const { 
+            nomeNoiva,
+            contactoNoiva,
+            nomeNoivo,
+            contactoNoivo,
+            planificadorEvento,
+            nomePlanificador,
+            contactoPlanificador,
+            localEvento,
+            provincia,
+            distrito,
+            bairro,
+            numeroCasaQuarteirao,
+            pontoReferencia,
+            dataEvento,
+            temaEvento,
+            orcamentoInicial,
+            coresEvento,
+            convidadosPrevistos,
+            tipoEvento,
+            tipodeBodas,
+            userId } = await req.json();
     
     try {
         await connectToDB();
         const newEvento = new Evento({
             creator: userId,
             nomeNoiva,
+            contactoNoiva,
             nomeNoivo,
+            contactoNoivo,
+            planificadorEvento,
+            nomePlanificador,
+            contactoPlanificador,
             localEvento,
+            provincia,
+            distrito,
+            bairro,
+            numeroCasaQuarteirao,
+            pontoReferencia,
             dataEvento,
+            temaEvento,
             orcamentoInicial,
+            coresEvento,
+            convidadosPrevistos,
+            tipoEvento,
+            tipodeBodas,
         });
 
         await newEvento.save();

@@ -77,30 +77,30 @@ function page() {
     orcamentoInicial: '',
 })
 
-const createEvento = async (e) => {
-  e.preventDefault();
-  setSubmitting(true); 
-  try {
-      const response = await fetch('api/eventos/new', {
-          method: 'POST',
-          body: JSON.stringify({
-              nomeNoiva: evento.nomeNoiva,
-              nomeNoivo: evento.nomeNoivo,
-              localEvento: evento.localEvento,
-              dataEvento: evento.dataEvento,
-              orcamentoInicial: evento.orcamentoInicial,
-              userId: session?.user.id,
-          })
-      })
-      if (response.ok) {
-          router.push('/dashboard/dasPage');
-      }
-  } catch (error) {
-      console.log(error);
-  } finally {
-      setSubmitting(false);
-  }
-}
+// const createEvento = async (e) => {
+//   e.preventDefault();
+//   setSubmitting(true); 
+//   try {
+//       const response = await fetch('api/eventos/new', {
+//           method: 'POST',
+//           body: JSON.stringify({
+//               nomeNoiva: evento.nomeNoiva,
+//               nomeNoivo: evento.nomeNoivo,
+//               localEvento: evento.localEvento,
+//               dataEvento: evento.dataEvento,
+//               orcamentoInicial: evento.orcamentoInicial,
+//               userId: session?.user.id,
+//           })
+//       })
+//       if (response.ok) {
+//           router.push('/dashboard/dasPage');
+//       }
+//   } catch (error) {
+//       console.log(error);
+//   } finally {
+//       setSubmitting(false);
+//   }
+// }
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/users/${session?.user.id}/posts`);
@@ -1040,12 +1040,12 @@ const createEvento = async (e) => {
         </svg>
         <div className="flex justify-center content-center justify-items-center">
           <Form 
-              type="Criar Evento"
+              type="Salvar"
               evento={evento}
               setEvento={setEvento2}
               submitting={submitting}
-              handleSubmit={createEvento}
               planificador={session?.user.name}
+              planificadorId={session?.user.id}
           />
         </div>
       </>
