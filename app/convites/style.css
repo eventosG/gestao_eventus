@@ -1,0 +1,191 @@
+.container9 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 100px 10px;
+}
+.container9 .card9 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 300px;
+    height: 250px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 35px 80px rgba(0,0,0,0.15);
+    transition: 0.5s;
+}
+.container9 .card9:hover {
+    height: 400px;
+}
+.container9 .card9 .imgBx {
+    position: absolute;
+    width: 300px;
+    height: 220px;
+    top: 20px;
+    border-radius: 12px;
+    transition: 0.5s;
+    overflow: hidden;
+    background: #333;
+}
+.container9 .card9:hover .imgBx {
+    top: -100px;
+    scale: 0.75;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.2);
+
+}
+.container9 .card9 .imgBx .imagem {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+    
+}
+.container9 .card9 .content9 {
+    position: absolute;
+    top: 210px;
+    width: 100%;
+    padding: 0 30px;
+    height: 26px;
+    overflow: hidden;
+    text-align: center;
+    transition: 0.5s;
+}
+.container9 .card9:hover .content9 {
+    top: 130px;
+    height: 250px;
+}
+.container9 .card9 .content9 h2 {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--clr);
+}
+.container9 .card9 .content9 p {
+    color: #333;
+    font-size: 1.05em;
+}
+/* .container9 .card9 .content9 a {
+    position: relative;
+    top: 15px;
+    display: inline-block;
+    padding: 12px 25px;
+    background: var(--clr);
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 8px;
+} */
+
+
+/* .background3 {
+    background: radial-gradient(circle at 50% 50%, #192233 20%, #000);
+    display: flex;
+    height: 100vh;
+} */
+
+.gallery3 {
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    perspective: 800px;
+}
+
+.card3 {
+    position: relative;
+    width: 220px;
+    height: 260px;
+    cursor: pointer;
+    transition: 1s ease-in-out;
+    transform-style: preserve-3d;
+}
+  
+.card3:hover {
+    transform: rotateY(0.5turn);
+}
+  
+.card__side {
+    position: absolute;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    width: 100%;
+    height: 100%;
+    transition: 1s ease-in-out;
+}
+
+.card__side--back {
+    transform: rotateY(0.5turn);
+}
+
+.card__side > img {
+    width: 220px;
+    height: 260px;
+    object-fit: cover;
+}
+
+
+#container12 {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 24px auto;
+    max-width: 640px;
+  }
+  
+  #model {
+    height: 512px;
+    position: relative;
+    width: 256px;
+  }
+  #model #pantsImg,
+  #model #shirtImg,
+  #model #shoesImg {
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+  #model #pantsImg {
+    left: 81px;
+    top: 233px;
+  }
+  #model #shirtImg {
+    left: 67px;
+    top: 95px;
+  }
+  #model #shoesImg {
+    left: 84px;
+    top: 450px;
+  }
+  
+  #sliderPicker {
+    border: solid 2px #999;
+    border-radius: 8px;
+    font: normal 14px/1.2 sans-serif;
+    height: auto;
+    margin-top: 80px;
+    max-height: 250px;
+    padding: 24px;
+  }
+  #sliderPicker p {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 2;
+  }
+  #sliderPicker #colorPicker {
+    padding: 0 24px;
+  }
+  #sliderPicker ul[id="colorTarget"] {
+    display: flex;
+    flex-flow: row nowrap;
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0;
+  }
+  #sliderPicker ul[id="colorTarget"] li {
+    margin-right: 1em;
+  }

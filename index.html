@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body,
+      html {
+        height: 100%;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Lato", sans-serif;
+        background: linear-gradient(#f7f8fa, #e5eaee);
+      }
+      .social {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 840px;
+        transform: translate(-50%, -50%);
+      }
+      .social > a {
+        position: relative;
+        display: inline-block;
+        margin: 40px;
+        width: 200px;
+        height: 200px;
+        cursor: pointer;
+      }
+      /* Buscar esta função */
+      .social > a:hover {
+        transform: translateY(-90px);
+        background: #000;
+      }
+      .front {
+        position: absolute;
+        z-index: 10;
+        width: 200px;
+        height: 200px;
+        border-radius: 3px;
+        background: #fff;
+        box-shadow: 0px 40px 40px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease-out;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="social">
+      <a href="" class="fb text-center pull-left">
+        <div class="front">
+          <i class="fa fa-facebook"></i>
+        </div>
+        <div class="behind text-right">LIKE MZ</div>
+        <span>27k</span>
+      </a>
+      <a href="" class="tw text-center pull-left">
+        <div class="front">
+          <i class="fa fa-twitter"></i>
+        </div>
+        <div class="behind text-right">LIKE MZ</div>
+        <span>27k</span>
+      </a>
+      <a href="" class="ig text-center pull-left">
+        <div class="front">
+          <i class="fa fa-instagram"></i>
+        </div>
+        <div class="behind text-right">LIKE MZ</div>
+        <span>27k</span>
+      </a>
+      <a href="" class="ig text-center pull-left">
+        <div class="front">
+          <i class="fa fa-instagram"></i>
+        </div>
+        <div class="behind text-right">LIKE MZ</div>
+        <span>27k</span>
+      </a>
+    </div>
+  </body>
+</html>

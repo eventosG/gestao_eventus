@@ -1,6 +1,5 @@
-import { connectToDB } from "@utils/database";
-import Convites from "@models/convites";
-
+import { connectToDB } from "../../../../../utils/database";
+import Convites from "../../../../../models/convites";
 export const GET = async (request, { params }) => {
     try {
         await connectToDB();
