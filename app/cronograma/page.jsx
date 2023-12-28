@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import Profile from '@app/profile/page';
-
-function page() {
-  return (
-    <Profile>
-        <div>Cronograma</div>
-    </Profile>    
-=======
 "use client";
 import React from 'react';
 import Profile from "../../app/profile/page";
@@ -110,8 +100,7 @@ function page() {
           </div>
         </Profile> 
       </main>
-    </>   
->>>>>>> 81cace7 (novo update)
+    </>  
   )
 }
 

@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import Padrinho from "@models/padrinho";
-import { connectToDB } from "@utils/database";
-=======
 import { connectToDB } from "../../../../utils/database";
 import Padrinho from "../../../../models/padrinho";
->>>>>>> 81cace7 (novo update)
 
 export const GET = async (request, { params }) => {
     try {
