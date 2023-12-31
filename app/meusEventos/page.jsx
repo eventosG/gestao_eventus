@@ -5,13 +5,7 @@ function page() {
   return (
     <Profile>
       <div>
-        <button
-          type="button"
-          onClick={() => {}}
-          className="black_btn"
-          >
-            Adicionar Evento
-        </button>
+      Adicionar Evento
       </div> 
     </Profile>
     
