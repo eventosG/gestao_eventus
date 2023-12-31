@@ -1,7 +1,6 @@
 'use client';
-import Profile from "../profile/page";
+import Profile from "../../components/Perfil";
 import React, { useState, useEffect } from 'react';
-import {Accordion, AccordionItem} from "@nextui-org/react";
 import Nav from '../../components/Nav';
 import { Container, Textarea, Modal, Input, Button, Card, Row, Text, Avatar, Grid, Spacer, Col, Progress } from "@nextui-org/react";
 import { useSession } from 'next-auth/react';

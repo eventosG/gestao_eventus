@@ -91,7 +91,7 @@ function Padrinhos() {
               defaultValue="NextUI is a React UI library that provides a set of accessible, reusable, and beautiful components."
               className="flex w-full"
             /> */}
-            <textarea name="messagens" id="messagens" cols="67" rows="5" placeholder="Gostariamos de te-los como os nossos padrinhos..."></textarea>
+            <textarea name="messagens" id="messagens" placeholder="Gostariamos de te-los como os nossos padrinhos..."></textarea>
           </div> 
           <div className="flex-end mx-3 mb-5 gap-4">
           <button
