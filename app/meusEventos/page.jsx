@@ -7,7 +7,6 @@ function page() {
       <div>
         <button
           type="button"
-          key={provider.name}
           onClick={() => {}}
           className="black_btn"
           >
