@@ -1,5 +1,6 @@
 import React from 'react';
-import Profile from "../../components/Perfil";
+// import Profile from '../../app/profile/page';
+import Profile from '../../components/ProfilePage';
 
 function page() {
   return (

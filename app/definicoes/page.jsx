@@ -1,5 +1,5 @@
 'use client';
-import Profile from "../../components/Perfil";
+import Profile from '../../components/ProfilePage';
 import React, { useState } from 'react';
 import { Container, Spacer } from "@nextui-org/react";
 import { useRouter } from 'next/navigation';

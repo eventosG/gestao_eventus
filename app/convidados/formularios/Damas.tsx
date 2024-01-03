@@ -12,21 +12,21 @@ function Damas() {
       >
         <>
           <label className="flex flex-row font-satoshi font-semibold text-base text-gray-700 text-center gap-4 justify-center content-center">
-            <h3>Damas</h3>
+            <h3>Cavalheiros</h3>
             {/* <Reactphone /> */}
           </label>
           <div className="flex flex-row gap-4">
             <input
               // value={nomePlanificador}
               // onChange={(e) => setNomePlanificador(e.target.value)}
-              placeholder="Nome Completo da Dama"
+              placeholder="Nome Completo do Cavalheiro"
               required
               className="form_input"
             />
             <input
               // value={contactoPlanificador}
               // onChange={(e) => setContactoPlanificador(e.target.value)}
-              placeholder="Contacto da Dama"
+              placeholder="Contacto do Cavalheiro"
               required
               type="text"
               className="form_input"
@@ -42,7 +42,7 @@ function Damas() {
               +
               {/* {submitting ? `${type}...` : type} */}
             </button>
-            <h1>Adicionar Dama</h1>
+            <h1>Adicionar Cavalheiro</h1>
           </div>
           <div className="flex flex-row gap-4">
           {/* <Textarea
@@ -51,7 +51,7 @@ function Damas() {
               defaultValue="NextUI is a React UI library that provides a set of accessible, reusable, and beautiful components."
               className="flex w-full"
             /> */}
-            <textarea name="messagens" id="messagens" placeholder="Gostariamos de te-la como a nossa Dama..."></textarea>
+            <textarea name="messagens" id="messagens" placeholder="Gostariamos de te-los como os nossos Cavalheiro..."></textarea>
           </div> 
           <div className="flex-end mx-3 mb-5 gap-4">
           <button

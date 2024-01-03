@@ -1,8 +1,9 @@
 'use client';
 
-import Profile from "../../components/Perfil";
+import Profile from '../../components/ProfilePage';
 import React, { useState, useEffect } from 'react';
 import Image from "next/image";
+import Nav from '../../components/Nav';
 import {Card} from "@nextui-org/react";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
@@ -90,7 +91,10 @@ function ProdutosServicos() {
     fetchPosts();
   }
   return (
-    <Profile>
+    <>
+      <main className='app'>
+        <Nav />
+        <Profile>
       {selected ? (
       <>
         <div className="gap-2 grid grid-cols-1 sm:grid-cols-1">
@@ -178,7 +182,10 @@ function ProdutosServicos() {
       </>
       )}
           
-    </Profile>
+        </Profile>
+      </main>
+    </>
+    
   )
 }
 

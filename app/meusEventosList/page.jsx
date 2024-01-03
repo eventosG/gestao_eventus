@@ -1,11 +1,12 @@
 'use client';
-import Profile from "../../components/Perfil";
+import Profile from '../../components/ProfilePage';
 import React, { useState } from 'react';
 import Nav from '../../components/Nav';
 import { Container } from "@nextui-org/react";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
+import Image from "next/image";
 import {Divider} from "@nextui-org/react";
 import {
   Spacer,

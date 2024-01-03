@@ -1,12 +1,17 @@
 import React from 'react';
-// import Profile from '@app/profile/page';
-import Profile from "../../components/Perfil";
+import Profile from '../../components/ProfilePage';
+import Nav from '../../components/Nav';
 
 function page() {
   return (
-    <Profile>
-        <div>Inspiração</div>
-    </Profile>    
+    <>
+      <main className='app'>
+        <Nav />
+        <Profile>
+            <div>Inspiração</div>
+        </Profile>
+      </main>
+    </>
   )
 }
 

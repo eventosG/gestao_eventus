@@ -1,5 +1,7 @@
 import { connectToDB } from "../../../../utils/database";
 import Grupo from "../../../../models/grupo";
+// import { connectToDB } from "@utils/database";
+// import Grupo from "@models/grupo";
 
 export const POST = async (req, res) => {
     const { grupo, userId } = await req.json();

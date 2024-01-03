@@ -1,5 +1,8 @@
 import { connectToDB } from "../../../../utils/database";
 import Mesa from "../../../../models/mesa";
+// import { connectToDB } from "@utils/database";
+// import Mesa from "@models/mesa";
+
 export const POST = async (req, res) => {
     const { mesa, userId } = await req.json();
     

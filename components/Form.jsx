@@ -1,8 +1,10 @@
-import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import Reactphone from './Reactphone';
+import {
+  Checkbox,
+  Link,
+} from "@nextui-org/react";
 
 function Form(
   {type,
@@ -20,6 +22,7 @@ function Form(
     const [contactoPlanificador, setContactoPlanificador] = useState("");
     const [nomeNoiva, setNomeNoiva] = useState("");
     const [nomeNoivo, setNomeNoivo] = useState("");
+    const [transporteVal, setTransporteVal] = useState(false);
     const [contactoNoiva, setContactoNoiva] = useState("");
     const [contactoNoivo, setContactoNoivo] = useState("");
     const [numeroCasaQuarteirao, setNumeroCasaQuarteirao] = useState("");
@@ -300,7 +303,8 @@ function Form(
            <option value="Despedida de Solteiro">Despedida de Solteiro</option>
            <option value="Aniversário">Aniversário</option>
            <option value="Graduação">Graduação</option>
-           <option value="Sociais">Sociais</option>
+           <option value="Sociais">Sociais</option>           
+           <option value="Apenas Gerar Convites">Apenas Gerar Convites</option>           
       </select>
           {/* <button 
           onClick={() => setTipoEvento((prev) => !prev)}
@@ -326,7 +330,7 @@ function Form(
                     onClick={() => verificarEstado("bodas")}
                     className="black_btn"
                     >
-                        Bodas
+                        Bodas 
                     </button>
             </label>
         <span className='font-normal'>Quem és?</span>
@@ -523,11 +527,26 @@ function Form(
           type="number"
           className='form_input'
         />
-        <div className='flex-end mx-3 mb-5 gap-4'>
+        <div>
+          <Checkbox
+            defaultSelected={transporteVal}
+            color="warning"
+            onChange={() => setTransporteVal((prev) => !prev)}
+            >
+            <p className="text-sm">Ao criar evento, aceita com os 
+            <Link
+              href={"#"}
+              className="dropdown_link"
+              >
+                &nbsp;termos e condicoes
+                  </Link> da gestao de eventos</p>
+          </Checkbox>
+        </div>
+        {transporteVal && (
+          <div className='flex-end mx-3 mb-5 gap-4'>
           <Link href={"/"} className='text-gray-500 text-sm'>
             Cancelar
           </Link>
-
           <button 
             type='submit'
             disabled={submitting}
@@ -536,8 +555,8 @@ function Form(
           >
             {submitting ? `${type}...` : type}
           </button>
-
         </div>
+        )}        
           </>
           ) : (
           <>
@@ -759,19 +778,36 @@ function Form(
           type="number"
           className='form_input'
         />
-        <div className='flex-end mx-3 mb-5 gap-4'>
+        <div>
+          <Checkbox
+            defaultSelected={transporteVal}
+            color="warning"
+            onChange={() => setTransporteVal((prev) => !prev)}
+            >
+            <p className="text-sm">Ao criar evento, aceita com os 
+            <Link
+              href={"#"}
+              className="dropdown_link"
+              >
+                &nbsp;termos e condicoes
+                  </Link> da gestao de eventos</p>
+          </Checkbox>
+        </div>
+        {transporteVal && (
+          <div className='flex-end mx-3 mb-5 gap-4'>
           <Link href={"/"} className='text-gray-500 text-sm'>
             Cancelar
           </Link>
           <button 
             type='submit'
             disabled={submitting}
-            onClick={() => createEvento("Bodas")}
+            onClick={() => createEvento("Casamento")}
             className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
           >
             {submitting ? `${type}...` : type}
           </button>
         </div>
+        )} 
           </>
           )
         }        
@@ -979,19 +1015,36 @@ function Form(
           type="number"
           className='form_input'
         />
-        <div className='flex-end mx-3 mb-5 gap-4'>
+        <div>
+          <Checkbox
+            defaultSelected={transporteVal}
+            color="warning"
+            onChange={() => setTransporteVal((prev) => !prev)}
+            >
+            <p className="text-sm">Ao criar evento, aceita com os 
+            <Link
+              href={"#"}
+              className="dropdown_link"
+              >
+                &nbsp;termos e condicoes
+                  </Link> da gestao de eventos</p>
+          </Checkbox>
+        </div>
+        {transporteVal && (
+          <div className='flex-end mx-3 mb-5 gap-4'>
           <Link href={"/"} className='text-gray-500 text-sm'>
             Cancelar
           </Link>
           <button 
             type='submit'
             disabled={submitting}
-            onClick={() => createEvento("Lobolo")}
+            onClick={() => createEvento("Casamento")}
             className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
           >
             {submitting ? `${type}...` : type}
           </button>
         </div>
+        )} 
           </>      
       </form>
       )}
@@ -1199,21 +1252,36 @@ function Form(
           type="number"
           className='form_input'
         />
-        <div className='flex-end mx-3 mb-5 gap-4'>
+        <div>
+          <Checkbox
+            defaultSelected={transporteVal}
+            color="warning"
+            onChange={() => setTransporteVal((prev) => !prev)}
+            >
+            <p className="text-sm">Ao criar evento, aceita com os 
+            <Link
+              href={"#"}
+              className="dropdown_link"
+              >
+                &nbsp;termos e condicoes
+                  </Link> da gestao de eventos</p>
+          </Checkbox>
+        </div>
+        {transporteVal && (
+          <div className='flex-end mx-3 mb-5 gap-4'>
           <Link href={"/"} className='text-gray-500 text-sm'>
             Cancelar
           </Link>
-
           <button 
             type='submit'
             disabled={submitting}
-            onClick={() => createEvento("Anelamento")}
+            onClick={() => createEvento("Casamento")}
             className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
           >
             {submitting ? `${type}...` : type}
           </button>
-
         </div>
+        )} 
           </>      
       </form>
       )}  
@@ -1412,19 +1480,36 @@ function Form(
           type="number"
           className='form_input'
         />
-        <div className='flex-end mx-3 mb-5 gap-4'>
+        <div>
+          <Checkbox
+            defaultSelected={transporteVal}
+            color="warning"
+            onChange={() => setTransporteVal((prev) => !prev)}
+            >
+            <p className="text-sm">Ao criar evento, aceita com os 
+            <Link
+              href={"#"}
+              className="dropdown_link"
+              >
+                &nbsp;termos e condicoes
+                  </Link> da gestao de eventos</p>
+          </Checkbox>
+        </div>
+        {transporteVal && (
+          <div className='flex-end mx-3 mb-5 gap-4'>
           <Link href={"/"} className='text-gray-500 text-sm'>
             Cancelar
           </Link>
           <button 
             type='submit'
             disabled={submitting}
-            onClick={() => createEvento("Despedida de Solteiro")}
+            onClick={() => createEvento("Casamento")}
             className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
           >
             {submitting ? `${type}...` : type}
           </button>
         </div>
+        )} 
           </>      
       </form>
       )}  
@@ -1636,21 +1721,36 @@ function Form(
           type="number"
           className='form_input'
         />
-        <div className='flex-end mx-3 mb-5 gap-4'>
+        <div>
+          <Checkbox
+            defaultSelected={transporteVal}
+            color="warning"
+            onChange={() => setTransporteVal((prev) => !prev)}
+            >
+            <p className="text-sm">Ao criar evento, aceita com os 
+            <Link
+              href={"#"}
+              className="dropdown_link"
+              >
+                &nbsp;termos e condicoes
+                  </Link> da gestao de eventos</p>
+          </Checkbox>
+        </div>
+        {transporteVal && (
+          <div className='flex-end mx-3 mb-5 gap-4'>
           <Link href={"/"} className='text-gray-500 text-sm'>
             Cancelar
           </Link>
-
           <button 
             type='submit'
             disabled={submitting}
-            onClick={() => createEvento("Aniversário")}
+            onClick={() => createEvento("Casamento")}
             className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
           >
             {submitting ? `${type}...` : type}
           </button>
-
         </div>
+        )} 
           </>      
       </form>
       )}
@@ -1855,20 +1955,36 @@ function Form(
           type="number"
           className='form_input'
         />
-        <div className='flex-end mx-3 mb-5 gap-4'>
+        <div>
+          <Checkbox
+            defaultSelected={transporteVal}
+            color="warning"
+            onChange={() => setTransporteVal((prev) => !prev)}
+            >
+            <p className="text-sm">Ao criar evento, aceita com os 
+            <Link
+              href={"#"}
+              className="dropdown_link"
+              >
+                &nbsp;termos e condicoes
+                  </Link> da gestao de eventos</p>
+          </Checkbox>
+        </div>
+        {transporteVal && (
+          <div className='flex-end mx-3 mb-5 gap-4'>
           <Link href={"/"} className='text-gray-500 text-sm'>
             Cancelar
           </Link>
           <button 
             type='submit'
             disabled={submitting}
-            onClick={() => createEvento("Graduação")}
+            onClick={() => createEvento("Casamento")}
             className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
           >
             {submitting ? `${type}...` : type}
           </button>
-
         </div>
+        )} 
           </>      
       </form>
       )}
@@ -2075,21 +2191,160 @@ function Form(
           type="number"
           className='form_input'
         />
-        <div className='flex-end mx-3 mb-5 gap-4'>
+        <div>
+          <Checkbox
+            defaultSelected={transporteVal}
+            color="warning"
+            onChange={() => setTransporteVal((prev) => !prev)}
+            >
+            <p className="text-sm">Ao criar evento, aceita com os 
+            <Link
+              href={"#"}
+              className="dropdown_link"
+              >
+                &nbsp;termos e condicoes
+                  </Link> da gestao de eventos</p>
+          </Checkbox>
+        </div>
+        {transporteVal && (
+          <div className='flex-end mx-3 mb-5 gap-4'>
           <Link href={"/"} className='text-gray-500 text-sm'>
             Cancelar
           </Link>
-
           <button 
             type='submit'
             disabled={submitting}
-            onClick={() => createEvento("Sociais")}
+            onClick={() => createEvento("Casamento")}
             className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
           >
             {submitting ? `${type}...` : type}
           </button>
-
         </div>
+        )} 
+          </>      
+      </form>
+      )}
+      {eventosSelect === "Apenas Gerar Convites" && (
+        <form 
+        onSubmit={handleSubmit}
+        className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
+      >
+        <>
+        <label className='flex flex-row font-satoshi font-semibold text-base text-gray-700 text-center gap-4 justify-center content-center'>
+          <h3>Gerar Convites</h3>
+          {/* <Reactphone /> */}
+        </label>
+        <span className='font-normal'>Quem és?</span>
+        <select name="cars2" id="cars2" className='form_input'>
+        <option value="Planificador(a)" onClick={() => setPlanificadorEvento("Planificador(a)")}>Planificador(a)</option>
+          <option value="Noivo" onClick={() => setPlanificadorEvento("Noivo")}>Noivo</option>
+          <option value="Noiva" onClick={() => setPlanificadorEvento("Noiva")}>Noiva</option>
+        </select>
+        
+        <div className='flex flex-row gap-4'>
+          <input 
+            value={nomePlanificador}
+            onChange={(e) => setNomePlanificador(e.target.value)}
+            placeholder='Nome'
+            required
+            className='form_input'
+          />
+          <input 
+            value={contactoPlanificador}
+            onChange={(e) => setContactoPlanificador(e.target.value)}
+            placeholder='Contacto com whatsapp'
+            required
+            type='text'
+            className='form_input'
+          />
+        </div>
+        <span className='font-normal'>Tipo de Evento</span>
+        <select name="cars2" id="cars2" className='form_input' onChange={(e) => setCoresEvento(e.target.value)}>
+          <option value="Casamento">Casamento</option>
+          <option value="Lobolo">Lobolo</option>
+          <option value="Aniversario">Aniversario</option>
+          <option value="Despedida de Solteiro">Despedida de Solteiro</option>
+          <option value="Graduacao">Graduacao</option>
+          <option value="Xitique">Xitique</option>
+          <option value="Churasco">Churasco</option>
+          <option value="Outro">Outro</option>
+        </select>
+        <span className='font-normal'>Nome do Noivos</span>
+        <div className='flex flex-row gap-4'>
+          <input 
+            // value={nomePlanificador}
+            // onChange={(e) => setNomePlanificador(e.target.value)}
+            placeholder='Nome da Noiva'
+            required
+            type='text'
+            className='form_input'
+          />
+          <input 
+            value={contactoPlanificador}
+            onChange={(e) => setContactoPlanificador(e.target.value)}
+            placeholder='Nome do Noivo'
+            required
+            type='text'
+            className='form_input'
+          />
+        </div>
+        <span className='font-normal'>Local do Evento</span>
+        <input
+          // value={convidadosPrevistos}
+          // onChange={(e) => setConvidadosPrevistos(e.target.value)}
+          placeholder='Local do Evento'
+          type="text"
+          className='form_input'
+        />
+        <span className='font-normal'>Data do Evento</span>
+        
+        <input 
+          type='date'
+          value={dataEvento}
+          onChange={(e) => setDataEvento(e.target.value)}
+          placeholder='Data do Evento'
+          required
+          className='form_input'
+        />
+        
+        <span className='font-normal'>Convidados Previstos</span>
+        <input
+          value={convidadosPrevistos}
+          onChange={(e) => setConvidadosPrevistos(e.target.value)}
+          placeholder='Número de Convidados'
+          type="number"
+          className='form_input'
+        />
+        <div>
+          <Checkbox
+            defaultSelected={transporteVal}
+            color="warning"
+            onChange={() => setTransporteVal((prev) => !prev)}
+            >
+            <p className="text-sm">Ao criar evento, aceita com os 
+            <Link
+              href={"#"}
+              className="dropdown_link"
+              >
+                &nbsp;termos e condicoes
+                  </Link> da gestao de eventos</p>
+          </Checkbox>
+        </div>
+        {transporteVal && (
+          <div className='flex-end mx-3 mb-5 gap-4'>
+          <Link href={"/"} className='text-gray-500 text-sm'>
+            Cancelar
+          </Link>
+          <button 
+            type='submit'
+            disabled={submitting}
+            onClick={() => createEvento("Casamento")}
+            className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
+          >
+            {submitting ? `${type}...` : type}
+          </button>
+        </div>
+        )} 
           </>      
       </form>
       )} 

@@ -1,6 +1,4 @@
-// import { connectToDB } from "../../../..utils/database";
 import { connectToDB } from "../../../../utils/database";
-// import Servicos from "../../../../models/servicos";
 import Servicos from "../../../../models/servicos";
 
 export const POST = async (req, res) => {

@@ -1,5 +1,5 @@
 'use client';
-import Profile from "../../components/Perfil";
+import Profile from '../../components/ProfilePage';
 import React, { useState, useEffect } from 'react';
 import Nav from '../../components/Nav';
 import { Container, Textarea, Modal, Input, Button, Card, Row, Text, Avatar, Grid, Spacer, Col, Progress } from "@nextui-org/react";

@@ -1,5 +1,7 @@
 import { connectToDB } from "../../../../utils/database";
 import Padrinho from "../../../../models/padrinho";
+// import { connectToDB } from "@utils/database";
+// import Padrinho from "@models/padrinho";
 
 export const POST = async (req, res) => {
     const { mensagem,nomeConvidado, emailConvidado, grupo, mesa, tipoConvidado, userId } = await req.json();

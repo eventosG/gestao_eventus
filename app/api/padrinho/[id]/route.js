@@ -1,5 +1,7 @@
-import { connectToDB } from "../../../../utils/database";
 import Padrinho from "../../../../models/padrinho";
+import { connectToDB } from "../../../../utils/database";
+// import Padrinho from "@models/padrinho";
+// import { connectToDB } from "@utils/database";
 
 export const GET = async (request, { params }) => {
     try {

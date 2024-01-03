@@ -1,6 +1,7 @@
 "use client";
-import Profile from "../../components/Perfil";
+import Profile from '../../components/ProfilePage';
 import { Image } from "@nextui-org/react";
+import Nav from '../../components/Nav';
 import React, { useState, useEffect } from "react";
 import {
   Button,
@@ -819,707 +820,713 @@ function Convidados() {
     }
   };
   return (
-    <Profile>
-      <div>
-        {/* <Row>
-          {convitesSelect.length > 0 &&
-            convitesSelect.map((link) => (
+    <>
+      <main className='app'>
+        <Nav />        
+        <Profile>
+          <div>
+            {/* <Row>
+              {convitesSelect.length > 0 &&
+                convitesSelect.map((link) => (
+                  <button
+                    type={"button"}
+                    onClick={() => selectedEvent(link)}
+                    className="black_btn"
+                  >
+                    {link}
+                  </button>
+                ))}
+
               <button
                 type={"button"}
-                onClick={() => selectedEvent(link)}
+                onClick={() => openMomentos()}
                 className="black_btn"
               >
-                {link}
+                +
               </button>
-            ))}
-
-          <button
-            type={"button"}
-            onClick={() => openMomentos()}
-            className="black_btn"
-          >
-            +
-          </button>
-        </Row> */}
-        <div className="flex justify-center">
-          {statusPadrinho && <Padrinhos />}
-          {statusProtocolo && <Protocolos />}
-          {statusCavalheiro && <Cavalheiros />}
-          {statusDamas && <Damas />}
-          {statusFamiliaNoiva && <FamiliaNoiva />}
-          {statusFamiliaNoivo && <FamiliaNoivo />}
-          {statusFamiliaGraduado && <FamiliaGraduado />}
-        </div>
-      </div>
-      <Spacer y={1} />
-      <div className="flex flex-col text-center justify-center items-center ">
-      <Text b size={18}>
-              Momentos do Evento
-            </Text>
-            <Spacer y={0.4} />
-        <div className="w-1/2">
-        <Row className="flex gap-4">        
-        {links2.length > 0 &&
-          links2.map((link) => (
-            <Col>
-              <Card> 
-                <div
-                  onMouseEnter={() => onMouseEnter(link.id)}
-                  onMouseLeave={onMouseLeave}
-                  cursor
-                >
-                  <Card.Body>
-                    <span className="font-satoshi font-semibold text-base text-gray-700 p-1">
-                      <Link>
-                        {isHovering ? (
-                          <div className="flex text-center justify-center">
-                            {idd4 === link.id && (
-                              <Text h6 size={12} css={{ m: 0 }}>
-                                {nomeVariavel}
-                              </Text>
+            </Row> */}
+            <div className="flex justify-center">
+              {statusPadrinho && <Padrinhos />}
+              {statusProtocolo && <Protocolos />}
+              {statusCavalheiro && <Cavalheiros />}
+              {statusDamas && <Damas />}
+              {statusFamiliaNoiva && <FamiliaNoiva />}
+              {statusFamiliaNoivo && <FamiliaNoivo />}
+              {statusFamiliaGraduado && <FamiliaGraduado />}
+            </div>
+          </div>
+          <Spacer y={1} />
+          <div className="flex flex-col text-center justify-center items-center ">
+          <Text b size={18}>
+                  Momentos do Evento
+                </Text>
+                <Spacer y={0.4} />
+            <div className="w-1/2">
+            <Row className="flex gap-4">        
+            {links2.length > 0 &&
+              links2.map((link) => (
+                <Col>
+                  <Card> 
+                    <div
+                      onMouseEnter={() => onMouseEnter(link.id)}
+                      onMouseLeave={onMouseLeave}
+                      cursor
+                    >
+                      <Card.Body>
+                        <span className="font-satoshi font-semibold text-base text-gray-700 p-1">
+                          <Link>
+                            {isHovering ? (
+                              <div className="flex text-center justify-center">
+                                {idd4 === link.id && (
+                                  <Text h6 size={12} css={{ m: 0 }}>
+                                    {nomeVariavel}
+                                  </Text>
+                                )}
+                              </div>
+                            ) : (
+                              <></>
                             )}
-                          </div>
-                        ) : (
-                          <></>
-                        )}
-                        <div className="flex flex-row gap-2">
-                          <Image
-                            src={link.img}
-                            alt={"Momentos do Evento"}
-                            width={50}
-                            height={50}
-                            className="object-contain"
-                          />
-                        </div>
-                      </Link>
-                    </span>
-                  </Card.Body>
-                </div>
-              </Card>
-            </Col>
-          ))}
+                            <div className="flex flex-row gap-2">
+                              <Image
+                                src={link.img}
+                                alt={"Momentos do Evento"}
+                                width={50}
+                                height={50}
+                                className="object-contain"
+                              />
+                            </div>
+                          </Link>
+                        </span>
+                      </Card.Body>
+                    </div>
+                  </Card>
+                </Col>
+              ))}
 
-        <button
-          type={"button"}
-          onClick={() => openMomentos()}
-          className="black_btn"
-        >
-          +
-        </button>
-      </Row>
-      <Spacer y={1} />
-      <Divider className="my-4" />
-      </div>      
-      </div>
-      
-      <Spacer y={3} />
-      <div className="flex flex-row gap-4 mb-2"
-        onMouseEnter={() => onMouseEnterEspeciais()}
-        onMouseLeave={onMouseLeaveEspeciais}
-        cursor
-        >
-        <Text 
-        
-        b 
-        size={20}>
-        Convidados Especiais 
-        </Text>
-        {isHoveringEspeciais && (
-          <div>
             <button
-            type={"button"}
-            onClick={() => {}}
-            className="black_btn"
-          >
-            +
-        </button>
-        </div>
-        )}
-        
-      </div>
-      
-      <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-      
-      </div>
-      <Divider className="my-4" />   
-      <div className="flex flex-row gap-4 my-2">
-      
-      </div>
-      <Spacer y={3} />
-      <div className="flex flex-row gap-4 mb-2"><Text b size={20}>
-            Meus Convidados
-      </Text>
-        </div>
-        
-      
-      <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-      
-    </div>
-      <Divider className="" />  
-      <Spacer y={1} /> 
-      <Card>
-          <div className='justify-center items-center'>
-            <Card.Body>
-            <Grid.Container gap={2} className="flex justify-between">                         
-              <div className="flex flex-row">              
-                <Grid>
-                  <Button onPress={() => setVisible(true)} bordered color="gradient" auto>
-                    + Grupos
-                  </Button>
-                </Grid>
-                <Grid>
-                  <Button onPress={() => setVisibleMesa(true)} bordered color="gradient" auto>
-                    + Mesas
-                  </Button>
-                </Grid>
-                <Grid>
-                  <Button onPress={visiblePadrinhosPopUp} bordered color="gradient" auto>
-                    + Convidado
-                  </Button>
-                </Grid>
-              </div>
-              <div  className="flex flex-row">
-                <Grid>
-                <form class="search-box">
-                  <input className="text-blue-500" type="text" placeholder=" "/>
-                  <button type="reset"></button>
-                </form>
-                </Grid>
-                <Grid>
-                  <Button onPress={() => {}} bordered color="gradient" auto>
-                    Gerir Mesas
-                  </Button>
-                </Grid>          
-              </div>
-              </Grid.Container>
-          </Card.Body>
-        </div>
-      </Card>
-      <Modal
-        closeButton
-        aria-labelledby="modal-title"
-        open={momentosVisible}
-        onClose={closeMomentos}
-      >
-        <Modal.Header>
-          <Text id="modal-title" size={18}>
-            <Text b size={18}>
-              Categoria de Convidados
-            </Text>
-          </Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Dropdown>
-            <Dropdown.Button flat color="warning" css={{ tt: "capitalize" }}>
-              {selectedValue}
-            </Dropdown.Button>
-            <Dropdown.Menu
-              aria-label="Convidados"
-              color="warning"
-              disallowEmptySelection
-              selectionMode="single"
-              selectedKeys={selected}
-              onSelectionChange={setSelected}
+              type={"button"}
+              onClick={() => openMomentos()}
+              className="black_btn"
             >
-              <Dropdown.Item key="Convidados Especiais">
-                Convidados Especiais
-              </Dropdown.Item>
-              <Dropdown.Item key="Familiares">Familiares</Dropdown.Item>
-              <Dropdown.Item key="Amigos">Amigos</Dropdown.Item>
-              <Dropdown.Item key="Colegas">Colegas</Dropdown.Item>
-              <Dropdown.Item key="Outros">Outros</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          {selectedValue === "Outros" && (
-            <>
+              +
+            </button>
+          </Row>
+          <Spacer y={1} />
+          <Divider className="my-4" />
+          </div>      
+          </div>
+          
+          <Spacer y={3} />
+          <div className="flex flex-row gap-4 mb-2"
+            onMouseEnter={() => onMouseEnterEspeciais()}
+            onMouseLeave={onMouseLeaveEspeciais}
+            cursor
+            >
+            <Text 
+            
+            b 
+            size={20}>
+            Convidados Especiais 
+            </Text>
+            {isHoveringEspeciais && (
+              <div>
+                <button
+                type={"button"}
+                onClick={() => {}}
+                className="black_btn"
+              >
+                +
+            </button>
+            </div>
+            )}
+            
+          </div>
+          
+          <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+          
+          </div>
+          <Divider className="my-4" />   
+          <div className="flex flex-row gap-4 my-2">
+          
+          </div>
+          <Spacer y={3} />
+          <div className="flex flex-row gap-4 mb-2"><Text b size={20}>
+                Meus Convidados
+          </Text>
+            </div>
+            
+          
+          <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+          
+        </div>
+          <Divider className="" />  
+          <Spacer y={1} /> 
+          <Card>
+              <div className='justify-center items-center'>
+                <Card.Body>
+                <Grid.Container gap={2} className="flex justify-between">                         
+                  <div className="flex flex-row">              
+                    <Grid>
+                      <Button onPress={() => setVisible(true)} bordered color="gradient" auto>
+                        + Grupos
+                      </Button>
+                    </Grid>
+                    <Grid>
+                      <Button onPress={() => setVisibleMesa(true)} bordered color="gradient" auto>
+                        + Mesas
+                      </Button>
+                    </Grid>
+                    <Grid>
+                      <Button onPress={visiblePadrinhosPopUp} bordered color="gradient" auto>
+                        + Convidado
+                      </Button>
+                    </Grid>
+                  </div>
+                  <div  className="flex flex-row">
+                    <Grid>
+                    <form class="search-box">
+                      <input className="text-blue-500" type="text" placeholder=" "/>
+                      <button type="reset"></button>
+                    </form>
+                    </Grid>
+                    <Grid>
+                      <Button onPress={() => {}} bordered color="gradient" auto>
+                        Gerir Mesas
+                      </Button>
+                    </Grid>          
+                  </div>
+                  </Grid.Container>
+              </Card.Body>
+            </div>
+          </Card>
+          <Modal
+            closeButton
+            aria-labelledby="modal-title"
+            open={momentosVisible}
+            onClose={closeMomentos}
+          >
+            <Modal.Header>
+              <Text id="modal-title" size={18}>
+                <Text b size={18}>
+                  Categoria de Convidados
+                </Text>
+              </Text>
+            </Modal.Header>
+            <Modal.Body>
+              <Dropdown>
+                <Dropdown.Button flat color="warning" css={{ tt: "capitalize" }}>
+                  {selectedValue}
+                </Dropdown.Button>
+                <Dropdown.Menu
+                  aria-label="Convidados"
+                  color="warning"
+                  disallowEmptySelection
+                  selectionMode="single"
+                  selectedKeys={selected}
+                  onSelectionChange={setSelected}
+                >
+                  <Dropdown.Item key="Convidados Especiais">
+                    Convidados Especiais
+                  </Dropdown.Item>
+                  <Dropdown.Item key="Familiares">Familiares</Dropdown.Item>
+                  <Dropdown.Item key="Amigos">Amigos</Dropdown.Item>
+                  <Dropdown.Item key="Colegas">Colegas</Dropdown.Item>
+                  <Dropdown.Item key="Outros">Outros</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              {selectedValue === "Outros" && (
+                <>
+                  <Input
+                    type="text"
+                    value={titulo}
+                    onChange={(e) => setTitulo(e.target.value)}
+                    clearable
+                    bordered
+                    fullWidth
+                    color="primary"
+                    size="lg"
+                    placeholder="Outros Convidados"
+                    contentLeft={<Mail fill="currentColor" />}
+                  />
+                </>
+              )}
+              {selectedValue === "Amigos" && (
+                <>
+                  <Dropdown>
+                    <Dropdown.Button
+                      flat
+                      color="warning"
+                      css={{ tt: "capitalize" }}
+                    >
+                      {selectedValue1}
+                    </Dropdown.Button>
+                    <Dropdown.Menu
+                      aria-label="Convidados"
+                      color="warning"
+                      disallowEmptySelection
+                      selectionMode="single"
+                      selectedKeys={selected1}
+                      onSelectionChange={setSelected1}
+                    >
+                      <Dropdown.Item key="Amigos Da Noiva">
+                        Amigos Da Noiva
+                      </Dropdown.Item>
+                      <Dropdown.Item key="Amigos Do Noivo">
+                        Amigos Do Noivo
+                      </Dropdown.Item>
+                      <Dropdown.Item key="Amigos Do Graduado">
+                        Amigos Do Graduado
+                      </Dropdown.Item>
+                      <Dropdown.Item key="Amigos Do Aniversariante">
+                        Amigos Do Aniversariante
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </>
+              )}
+              {selectedValue === "Familiares" && (
+                <>
+                  <Dropdown>
+                    <Dropdown.Button
+                      flat
+                      color="warning"
+                      css={{ tt: "capitalize" }}
+                    >
+                      {selectedValue1}
+                    </Dropdown.Button>
+                    <Dropdown.Menu
+                      aria-label="Convidados"
+                      color="warning"
+                      disallowEmptySelection
+                      selectionMode="single"
+                      selectedKeys={selected1}
+                      onSelectionChange={setSelected1}
+                    >
+                      <Dropdown.Item key="Familiares Da Noiva">
+                        Familiares Da Noiva
+                      </Dropdown.Item>
+                      <Dropdown.Item key="Familiares Do Noivo">
+                        Familiares Do Noivo
+                      </Dropdown.Item>
+                      <Dropdown.Item key="Familiares Do Graduado">
+                        Familiares Do Graduado
+                      </Dropdown.Item>
+                      <Dropdown.Item key="Familiares Do Aniversariante">
+                        Familiares Do Aniversariante
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </>
+              )}
+              {selectedValue === "Convidados Especiais" && (
+                <>
+                  <Dropdown>
+                    <Dropdown.Button
+                      flat
+                      color="warning"
+                      css={{ tt: "capitalize" }}
+                    >
+                      {selectedValue1}
+                    </Dropdown.Button>
+                    <Dropdown.Menu
+                      aria-label="Convidados"
+                      color="warning"
+                      disallowEmptySelection
+                      selectionMode="single"
+                      selectedKeys={selected1}
+                      onSelectionChange={setSelected1}
+                    >
+                      <Dropdown.Item key="Padrinhos">Padrinhos</Dropdown.Item>
+                      <Dropdown.Item key="Cavalheiros">Cavalheiros</Dropdown.Item>
+                      <Dropdown.Item key="Damas">Damas</Dropdown.Item>
+                      <Dropdown.Item key="Protocolos">Protocolos</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </>
+              )}
+              {selectedValue === "Colegas" && (
+                <>
+                  <Dropdown>
+                    <Dropdown.Button
+                      flat
+                      color="warning"
+                      css={{ tt: "capitalize" }}
+                    >
+                      {selectedValue1}
+                    </Dropdown.Button>
+                    <Dropdown.Menu
+                      aria-label="Convidados"
+                      color="warning"
+                      disallowEmptySelection
+                      selectionMode="single"
+                      selectedKeys={selected1}
+                      onSelectionChange={setSelected1}
+                    >
+                      <Dropdown.Item key="Colegas Do Trabalho">
+                        Colegas Do Trabalho
+                      </Dropdown.Item>
+                      <Dropdown.Item key="Colegas Da Escola">
+                        Colegas Da Escola
+                      </Dropdown.Item>
+                      <Dropdown.Item key="Colegas Da Faculdade">
+                        Colegas Da Faculdade
+                      </Dropdown.Item>
+                      <Dropdown.Item key="Colegas Do Curso">
+                        Colegas Do Curso
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </>
+              )}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button auto flat color="error" onPress={confirmarConvidado}>
+                OK
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          <Modal
+            closeButton
+            aria-labelledby="modal-title"
+            open={visible}
+            onClose={closeHandler}
+          >
+            <Modal.Header>
+              <Text id="modal-title" size={18}>
+                <Text b size={18}>
+                  Grupos
+                </Text>
+              </Text>
+            </Modal.Header>
+            <Modal.Body>
               <Input
-                type="text"
-                value={titulo}
-                onChange={(e) => setTitulo(e.target.value)}
+                value={grupo}
+                onChange={(e) => setGrupo(e.target.value)}
                 clearable
                 bordered
                 fullWidth
                 color="primary"
                 size="lg"
-                placeholder="Outros Convidados"
+                placeholder="Nome do Grupo"
                 contentLeft={<Mail fill="currentColor" />}
               />
-            </>
-          )}
-          {selectedValue === "Amigos" && (
-            <>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button auto flat color="error" onPress={closeHandler}>
+                Cancelar
+              </Button>
+              <Button auto onPress={saveGrupo}>
+                Confirmar
+              </Button>
+            </Modal.Footer>
+          </Modal>   
+          <Modal
+            closeButton
+            aria-labelledby="modal-title"
+            open={visibleMesa}
+            onClose={closeHandlerMesa}
+          >
+            <Modal.Header>
+              <Text id="modal-title" size={18}>
+                <Text b size={18}>
+                  Mesas
+                </Text>
+              </Text>
+            </Modal.Header>
+            <Modal.Body>
+              <Input
+                value={mesa}
+                onChange={(e) => setMesa(e.target.value)}
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Nome da Mesa"
+                contentLeft={<Mail fill="currentColor" />}
+              />
+              <Input
+                // value={mesa}
+                // onChange={(e) => setMesa(e.target.value)}
+                type="number"
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Numero de Cadeiras"
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button auto flat color="error" onPress={closeHandlerMesa}>
+                Cancelar
+              </Button>
+              <Button auto onPress={saveMesa}>
+                Confirmar
+              </Button>
+            </Modal.Footer>
+          </Modal>   
+          {/* Inicio Padrinhos */}
+          <Modal
+            closeButton
+            aria-labelledby="modal-title"
+            open={visiblePadrinho}
+            onClose={closeHandlerPadrinho}
+          >
+            <Modal.Header>
+              <Text id="modal-title" size={18}>
+                <Text b size={18}>
+                  {textoVariavel}
+                </Text>
+              </Text>
+            </Modal.Header>
+            <Modal.Body>
+              <Input
+                type='text'
+                value={nomeConvidado}
+                onChange={(e) => setNomeConvidado(e.target.value)}
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Nome do Convidado"
+                contentLeft={<Mail fill="currentColor" />}
+              />
+              <Input
+                type='email'
+                value={emailConvidado}
+                onChange={(e) => setEmailConvidado(e.target.value)}
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Email do Convidado"
+                contentLeft={<Mail fill="currentColor" />}
+              />
+              <Input
+                type='email'
+                // value={emailConvidado}
+                // onChange={(e) => setEmailConvidado(e.target.value)}
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Contacto (Com WhatsApp)"
+                contentLeft={<Mail fill="currentColor" />}
+              />
               <Dropdown>
-                <Dropdown.Button
-                  flat
-                  color="warning"
-                  css={{ tt: "capitalize" }}
-                >
-                  {selectedValue1}
+                <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
+                  {selectedValueTipoConvidado}
                 </Dropdown.Button>
                 <Dropdown.Menu
-                  aria-label="Convidados"
-                  color="warning"
+                  aria-label="Grupo"
+                  color="secondary"
                   disallowEmptySelection
                   selectionMode="single"
-                  selectedKeys={selected1}
-                  onSelectionChange={setSelected1}
+                  selectedKeys={selectedMesasTipoConvidado}
+                  onSelectionChange={setSelectedMesasTipoConvidado}
                 >
-                  <Dropdown.Item key="Amigos Da Noiva">
-                    Amigos Da Noiva
-                  </Dropdown.Item>
-                  <Dropdown.Item key="Amigos Do Noivo">
-                    Amigos Do Noivo
-                  </Dropdown.Item>
-                  <Dropdown.Item key="Amigos Do Graduado">
-                    Amigos Do Graduado
-                  </Dropdown.Item>
-                  <Dropdown.Item key="Amigos Do Aniversariante">
-                    Amigos Do Aniversariante
-                  </Dropdown.Item>
+                  <Dropdown.Item key="Padrinho">Padrinho</Dropdown.Item>
+                  <Dropdown.Item key="Dama">Dama</Dropdown.Item>
+                  <Dropdown.Item key="Cavalheiro">Cavalheiro</Dropdown.Item>
+                  <Dropdown.Item key="Protocolo">Protocolo</Dropdown.Item>
+                  <Dropdown.Item key="Outros">Outros</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </>
-          )}
-          {selectedValue === "Familiares" && (
-            <>
               <Dropdown>
-                <Dropdown.Button
-                  flat
-                  color="warning"
-                  css={{ tt: "capitalize" }}
-                >
-                  {selectedValue1}
+                <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
+                  {selectedValue}
                 </Dropdown.Button>
                 <Dropdown.Menu
-                  aria-label="Convidados"
-                  color="warning"
+                  aria-label="Gropos"
+                  color="secondary"
                   disallowEmptySelection
                   selectionMode="single"
-                  selectedKeys={selected1}
-                  onSelectionChange={setSelected1}
+                  selectedKeys={selected}
+                  onSelectionChange={setSelected}
                 >
-                  <Dropdown.Item key="Familiares Da Noiva">
-                    Familiares Da Noiva
-                  </Dropdown.Item>
-                  <Dropdown.Item key="Familiares Do Noivo">
-                    Familiares Do Noivo
-                  </Dropdown.Item>
-                  <Dropdown.Item key="Familiares Do Graduado">
-                    Familiares Do Graduado
-                  </Dropdown.Item>
-                  <Dropdown.Item key="Familiares Do Aniversariante">
-                    Familiares Do Aniversariante
-                  </Dropdown.Item>
+                  {grupos?.length > 0 && grupos?.map((grup) => 
+                    <Dropdown.Item key={grup.grupo}>{grup.grupo}</Dropdown.Item>
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
-            </>
-          )}
-          {selectedValue === "Convidados Especiais" && (
-            <>
               <Dropdown>
-                <Dropdown.Button
-                  flat
-                  color="warning"
-                  css={{ tt: "capitalize" }}
-                >
-                  {selectedValue1}
+                <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
+                  {selectedValueMesas}
                 </Dropdown.Button>
                 <Dropdown.Menu
-                  aria-label="Convidados"
-                  color="warning"
+                  aria-label="Mesas"
+                  color="secondary"
                   disallowEmptySelection
                   selectionMode="single"
-                  selectedKeys={selected1}
-                  onSelectionChange={setSelected1}
+                  selectedKeys={selectedMesas}
+                  onSelectionChange={setSelectedMesas}
                 >
-                  <Dropdown.Item key="Padrinhos">Padrinhos</Dropdown.Item>
-                  <Dropdown.Item key="Cavalheiros">Cavalheiros</Dropdown.Item>
-                  <Dropdown.Item key="Damas">Damas</Dropdown.Item>
-                  <Dropdown.Item key="Protocolos">Protocolos</Dropdown.Item>
+                  {mesas.length > 0 && mesas.map((mes) => 
+                    <Dropdown.Item key={mes.mesa}>{mes.mesa}</Dropdown.Item>
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
-            </>
-          )}
-          {selectedValue === "Colegas" && (
-            <>
+              <Textarea
+                label="Mensagem"
+                value={mensagem}
+                onChange={(e) => setMensagem(e.target.value)}
+                placeholder="Escreva uma mensagem de motivação para o seu convidado"
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button auto flat color="error" onPress={closeHandlerPadrinho}>
+                Cancelar
+              </Button>
+              <Button auto onPress={savePadrinho}>
+                Confirmar
+              </Button>
+            </Modal.Footer>
+          </Modal>  
+          <Modal
+            closeButton
+            aria-labelledby="modal-title"
+            open={visibleDetalhes}
+            onClose={closeDetalhes}
+          >
+            <Modal.Header>
+              <Text id="modal-title" size={18}>
+                <Text b size={18}>
+                  Detalhes de {nomeConvidado}
+                </Text> 
+              </Text>
+            </Modal.Header>
+            <Modal.Body>
+              <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Link do Convite: https://www.hiventus.com/confirmarPresenca/{iDDD}</span>
+              <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Mesa: {mesa}</span>
+              <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Grupo: {grupo}</span>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button auto onPress={closeDetalhes}>
+                OK
+              </Button>
+            </Modal.Footer>
+          </Modal> 
+          <Modal
+            closeButton
+            aria-labelledby="modal-title"
+            open={visibleEditar}
+            onClose={closeHandlerEditar}
+          >
+            <Modal.Header>
+              <Text id="modal-title" size={18}>
+                <Text b size={18}>
+                  {textoVariavel}
+                </Text>
+              </Text>
+            </Modal.Header>
+            <Modal.Body>
+              <Input
+                type='text'
+                value={nomeConvidado}
+                onChange={(e) => setNomeConvidado(e.target.value)}
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Nome do Padrinho"
+                contentLeft={<Mail fill="currentColor" />}
+              />
+              <Input
+                type='email'
+                value={emailConvidado}
+                onChange={(e) => setEmailConvidado(e.target.value)}
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Email do Padrinho"
+                contentLeft={<Mail fill="currentColor" />}
+              />
               <Dropdown>
-                <Dropdown.Button
-                  flat
-                  color="warning"
-                  css={{ tt: "capitalize" }}
-                >
-                  {selectedValue1}
+                <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
+                  {selectedValue}
                 </Dropdown.Button>
                 <Dropdown.Menu
-                  aria-label="Convidados"
-                  color="warning"
+                  aria-label="Gropos"
+                  color="secondary"
                   disallowEmptySelection
                   selectionMode="single"
-                  selectedKeys={selected1}
-                  onSelectionChange={setSelected1}
+                  selectedKeys={selected}
+                  onSelectionChange={setSelected}
                 >
-                  <Dropdown.Item key="Colegas Do Trabalho">
-                    Colegas Do Trabalho
-                  </Dropdown.Item>
-                  <Dropdown.Item key="Colegas Da Escola">
-                    Colegas Da Escola
-                  </Dropdown.Item>
-                  <Dropdown.Item key="Colegas Da Faculdade">
-                    Colegas Da Faculdade
-                  </Dropdown.Item>
-                  <Dropdown.Item key="Colegas Do Curso">
-                    Colegas Do Curso
-                  </Dropdown.Item>
+                  {grupos?.length > 0 && grupos?.map((grup) => 
+                    <Dropdown.Item key={grup.grupo}>{grup.grupo}</Dropdown.Item>
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
-            </>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onPress={confirmarConvidado}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal
-        closeButton
-        aria-labelledby="modal-title"
-        open={visible}
-        onClose={closeHandler}
-      >
-        <Modal.Header>
-          <Text id="modal-title" size={18}>
-            <Text b size={18}>
-              Grupos
-            </Text>
-          </Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            value={grupo}
-            onChange={(e) => setGrupo(e.target.value)}
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Nome do Grupo"
-            contentLeft={<Mail fill="currentColor" />}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onPress={closeHandler}>
-            Cancelar
-          </Button>
-          <Button auto onPress={saveGrupo}>
-            Confirmar
-          </Button>
-        </Modal.Footer>
-      </Modal>   
-      <Modal
-        closeButton
-        aria-labelledby="modal-title"
-        open={visibleMesa}
-        onClose={closeHandlerMesa}
-      >
-        <Modal.Header>
-          <Text id="modal-title" size={18}>
-            <Text b size={18}>
-              Mesas
-            </Text>
-          </Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            value={mesa}
-            onChange={(e) => setMesa(e.target.value)}
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Nome da Mesa"
-            contentLeft={<Mail fill="currentColor" />}
-          />
-          <Input
-            // value={mesa}
-            // onChange={(e) => setMesa(e.target.value)}
-            type="number"
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Numero de Cadeiras"
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onPress={closeHandlerMesa}>
-            Cancelar
-          </Button>
-          <Button auto onPress={saveMesa}>
-            Confirmar
-          </Button>
-        </Modal.Footer>
-      </Modal>   
-      {/* Inicio Padrinhos */}
-      <Modal
-        closeButton
-        aria-labelledby="modal-title"
-        open={visiblePadrinho}
-        onClose={closeHandlerPadrinho}
-      >
-        <Modal.Header>
-          <Text id="modal-title" size={18}>
-            <Text b size={18}>
-              {textoVariavel}
-            </Text>
-          </Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            type='text'
-            value={nomeConvidado}
-            onChange={(e) => setNomeConvidado(e.target.value)}
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Nome do Convidado"
-            contentLeft={<Mail fill="currentColor" />}
-          />
-          <Input
-            type='email'
-            value={emailConvidado}
-            onChange={(e) => setEmailConvidado(e.target.value)}
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Email do Convidado"
-            contentLeft={<Mail fill="currentColor" />}
-          />
-          <Input
-            type='email'
-            // value={emailConvidado}
-            // onChange={(e) => setEmailConvidado(e.target.value)}
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Contacto (Com WhatsApp)"
-            contentLeft={<Mail fill="currentColor" />}
-          />
-          <Dropdown>
-            <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
-              {selectedValueTipoConvidado}
-            </Dropdown.Button>
-            <Dropdown.Menu
-              aria-label="Grupo"
-              color="secondary"
-              disallowEmptySelection
-              selectionMode="single"
-              selectedKeys={selectedMesasTipoConvidado}
-              onSelectionChange={setSelectedMesasTipoConvidado}
-            >
-              <Dropdown.Item key="Padrinho">Padrinho</Dropdown.Item>
-              <Dropdown.Item key="Dama">Dama</Dropdown.Item>
-              <Dropdown.Item key="Cavalheiro">Cavalheiro</Dropdown.Item>
-              <Dropdown.Item key="Protocolo">Protocolo</Dropdown.Item>
-              <Dropdown.Item key="Outros">Outros</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <Dropdown>
-            <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
-              {selectedValue}
-            </Dropdown.Button>
-            <Dropdown.Menu
-              aria-label="Gropos"
-              color="secondary"
-              disallowEmptySelection
-              selectionMode="single"
-              selectedKeys={selected}
-              onSelectionChange={setSelected}
-            >
-              {grupos?.length > 0 && grupos?.map((grup) => 
-                 <Dropdown.Item key={grup.grupo}>{grup.grupo}</Dropdown.Item>
-              )}
-            </Dropdown.Menu>
-          </Dropdown>
-          <Dropdown>
-            <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
-              {selectedValueMesas}
-            </Dropdown.Button>
-            <Dropdown.Menu
-              aria-label="Mesas"
-              color="secondary"
-              disallowEmptySelection
-              selectionMode="single"
-              selectedKeys={selectedMesas}
-              onSelectionChange={setSelectedMesas}
-            >
-              {mesas.length > 0 && mesas.map((mes) => 
-                 <Dropdown.Item key={mes.mesa}>{mes.mesa}</Dropdown.Item>
-              )}
-            </Dropdown.Menu>
-          </Dropdown>
-          <Textarea
-            label="Mensagem"
-            value={mensagem}
-            onChange={(e) => setMensagem(e.target.value)}
-            placeholder="Escreva uma mensagem de motivação para o seu convidado"
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onPress={closeHandlerPadrinho}>
-            Cancelar
-          </Button>
-          <Button auto onPress={savePadrinho}>
-            Confirmar
-          </Button>
-        </Modal.Footer>
-      </Modal>  
-      <Modal
-        closeButton
-        aria-labelledby="modal-title"
-        open={visibleDetalhes}
-        onClose={closeDetalhes}
-      >
-        <Modal.Header>
-          <Text id="modal-title" size={18}>
-            <Text b size={18}>
-              Detalhes de {nomeConvidado}
-            </Text> 
-          </Text>
-        </Modal.Header>
-        <Modal.Body>
-          <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Link do Convite: https://www.hiventus.com/confirmarPresenca/{iDDD}</span>
-          <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Mesa: {mesa}</span>
-          <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Grupo: {grupo}</span>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto onPress={closeDetalhes}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal> 
-      <Modal
-        closeButton
-        aria-labelledby="modal-title"
-        open={visibleEditar}
-        onClose={closeHandlerEditar}
-      >
-        <Modal.Header>
-          <Text id="modal-title" size={18}>
-            <Text b size={18}>
-              {textoVariavel}
-            </Text>
-          </Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            type='text'
-            value={nomeConvidado}
-            onChange={(e) => setNomeConvidado(e.target.value)}
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Nome do Padrinho"
-            contentLeft={<Mail fill="currentColor" />}
-          />
-          <Input
-            type='email'
-            value={emailConvidado}
-            onChange={(e) => setEmailConvidado(e.target.value)}
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Email do Padrinho"
-            contentLeft={<Mail fill="currentColor" />}
-          />
-          <Dropdown>
-            <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
-              {selectedValue}
-            </Dropdown.Button>
-            <Dropdown.Menu
-              aria-label="Gropos"
-              color="secondary"
-              disallowEmptySelection
-              selectionMode="single"
-              selectedKeys={selected}
-              onSelectionChange={setSelected}
-            >
-              {grupos?.length > 0 && grupos?.map((grup) => 
-                 <Dropdown.Item key={grup.grupo}>{grup.grupo}</Dropdown.Item>
-              )}
-            </Dropdown.Menu>
-          </Dropdown>
-          <Dropdown>
-            <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
-              {selectedValueMesas}
-            </Dropdown.Button>
-            <Dropdown.Menu
-              aria-label="Mesas"
-              color="secondary"
-              disallowEmptySelection
-              selectionMode="single"
-              selectedKeys={selectedMesas}
-              onSelectionChange={setSelectedMesas}
-            >
-              {mesas.length > 0 && mesas.map((mes) => 
-                 <Dropdown.Item key={mes.mesa}>{mes.mesa}</Dropdown.Item>
-              )}
-            </Dropdown.Menu>
-          </Dropdown>
-          <Textarea
-            label="Mensagem"
-            value={mensagem}
-            onChange={(e) => setMensagem(e.target.value)}
-            placeholder="Escreva uma mensagem de motivação para o seu convidado"
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onPress={closeHandlerEditar}>
-            Cancelar
-          </Button>
-          <Button auto onPress={() => editPadrinho(iDDD)}>
-            Editar
-          </Button>
-        </Modal.Footer>
-      </Modal> 
-      <Modal
-        closeButton
-        aria-labelledby="modal-title"
-        open={visibleRemover}
-        onClose={closeHandlerRemover}
-      >
-        <Modal.Header>
-          <Text id="modal-title" size={18}>
-            <Text b size={18}>
-              Remover Convidado
-            </Text>
-          </Text>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Remover {nomeConvidado}?</p>
-        </Modal.Body>
-        <Modal.Footer>          
-          <Button auto onPress={closeHandlerRemover}>
-          Cancelar
-          </Button>
-          <Button auto flat color="error" onPress={() => deletePadrinho(iDDD)}>
-            Remover
-          </Button>
-        </Modal.Footer>
-      </Modal> 
-      {/* Fim Padrinhos */} 
-    </Profile>
+              <Dropdown>
+                <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
+                  {selectedValueMesas}
+                </Dropdown.Button>
+                <Dropdown.Menu
+                  aria-label="Mesas"
+                  color="secondary"
+                  disallowEmptySelection
+                  selectionMode="single"
+                  selectedKeys={selectedMesas}
+                  onSelectionChange={setSelectedMesas}
+                >
+                  {mesas.length > 0 && mesas.map((mes) => 
+                    <Dropdown.Item key={mes.mesa}>{mes.mesa}</Dropdown.Item>
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
+              <Textarea
+                label="Mensagem"
+                value={mensagem}
+                onChange={(e) => setMensagem(e.target.value)}
+                placeholder="Escreva uma mensagem de motivação para o seu convidado"
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button auto flat color="error" onPress={closeHandlerEditar}>
+                Cancelar
+              </Button>
+              <Button auto onPress={() => editPadrinho(iDDD)}>
+                Editar
+              </Button>
+            </Modal.Footer>
+          </Modal> 
+          <Modal
+            closeButton
+            aria-labelledby="modal-title"
+            open={visibleRemover}
+            onClose={closeHandlerRemover}
+          >
+            <Modal.Header>
+              <Text id="modal-title" size={18}>
+                <Text b size={18}>
+                  Remover Convidado
+                </Text>
+              </Text>
+            </Modal.Header>
+            <Modal.Body>
+              <p>Remover {nomeConvidado}?</p>
+            </Modal.Body>
+            <Modal.Footer>          
+              <Button auto onPress={closeHandlerRemover}>
+              Cancelar
+              </Button>
+              <Button auto flat color="error" onPress={() => deletePadrinho(iDDD)}>
+                Remover
+              </Button>
+            </Modal.Footer>
+          </Modal> 
+          {/* Fim Padrinhos */} 
+        </Profile>
+      </main>
+    </>
+    
   );
 }
 

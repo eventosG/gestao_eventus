@@ -1,11 +1,9 @@
-// import mongooseConnect from "../../../../../lib/mongoose";
-import mongooseConnect from "../../../lib/mongoose";
-// import { Category } from "../../../../../app/api/categories/route.js";
+import { connectToDB } from "../../../utils/database";
 import { Category } from "../../../models/Category";
 
 export const GET = async () => {
     try {
-        await mongooseConnect();
+        await connectToDB();
         const eventos = await Category.find().populate('parent');
         return new Response(JSON.stringify(eventos), {
             status: 200

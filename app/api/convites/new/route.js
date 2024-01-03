@@ -1,5 +1,7 @@
 import { connectToDB } from "../../../../utils/database";
 import Convites from "../../../../models/convites";
+// import { connectToDB } from "@utils/database";
+// import Convites from "@models/convites";
 
 export const POST = async (req, res) => {
     const { modelo, preco, userId } = await req.json();

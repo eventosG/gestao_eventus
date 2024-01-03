@@ -2,8 +2,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import Profile from '@app/profile/page';
+import Profile from '../components/ProfilePage';
 function MyProfile() {
   const {data: session} = useSession();
   const [posts, setPosts] = useState([]);

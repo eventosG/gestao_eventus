@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import Profile from "../../components/Perfil";
+import Profile from '../../components/ProfilePage';
 import Image from "next/image";
 import {Divider} from "@nextui-org/react";
 import Nav from '../../components/Nav';
@@ -100,7 +100,7 @@ function page() {
           </div>
         </Profile> 
       </main>
-    </>  
+    </>   
   )
 }
 

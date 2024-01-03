@@ -1,5 +1,7 @@
 import { connectToDB } from "../../../../utils/database";
 import Cronograma from "../../../../models/cronograma";
+// import { connectToDB } from "@utils/database";
+// import Cronograma from "@models/cronograma";
 
 export const POST = async (req, res) => {
     const { corpo, data, titulo, userId } = await req.json();

@@ -1,3 +1,5 @@
+// import { connectToDB } from "@utils/database";
+// import Padrinho from "@models/padrinho";
 import { connectToDB } from "../../../../utils/database";
 import Padrinho from "../../../../models/padrinho";
 

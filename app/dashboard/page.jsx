@@ -1,9 +1,10 @@
 'use client';
-import Profile from "../../components/Perfil";
+import Profile from '../../components/ProfilePage';
 import React, { useState, useEffect } from 'react';
 import { Container, Tooltip, Textarea, Modal, Input, Loading, Button, Card, Row, Text, Avatar, Grid, Spacer, Col, Progress, Collapse } from "@nextui-org/react";
 import { useSession } from 'next-auth/react';
 import Countdown from './countdown';
+import Nav from '../../components/Nav';
 import { useRouter } from 'next/navigation';
 import { Mail } from '../convidados/Mail';
 import { IconButton } from '../convidados/IconButton';
@@ -161,291 +162,294 @@ function Dashboard() {
     }
   }
   return (
-    <Profile> 
-      <Container>
-        <Card>
-          <div className='justify-center items-center'>
-            <Card.Body>              
+    <main className='app'>
+      <Nav />
+      <Profile> 
+        <Container>
+          <Card>
+            <div className='justify-center items-center'>
+              <Card.Body>              
+                {evento.length > 0 && evento.map((event) => (
+                  <>
+                    <Row justify="center" align="center">
+                    <div className='justify-center items-center'>
+                      <Grid.Container gap={1}>
+                        <Grid xs={12}>
+                          <Avatar.Group>
+                            {pictureUsers.map((url, index) => (
+                              <Avatar
+                                key={index}
+                                size="lg"
+                                pointer
+                                src={url}
+                                bordered
+                                color="gradient"
+                                stacked
+                              />
+                            ))}
+                          </Avatar.Group>
+                        </Grid>
+                      </Grid.Container>             
+                    </div>          
+                  </Row>
+                    <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>{event.nomeNoiva} & {event.nomeNoivo}</span>
+                    <p><span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Data do Evento:</span> {event.dataEvento}</p>
+                    <p><span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Local do Evento:</span> {event.localEvento}</p>
+                    <p className='mb-2'>Contagem Regressiva</p>
+                    <Countdown data={event.dataEvento}/>
+                  </>
+                ))}              
+            </Card.Body>
+          </div>
+        </Card>
+        <Container gap={0}>
+        <Spacer y={1} />
+        <Row gap={1}>
+          <Col>
+            <Card>
+            <div className='justify-center items-center'>
+              <Card.Body>
+              <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
               {evento.length > 0 && evento.map((event) => (
                 <>
-                  <Row justify="center" align="center">
-                  <div className='justify-center items-center'>
-                    <Grid.Container gap={1}>
-                      <Grid xs={12}>
-                        <Avatar.Group>
-                          {pictureUsers.map((url, index) => (
-                            <Avatar
-                              key={index}
-                              size="lg"
-                              pointer
-                              src={url}
-                              bordered
-                              color="gradient"
-                              stacked
-                            />
-                          ))}
-                        </Avatar.Group>
-                      </Grid>
-                    </Grid.Container>             
-                  </div>          
-                </Row>
-                  <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>{event.nomeNoiva} & {event.nomeNoivo}</span>
-                  <p><span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Data do Evento:</span> {event.dataEvento}</p>
-                  <p><span className='font-satoshi font-semibold text-base text-gray-700 p-1'>Local do Evento:</span> {event.localEvento}</p>
-                  <p className='mb-2'>Contagem Regressiva</p>
-                  <Countdown data={event.dataEvento}/>
-                </>
-              ))}              
-          </Card.Body>
-        </div>
-      </Card>
-      <Container gap={0}>
+                  <Text h6 size={12} css={{ m: 0 }}>
+                    Orçamento Inicial
+                  </Text>
+                  <Text h6 size={12} css={{ m: 0 }}>
+                    {USDollar.format(event.orcamentoInicial)}.00 Mt
+                  </Text>
+                </>              
+              ))}
+              
+                <Progress size="sm" value={100} color="warning" />
+              </span>              
+              </Card.Body>
+              </div>
+            </Card>
+          </Col>
+          <Col>
+            <Card>
+            <div className='justify-center items-center'>
+              <Card.Body>
+              <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
+              <Text h6 size={12} css={{ m: 0 }}>
+                Serv. Solicitados
+                </Text>
+                <Text h6 size={12} css={{ m: 0 }}>
+                    {USDollar.format(0)}.00 Mt
+                  </Text>
+                <Progress size="sm" value={70} color="warning" />
+              </span> 
+              </Card.Body>
+              </div>
+            </Card>
+          </Col>
+          <Col>
+            <Card>
+            <div className='justify-center items-center'>
+              <Card.Body>
+              <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
+              <Text h6 size={12} css={{ m: 0 }}>
+                Conv. Confirmados
+                </Text>
+                <Text h6 size={12} css={{ m: 0 }}>
+                {convidadosConfirmados}/{convidados}
+                </Text>
+                <Progress size="sm" value={25} color="warning" />
+              </span> 
+              </Card.Body>
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
       <Spacer y={1} />
-      <Row gap={1}>
-        <Col>
-          <Card>
+      {processando && (
           <div className='justify-center items-center'>
-            <Card.Body>
-            <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
-            {evento.length > 0 && evento.map((event) => (
-              <>
-                <Text h6 size={12} css={{ m: 0 }}>
-                  Orçamento Inicial
-                </Text>
-                <Text h6 size={12} css={{ m: 0 }}>
-                  {USDollar.format(event.orcamentoInicial)}.00 Mt
-                </Text>
-              </>              
-            ))}
-            
-              <Progress size="sm" value={100} color="warning" />
-            </span>              
-            </Card.Body>
-            </div>
-          </Card>
-        </Col>
-        <Col>
-          <Card>
-          <div className='justify-center items-center'>
-            <Card.Body>
-            <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
-            <Text h6 size={12} css={{ m: 0 }}>
-              Serv. Solicitados
-              </Text>
-              <Text h6 size={12} css={{ m: 0 }}>
-                  {USDollar.format(0)}.00 Mt
-                </Text>
-              <Progress size="sm" value={70} color="warning" />
-            </span> 
-            </Card.Body>
-            </div>
-          </Card>
-        </Col>
-        <Col>
-          <Card>
-          <div className='justify-center items-center'>
-            <Card.Body>
-            <span className='font-satoshi font-semibold text-base text-gray-700 p-1'>
-            <Text h6 size={12} css={{ m: 0 }}>
-              Conv. Confirmados
-              </Text>
-              <Text h6 size={12} css={{ m: 0 }}>
-              {convidadosConfirmados}/{convidados}
-              </Text>
-              <Progress size="sm" value={25} color="warning" />
-            </span> 
-            </Card.Body>
-            </div>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
-    <Spacer y={1} />
-    {processando && (
-        <div className='justify-center items-center'>
-        <Grid.Container gap={2}>
+          <Grid.Container gap={2}>
+          <Grid>
+            <Loading color="warning">Processando...</Loading>
+          </Grid>
+        </Grid.Container>
+        </div> 
+        )}
+      {/* <Button onPress={() => setVisible(true)} bordered color="gradient" auto>
+                    + Cronograma
+                  </Button> */}
+      <Grid.Container gap={2}>
         <Grid>
-          <Loading color="warning">Processando...</Loading>
+          <Collapse.Group shadow>
+            {cronograma.length > 0 && cronograma.map((crono) => (
+              <Collapse title={crono.titulo}>
+                <Row justify="center" align="center">
+                <Col css={{ d: "flex" }}>
+                  <Tooltip content="Editar Cronograma">
+                    <IconButton onClick={() => editarCronograma(crono._id)}>
+                      <EditIcon size={20} fill="#979797" />
+                    </IconButton>
+                  </Tooltip>
+                </Col>
+                <Col css={{ d: "flex" }}>
+                  <Tooltip
+                    content="Remover Cronograma"
+                    color="error"
+                    onClick={() => removerConograma(crono._id)}
+                  >
+                    <IconButton>
+                      <DeleteIcon size={20} fill="#FF0080" />
+                    </IconButton>
+                  </Tooltip>
+                </Col>
+              </Row>
+                <Text>
+                  Data: {crono.data}
+                </Text>
+                <Text>
+                  {crono.corpo}
+                </Text>
+              </Collapse>
+            ))}          
+          </Collapse.Group>
         </Grid>
       </Grid.Container>
-      </div> 
-      )}
-    {/* <Button onPress={() => setVisible(true)} bordered color="gradient" auto>
-                  + Cronograma
-                </Button> */}
-    <Grid.Container gap={2}>
-      <Grid>
-        <Collapse.Group shadow>
-          {cronograma.length > 0 && cronograma.map((crono) => (
-            <Collapse title={crono.titulo}>
-              <Row justify="center" align="center">
-              <Col css={{ d: "flex" }}>
-                <Tooltip content="Editar Cronograma">
-                  <IconButton onClick={() => editarCronograma(crono._id)}>
-                    <EditIcon size={20} fill="#979797" />
-                  </IconButton>
-                </Tooltip>
-              </Col>
-              <Col css={{ d: "flex" }}>
-                <Tooltip
-                  content="Remover Cronograma"
-                  color="error"
-                  onClick={() => removerConograma(crono._id)}
-                >
-                  <IconButton>
-                    <DeleteIcon size={20} fill="#FF0080" />
-                  </IconButton>
-                </Tooltip>
-              </Col>
-            </Row>
-              <Text>
-                Data: {crono.data}
+        </Container>  
+        <Modal
+            closeButton
+            aria-labelledby="modal-title"
+            open={visible}
+            onClose={closeHandler}
+          >
+            <Modal.Header>
+              <Text id="modal-title" size={18}>
+                <Text b size={18}>
+                  Cronograma
+                </Text>
               </Text>
-              <Text>
-                {crono.corpo}
+            </Modal.Header>
+            <Modal.Body>
+              <Input
+                type='text'
+                value={titulo}
+                onChange={(e) => setTitulo(e.target.value)}
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Titulo do Cronograma"
+                contentLeft={<Mail fill="currentColor" />}
+              />
+              <Input
+                type='date'
+                value={data}
+                onChange={(e) => setData(e.target.value)}
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Titulo do Cronograma"
+                contentLeft={<Mail fill="currentColor" />}
+              />
+              <Textarea
+                value={corpo}
+                onChange={(e) => setCorpo(e.target.value)}
+                label="Corpo do Cronograma"
+                placeholder="Detalhes do Cronograma"
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button auto flat color="error" onPress={closeHandler}>
+                Cancelar
+              </Button>
+              <Button auto onPress={saveCronograma}>
+                Confirmar
+              </Button>
+            </Modal.Footer>
+        </Modal>
+        <Modal
+            closeButton
+            aria-labelledby="modal-title"
+            open={visibleEditar}
+            onClose={() => setVisibleEditar(false)}
+          >
+            <Modal.Header>
+              <Text id="modal-title" size={18}>
+                <Text b size={18}>
+                  Editar Cronograma
+                </Text>
               </Text>
-            </Collapse>
-          ))}          
-        </Collapse.Group>
-      </Grid>
-    </Grid.Container>
-      </Container>  
-      <Modal
-          closeButton
-          aria-labelledby="modal-title"
-          open={visible}
-          onClose={closeHandler}
-        >
-          <Modal.Header>
-            <Text id="modal-title" size={18}>
+            </Modal.Header>
+            <Modal.Body>
+              <Input
+                type='text'
+                value={titulo}
+                onChange={(e) => setTitulo(e.target.value)}
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Titulo do Cronograma"
+                contentLeft={<Mail fill="currentColor" />}
+              />
+              <Input
+                type='date'
+                value={data}
+                onChange={(e) => setData(e.target.value)}
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Titulo do Cronograma"
+                contentLeft={<Mail fill="currentColor" />}
+              />
+              <Textarea
+                value={corpo}
+                onChange={(e) => setCorpo(e.target.value)}
+                label="Corpo do Cronograma"
+                placeholder="Detalhes do Cronograma"
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button auto flat color="error" onPress={() => setVisibleEditar(false)}>
+                Cancelar
+              </Button>
+              <Button auto onPress={() => editCronogramaConfirm(idd4)}>
+                Confirmar
+              </Button>
+            </Modal.Footer>
+        </Modal>  
+        <Modal
+            closeButton
+            aria-labelledby="modal-title"
+            open={visibleRemover}
+            onClose={() => setVisibleRemover(false)}
+          >
+            <Modal.Header>
+              <Text id="modal-title" size={18}>
+                <Text b size={18}>
+                  Remover Cronograma
+                </Text>
+              </Text>
+            </Modal.Header>
+            <Modal.Body>
               <Text b size={18}>
-                Cronograma
+                Tem certeza que deseja remover o cronograma com titulo {titulo}
               </Text>
-            </Text>
-          </Modal.Header>
-          <Modal.Body>
-            <Input
-              type='text'
-              value={titulo}
-              onChange={(e) => setTitulo(e.target.value)}
-              clearable
-              bordered
-              fullWidth
-              color="primary"
-              size="lg"
-              placeholder="Titulo do Cronograma"
-              contentLeft={<Mail fill="currentColor" />}
-            />
-            <Input
-              type='date'
-              value={data}
-              onChange={(e) => setData(e.target.value)}
-              clearable
-              bordered
-              fullWidth
-              color="primary"
-              size="lg"
-              placeholder="Titulo do Cronograma"
-              contentLeft={<Mail fill="currentColor" />}
-            />
-            <Textarea
-              value={corpo}
-              onChange={(e) => setCorpo(e.target.value)}
-              label="Corpo do Cronograma"
-              placeholder="Detalhes do Cronograma"
-            />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button auto flat color="error" onPress={closeHandler}>
-              Cancelar
-            </Button>
-            <Button auto onPress={saveCronograma}>
-              Confirmar
-            </Button>
-          </Modal.Footer>
-      </Modal>
-      <Modal
-          closeButton
-          aria-labelledby="modal-title"
-          open={visibleEditar}
-          onClose={() => setVisibleEditar(false)}
-        >
-          <Modal.Header>
-            <Text id="modal-title" size={18}>
-              <Text b size={18}>
-                Editar Cronograma
-              </Text>
-            </Text>
-          </Modal.Header>
-          <Modal.Body>
-            <Input
-              type='text'
-              value={titulo}
-              onChange={(e) => setTitulo(e.target.value)}
-              clearable
-              bordered
-              fullWidth
-              color="primary"
-              size="lg"
-              placeholder="Titulo do Cronograma"
-              contentLeft={<Mail fill="currentColor" />}
-            />
-            <Input
-              type='date'
-              value={data}
-              onChange={(e) => setData(e.target.value)}
-              clearable
-              bordered
-              fullWidth
-              color="primary"
-              size="lg"
-              placeholder="Titulo do Cronograma"
-              contentLeft={<Mail fill="currentColor" />}
-            />
-            <Textarea
-              value={corpo}
-              onChange={(e) => setCorpo(e.target.value)}
-              label="Corpo do Cronograma"
-              placeholder="Detalhes do Cronograma"
-            />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button auto flat color="error" onPress={() => setVisibleEditar(false)}>
-              Cancelar
-            </Button>
-            <Button auto onPress={() => editCronogramaConfirm(idd4)}>
-              Confirmar
-            </Button>
-          </Modal.Footer>
-      </Modal>  
-      <Modal
-          closeButton
-          aria-labelledby="modal-title"
-          open={visibleRemover}
-          onClose={() => setVisibleRemover(false)}
-        >
-          <Modal.Header>
-            <Text id="modal-title" size={18}>
-              <Text b size={18}>
-                Remover Cronograma
-              </Text>
-            </Text>
-          </Modal.Header>
-          <Modal.Body>
-            <Text b size={18}>
-              Tem certeza que deseja remover o cronograma com titulo {titulo}
-            </Text>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button auto onPress={() => setVisibleRemover(false)}>
-              Cancelar
-            </Button>
-            <Button auto flat color="error" onPress={() => deletePadrinho(idd4)}>
-              Confirmar
-            </Button>
-          </Modal.Footer>
-      </Modal>
-    </Profile>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button auto onPress={() => setVisibleRemover(false)}>
+                Cancelar
+              </Button>
+              <Button auto flat color="error" onPress={() => deletePadrinho(idd4)}>
+                Confirmar
+              </Button>
+            </Modal.Footer>
+        </Modal>
+      </Profile>
+    </main>
   )
 }
 
