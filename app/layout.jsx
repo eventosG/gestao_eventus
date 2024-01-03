@@ -3,8 +3,6 @@ import '../styles/globals.css';
 import '../styles/stttyle.css';
 import '../styles/styles.scss';
 import Provider from '../components/Provider';
-import { useState } from 'react';
-import Script from 'next/script';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export const metadata = {
