@@ -159,7 +159,7 @@ buttons.forEach((btn) => {
               <h2 href="#0" className='text-sm my-1 mx-1 cursor-pointer'>Cronograma</h2>
             </li>
             <li class="menu-item">
-              <h2 href="#0" className='text-sm my-1 mx-1 cursor-pointer'>Pagamentos</h2>
+              <h2 href="#0" className='text-sm my-1 mx-1 cursor-pointer'>Facturção</h2>
             </li>
             <li class="menu-item">
               <h2 href="#0" className='text-sm my-1 mx-1 cursor-pointer'>Inspiração</h2>

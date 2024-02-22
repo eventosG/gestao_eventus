@@ -18,7 +18,7 @@ function page() {
   };
   return (
     <>
-      <main className='app'>
+      <main className='app'> 
         <Nav />
         <Profile>
         <div className='m-2 flex'>
