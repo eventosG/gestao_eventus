@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { Divider } from "@nextui-org/react";
+import { useRouter } from 'next/navigation';
+import { toast } from "react-toastify";
 import {
   Modal,
   Input,
@@ -13,11 +15,13 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
+
 function Nav() {
   const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const [momentosVisible, setMomentosVisible] = useState(false);
+  const router = useRouter();
     const closeMomentos = () => {
         setMomentosVisible(false);
       };
@@ -61,46 +65,89 @@ function Nav() {
         answerScreen.style.color = " rgba(150, 150, 150, 0.87)";
     })
 
-buttons.forEach((btn) => {
 
-
-    btn.addEventListener("click", () => {
-        // when clicked button is not erased button 
-        if (!btn.id.match('erase')) {
-            // To display value on btn press
-            realTimeScreenValue.push(btn.value)
-            currentInput.innerHTML = realTimeScreenValue.join('');
-
-            // To evaluate answer in real time
-            if (btn.classList.contains('num_btn')) {
-                answerScreen.innerHTML = eval(realTimeScreenValue.join(''));
-            }
-        }
-
-        // When erase button is clicked
-        if (btn.id.match('erase')) {
-            realTimeScreenValue.pop();
-            currentInput.innerHTML = realTimeScreenValue.join('');
-            answerScreen.innerHTML = eval(realTimeScreenValue.join(''));
-        }
-
-        // When clicked button is evaluate button
-        if (btn.id.match('evaluate')) {
-            currentInput.className = 'answerScreen';
-            answerScreen.className = 'currentInput';
-            answerScreen.style.color = "white";
-        }
-
-        // To prevent undefined error in screen
-        if (typeof eval(realTimeScreenValue.join('')) == 'undefined') {
-            answerScreen.innerHTML = 0
-        }
-    })
-})
   }, []);
   function meusEventos() {
     setToggleDropdown(true);
     setMomentosVisible(true);
+  }
+  function planificacao() {
+    if (session?.user) {
+      router.push('/planificacao');
+    } else {
+      toast.error(`Faça o LogIn e Desfrute dos Nossos Serviços!`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }    
+  }
+  function produtosServicos() {
+    if (session?.user) {
+      router.push('/produtosServicos');
+    } else {
+      toast.error(`Faça o LogIn e Desfrute dos Nossos Serviços!`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } 
+  }
+  function convidados() {
+    if (session?.user) {
+      router.push('/convidados');
+    } else {
+      toast.error(`Faça o LogIn e Desfrute dos Nossos Serviços!`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } 
+    
+  }
+  function convites() {
+    if (session?.user) {
+      router.push('/convites');
+    } else {
+      toast.error(`Faça o LogIn e Desfrute dos Nossos Serviços!`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    
+  }
+  function streaming() {
+    if (session?.user) {
+      router.push('/streaming');
+    } else {
+      toast.error(`Faça o LogIn e Desfrute dos Nossos Serviços!`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    
+  }
+  function cronograma() {
+    if (session?.user) {
+      router.push('/cronograma');
+    } else {
+      toast.error(`Faça o LogIn e Desfrute dos Nossos Serviços!`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    
+  }
+  function inspiracao() {
+    if (session?.user) {
+      router.push('/inspiracao');
+    } else {
+      toast.error(`Faça o LogIn e Desfrute dos Nossos Serviços!`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    
+  }
+  function facturacao() {
+    if (session?.user) {
+      router.push('/facturacao');
+    } else {
+      toast.error(`Faça o LogIn e Desfrute dos Nossos Serviços!`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    
   }
   return (
     <div className="flex-between w-full mb-16 pt-3">
@@ -116,25 +163,25 @@ buttons.forEach((btn) => {
       <nav class="menu">
           <ol>
             <li class="menu-item">
-              <h2 href="#0" className='text-sm my-1 cursor-pointer'>Planificação</h2>
-              <ol class="sub-menu">
-                <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Produtos</h2></li>
+              <h2 onClick={() =>  planificacao()} className='text-sm my-1 cursor-pointer'>Planificação</h2>
+              {/* <ol class="sub-menu">
+                <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Produtos</h2></li> 
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Road Map</h2></li>
-              </ol>
+              </ol> */}
             </li>
             <li class="menu-item">
-              <h2 href="#0" className='text-sm my-1 mx-1 cursor-pointer'>Serviços</h2>
-              <ol class="sub-menu">
+              <h2 onClick={() =>  produtosServicos()} className='text-sm my-1 mx-1 cursor-pointer'>Serviços</h2>
+              {/* <ol class="sub-menu">
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>D.J.</h2></li>
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>M.C</h2></li>
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Som e Luz</h2></li>
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Doces</h2></li>
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Salgados</h2></li>
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Garço</h2></li>
-              </ol>
+              </ol> */}
             </li>
             <li class="menu-item">
-              <h2 href="#0" className='text-sm my-1 mx-1 cursor-pointer'>Convidados</h2>
+              <h2 onClick={() =>  convidados()} className='text-sm my-1 mx-1 cursor-pointer'>Convidados</h2>
               <ol class="sub-menu">
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Add. Convid.</h2></li>
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Gerir Mesas</h2></li>
@@ -142,7 +189,7 @@ buttons.forEach((btn) => {
               </ol>
             </li>
             <li class="menu-item">
-              <h2 href="#0" className='text-sm my-1 mx-1 cursor-pointer'>Convites</h2>
+              <h2 onClick={() =>  convites()} className='text-sm my-1 mx-1 cursor-pointer'>Convites</h2>
               <ol class="sub-menu">
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Casamento</h2></li>
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Aniversário</h2></li>
@@ -153,16 +200,16 @@ buttons.forEach((btn) => {
               </ol>
             </li>
             <li class="menu-item">
-              <h2 href="#0" className='text-sm my-1 mx-1 cursor-pointer'>Streaming</h2>
+              <h2 onClick={() =>  streaming()} className='text-sm my-1 mx-1 cursor-pointer'>Streaming</h2>
             </li>
             <li class="menu-item">
-              <h2 href="#0" className='text-sm my-1 mx-1 cursor-pointer'>Cronograma</h2>
+              <h2 onClick={() =>  cronograma()} className='text-sm my-1 mx-1 cursor-pointer'>Cronograma</h2>
             </li>
             <li class="menu-item">
-              <h2 href="#0" className='text-sm my-1 mx-1 cursor-pointer'>Facturção</h2>
+              <h2 onClick={() =>  facturacao()} className='text-sm my-1 mx-1 cursor-pointer'>Facturação</h2>
             </li>
             <li class="menu-item">
-              <h2 href="#0" className='text-sm my-1 mx-1 cursor-pointer'>Inspiração</h2>
+              <h2 onClick={() =>  inspiracao()} className='text-sm my-1 mx-1 cursor-pointer'>Inspiração</h2>
               <ol class="sub-menu">
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Tendências</h2></li>
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Maquetização</h2></li>

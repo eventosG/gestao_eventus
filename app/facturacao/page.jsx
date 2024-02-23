@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import Profile from '../../components/ProfilePage';
 import Nav from '../../components/Nav';
 import Image from "next/image"; 
@@ -10,15 +11,56 @@ import {
   Text,
   Spacer,
 } from "@nextui-org/react";
+import Stripe from 'stripe';
+const stripe = new Stripe('sk_test_51GxvyrCGChNeHFaH8QUyNFiHP4yc4r45rmbsp57W8uDE5Rd0QoWvI2HE2SL1YBM10rv0qblE4IROa4im5XvpvPTW00OK1uKyNB');
+var line_items = [];
 function page() {
   const [facturaVer, setFacturaVer] = useState(true);
+  const { data: session } = useSession();
   const [momentosVisible, setMomentosVisible] = useState(false);
+  const [totalSemIva, settotalSemIva] = useState("");
+  const [totalIva, settotalIva] = useState("");
+  const [total, settotal] = useState("");
+  const [verAgora, setVerAgora] = useState("");
+  const [nomesLista, setNomesLista] = useState([]);
+  var isodate = new Date().toISOString();
+  let d = new Date();
+  let sevenDaysFromNow = d.setDate(d.getDate() + 7);
+  sevenDaysFromNow = new Date(sevenDaysFromNow).toISOString();
   const closeMomentos = () => {
     setMomentosVisible(false);
   };
+  var totalSemIVAVolatem = 0;
+  var totalIVAVolatem = 0;
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch(`/api/facturacao/${session?.user.id}`);
+      const data = await response.json();
+      data.map((tot) => {
+        totalSemIVAVolatem += parseFloat(tot.totalPago);
+        totalIVAVolatem += parseFloat(tot.totalPago)*0.16;
+      })
+      setNomesLista(data);
+      settotalSemIva(totalSemIVAVolatem);
+      settotalIva(totalIVAVolatem);
+      settotal(totalIVAVolatem+totalSemIVAVolatem);
+    };
+    if (session?.user.id) fetchPosts();
+  }, [session?.user.id]);
+  async function formatoPagamento() {
+    const response = await fetch("http://localhost:3001/create-checkout-session", {
+      method: "POST",
+      body: JSON.stringify({
+        tipoPagamanto: "Completo",
+        totalPago: `${product.price}`,
+      }),
+    });
+    console.log(response);
+    setVerAgora(response.body)
+  }
   return (
     <>
-      <main className='app'> 
+      <main className='app'>
         <Nav />
         <Profile>
         <div className='m-2 flex'>
@@ -32,14 +74,9 @@ function page() {
                       <div className='flex flex-row gap-4'>
                         <button
                           type="button"
+                          onClick={() => formatoPagamento()}
                         >
-                          Pagamento Total
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setMomentosVisible(true)}
-                        >
-                          Pagamento Parcial
+                          Formato de Pagamento
                         </button>
                         <div className="mt-4">Meus Recibos</div>
                         <a href="" className="button">
@@ -58,7 +95,7 @@ function page() {
                 </span>
                 </div>
               </div>
-              <div className='m-2 p-2 bg-orange-100'>          
+              <div className='m-2 p-2 bg-orange-100'>
                 <div className='m-6'>
                   <div className='flex flex-between'>
                     <div>
@@ -74,7 +111,7 @@ function page() {
                       <div className='text-right'>Contactos do Cliente</div>
                     </div>
                   </div>
-                  <div className='flex justify-center font-bold text-2xl'>Factura</div>
+                  <div className='flex justify-center font-bold text-2xl'>Cotação</div>
                   <div className='flex flex-between'>
                     <div>
                       <div className='flex flex-row'><p className='font-bold'>Caixa: </p>&nbsp;Gestão de Eventos</div>
@@ -87,8 +124,8 @@ function page() {
                     </div>
                     <div>
                       <div className='text-right'><div className='flex flex-row'><p className='font-bold'>Número:</p>&nbsp;00001</div></div>
-                      <div className='text-right'><div className='flex flex-row'><p className='font-bold'>Data:</p>&nbsp;01/02/2024</div></div>
-                      <div className='text-right'><div className='flex flex-row'><p className='font-bold'>Data de Vencimento:</p>&nbsp;01/02/2024</div></div>
+                      <div className='text-right'><div className='flex flex-row'><p className='font-bold'>Data:</p>&nbsp;{isodate.substring(0, 10)}</div></div>
+                      <div className='text-right'><div className='flex flex-row'><p className='font-bold'>Data de Vencimento:</p>&nbsp;{sevenDaysFromNow.substring(0, 10)}</div></div>
                     </div>
                   </div>
                   <Spacer y={1} />
@@ -98,18 +135,29 @@ function page() {
                     <div className='w-[130px]'>Qt.</div>
                     <div className='w-[120px]'>Preço</div>
                     <div className='w-[130px]'>IVA</div>
-                    <div>Sub Total</div>
+                    <div className='w-[130px]'>Sub Total</div>
+                    <div>...</div>
                   </div>
                   <Divider className="my-4" />
-                  <div className='flex flex-row'>
-                    <div className='w-[420px]'>Produto Selecionado</div>
-                    <div className='w-[150px]'>PS</div>
-                    <div className='w-[130px]'>1</div>
-                    <div className='w-[120px]'>2.564,48</div>
-                    <div className='w-[130px]'>410,32</div>
-                    <div>2.974,80</div>
+                  {nomesLista.length > 0 &&
+                          nomesLista.map((product) => (
+                          <>
+                          <div className='flex flex-row'>
+                    <div className='w-[420px]'>{product.nomeProduto}</div>
+                    <div className='w-[150px]'>{product.codigoProduto}</div>
+                    <div className='w-[130px]'>{product.quantidade}</div>
+                    <div className='w-[120px]'>{product.preco}</div>
+                    <div className='w-[130px]'>{product.iva}</div>
+                    <div className='w-[130px]'>{parseFloat(product.preco)*parseInt(product.quantidade)+(parseFloat(product.preco)*parseInt(product.quantidade)*0.16)}</div>
+                    <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                      </svg>
+                    </div>
                   </div>
                   <Divider className="my-4" />
+                          </>))}
+                  
                   <Spacer y={2} />
                   <div className='flex flex-between'>
                     <div>
@@ -127,22 +175,23 @@ function page() {
                       <Divider className="my-4" />
                       <div className='flex justify-between w-[300px]'>
                         <div className='w-[200px]'>Subtotal Sem IVA</div>
-                        <div>2.564,48 Mt</div>
+                        <div>{totalSemIva} Mt</div>
                       </div>
                       <div className='flex justify-between w-[300px]'>
                         <div className='w-[200px]'>IVA</div>
-                        <div>410,32 Mt</div>
+                        <div>{totalIva} Mt</div>
                       </div>
                     </div>
                   </div>
                   <Spacer y={2} />
+                  {verAgora}
                   <div className='flex flex-between'>
                     <div>
                       <div className='flex flex-row'>.</div>
                     </div>
                     <div className='flex justify-between w-[350px] font-bold text-2xl'>
                       <div>Total:</div>
-                      <div>2.974,80 Mt</div>
+                      <div>{total} Mt</div>
                   </div>  
                   </div> 
                 </div> 

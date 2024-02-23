@@ -7,8 +7,11 @@ import Nav from '../../components/Nav';
 import {Card} from "@nextui-org/react";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
 function ProdutosServicos() {
+const { data: session } = useSession();
  const [produtos, setProdutos] = useState([]);
  const [produtos2, setProdutos2] = useState([]);
  const [produtosImutavel, setProdutosImutavel] = useState([]);
@@ -90,6 +93,45 @@ function ProdutosServicos() {
     }
     fetchPosts();
   }
+  function adicionarProdutoServoco(id) {
+    toast.info("Adicionando Serviço!", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    produtos2.map(async (product) => {
+      try {
+        if (product._id == id) {
+          const response = await fetch("api/facturacao/new", {
+            method: "POST",
+            body: JSON.stringify({
+              tipoPagamanto: "Completo",
+              totalPago: `${product.price}`,
+              remanescente: "0",
+              tipoDoc: "Cotação",
+              numeroDoc: "",
+              status: "",
+              nomeProduto: `${product.title}`,
+              quantidade: "1",
+              codigoProduto: `${product.title.substring(0, 3)}`,
+              preco: `${product.price}`,
+              iva: "16%",
+              desconto: "0",
+              userId: session?.user.id,
+            }),
+          });
+        }
+        
+      } catch (error) {
+        toast.error(`Erro ao adicionar serviço! ${error}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } finally {
+        toast.info("Serviço Adicionado!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        router.push('/facturacao');
+      }
+    })
+  }
   return (
     <>
       <main className='app'>
@@ -125,7 +167,7 @@ function ProdutosServicos() {
                   <h1 className='text-left text-3xl font-bold'>
                     Preço: {product.price}.00 Mt
                   </h1>
-                  <Link href={"#"} className="black_btn">
+                  <Link href={"#"} className="black_btn" onClick={() => adicionarProdutoServoco(product._id)}>
                         Adicionar
                   </Link>
                 </div>                

@@ -1,59 +1,43 @@
 import { connectToDB } from "../../../../utils/database";
-import Evento from "../../../../models/evento";
+import Facturacao from "../../../../models/facturacao";
 
 export const POST = async (req, res) => {
     const { 
-            nomeNoiva, 
-            contactoNoiva,
-            nomeNoivo,
-            contactoNoivo,
-            planificadorEvento,
-            nomePlanificador,
-            contactoPlanificador,
-            localEvento,
-            provincia,
-            distrito,
-            bairro,
-            numeroCasaQuarteirao,
-            pontoReferencia,
-            dataEvento,
-            temaEvento,
-            orcamentoInicial,
-            coresEvento,
-            convidadosPrevistos,
-            tipoEvento,
-            tipodeBodas,
+            tipoPagamanto,
+            totalPago,
+            remanescente,
+            tipoDoc,
+            numeroDoc,
+            status,
+            nomeProduto,
+            quantidade,
+            codigoProduto,
+            preco,
+            iva,
+            desconto,
             userId } = await req.json();
     
     try {
         await connectToDB();
-        const newEvento = new Evento({
+        const newEvento = new Facturacao({
             creator: userId,
-            nomeNoiva,
-            contactoNoiva,
-            nomeNoivo,
-            contactoNoivo,
-            planificadorEvento,
-            nomePlanificador,
-            contactoPlanificador,
-            localEvento,
-            provincia,
-            distrito,
-            bairro,
-            numeroCasaQuarteirao,
-            pontoReferencia,
-            dataEvento,
-            temaEvento,
-            orcamentoInicial,
-            coresEvento,
-            convidadosPrevistos,
-            tipoEvento,
-            tipodeBodas,
+            tipoPagamanto,
+            totalPago,
+            remanescente,
+            tipoDoc,
+            numeroDoc,
+            status,
+            nomeProduto,
+            quantidade,
+            codigoProduto,
+            preco,
+            iva,
+            desconto,
         });
 
         await newEvento.save();
         return new Response(JSON.stringify(newEvento), { status: 201 })
     } catch (error) {
-        return new Response("Failed to create a new Evento", { status: 500 })
+        return new Response("Failed to create a new Doc", { status: 500 })
     }
 }
