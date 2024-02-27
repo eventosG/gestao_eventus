@@ -51,12 +51,12 @@ function page() {
   const onToken = (onToken) => {
     const tampleteForms = {
       from_name: 'Gestao de Eventos',
-      from_email: 'lyrthus@gmail.com',
-      to_name: session?.user.email,
-      message: "",
+      from_email: 'coutinhocoutinholucas@gmail.com',
+      to_name: session?.user.name,
+      message: "Lucas Coutinho",
     }
     emailjs
-      .sendForm('service_stj1kcb', 'template_rr2lm75', tampleteForms, {
+      .send('service_stj1kcb', 'template_rr2lm75', tampleteForms, {
         publicKey: 'EjReHUUIo8PCVMk1B',
       })
       .then(
@@ -72,7 +72,7 @@ function page() {
         },
       );
     console.log(onToken);
-  }
+  } 
   return (
     <>
       <main className='app'>
