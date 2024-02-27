@@ -11,9 +11,10 @@ import {
   Text,
   Spacer,
 } from "@nextui-org/react";
-import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_51GxvyrCGChNeHFaH8QUyNFiHP4yc4r45rmbsp57W8uDE5Rd0QoWvI2HE2SL1YBM10rv0qblE4IROa4im5XvpvPTW00OK1uKyNB');
 var line_items = [];
+import StripeCheckout from 'react-stripe-checkout';
+import { toast } from "react-toastify";
+import emailjs from '@emailjs/browser';
 function page() {
   const [facturaVer, setFacturaVer] = useState(true);
   const { data: session } = useSession();
@@ -47,16 +48,30 @@ function page() {
     };
     if (session?.user.id) fetchPosts();
   }, [session?.user.id]);
-  async function formatoPagamento() {
-    const response = await fetch("http://localhost:3001/create-checkout-session", {
-      method: "POST",
-      body: JSON.stringify({
-        tipoPagamanto: "Completo",
-        totalPago: `${product.price}`,
-      }),
-    });
-    console.log(response);
-    setVerAgora(response.body)
+  const onToken = (onToken) => {
+    const tampleteForms = {
+      from_name: 'Gestao de Eventos',
+      from_email: 'lyrthus@gmail.com',
+      to_name: session?.user.email,
+      message: "",
+    }
+    emailjs
+      .sendForm('service_stj1kcb', 'template_rr2lm75', tampleteForms, {
+        publicKey: 'EjReHUUIo8PCVMk1B',
+      })
+      .then(
+        () => {
+          toast.info(`Pagamento efectuado com sucesso, mandamos o Recibo para o seu email...`, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        },
+        (error) => {
+          toast.error(`Error ao enviar email: ${error}`, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        },
+      );
+    console.log(onToken);
   }
   return (
     <>
@@ -78,6 +93,13 @@ function page() {
                         >
                           Formato de Pagamento
                         </button>
+                        <StripeCheckout
+                          token={onToken}
+                          name="Gestão de Eventos"
+                          currency="MZN"
+                          amount={total}
+                          stripeKey="pk_test_51GxvyrCGChNeHFaHiiuqfUDv9rJwFttQvRCwRr4xIgdyalP7DVKAuHsFXklbwRLQY1QoCwNnUa8xQdmkNxObQkxB00PXm5gxpX"
+                        />
                         <div className="mt-4">Meus Recibos</div>
                         <a href="" className="button">
                           <ul>
