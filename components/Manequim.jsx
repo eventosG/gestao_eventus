@@ -90,24 +90,24 @@ function Manequim() {
                             name="colors"
                             value="shirt"
                             checked
-                        />Blusa
+                        />Fundo
                         </label>
                     </li>
                     <li>
                         <label class="label" for="pants">
-                        <input type="radio" id="pants" name="colors" value="pants" />Calça
+                        <input type="radio" id="pants" name="colors" value="pants" />Letras
                         </label>
                     </li>
                     <li>
                         <label class="label" for="shoes">
-                        <input type="radio" id="shoes" name="colors" value="shoes" />Tênis
+                        <input type="radio" id="shoes" name="colors" value="shoes" />Detalhes
                         </label>
                     </li>
                     </ul>
                     <div id="picker"></div>
                 </div>
                 <div id="model">
-                    <img
+                    {/* <img
                     id="bodyImg"
                     src="https://assets.codepen.io/11614/body.png"
                     alt=""
@@ -126,7 +126,7 @@ function Manequim() {
                     id="shirtImg"
                     src="https://assets.codepen.io/11614/shirt_1.png"
                     alt="Shirt"
-                    />
+                    /> */}
                 </div>
                 </div>
                 <script src="https://assets.codepen.io/11614/iro.min.js"></script>

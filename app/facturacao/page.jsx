@@ -14,8 +14,8 @@ import {
 var line_items = [];
 import StripeCheckout from 'react-stripe-checkout';
 import { toast } from "react-toastify";
-import emailjs from '@emailjs/browser';
-function page() {
+import axios from 'axios';
+function page() { 
   const [facturaVer, setFacturaVer] = useState(true);
   const { data: session } = useSession();
   const [momentosVisible, setMomentosVisible] = useState(false);
@@ -48,30 +48,28 @@ function page() {
     };
     if (session?.user.id) fetchPosts();
   }, [session?.user.id]);
-  const onToken = (onToken) => {
-    const tampleteForms = {
-      from_name: 'Gestao de Eventos',
-      from_email: 'coutinhocoutinholucas@gmail.com',
-      to_name: session?.user.name,
-      message: "Lucas Coutinho",
-    }
-    emailjs
-      .send('service_stj1kcb', 'template_rr2lm75', tampleteForms, {
-        publicKey: 'EjReHUUIo8PCVMk1B',
+  const onToken = async (onToken) => {
+    axios.post('https://desktop-api-4f850b3f9733.herokuapp.com/enviarEmail', {
+      emailSubject: "Confirmação de Pagamento - Gestão de Eventos",
+      emailBody: "Confirmamos que o seu pagamento foi efectuado com sucesso! Em anexo mandamos a sua Factura e o respectivo Recibo...",
+      emailTo: onToken.email,
+      }, 
+      {
+        headers: {
+        'Content-Type': 'application/json'
+      }
       })
-      .then(
-        () => {
-          toast.info(`Pagamento efectuado com sucesso, mandamos o Recibo para o seu email...`, {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-        },
-        (error) => {
-          toast.error(`Error ao enviar email: ${error}`, {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-        },
-      );
-    console.log(onToken);
+      .then(function (response) {
+        toast.info("Pagamento efectuado com sucesso! Mandamos a sua Factura e Recibo para o seu email.", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      })
+      .catch(function (error) {
+        toast.error(`Erro ao efectuar o pagamento! ${error}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      });
+    
   } 
   return (
     <>
