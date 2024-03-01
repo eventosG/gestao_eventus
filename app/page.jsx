@@ -54,56 +54,52 @@ function Home() {
         }
         setUpProviders();
 
-        $(document).ready(function() {
-
-          var curPage = 1;
-          var numOfPages = $(".skw-page").length;
-          var animTime = 1000;
-          var scrolling = false;
-          var pgPrefix = ".skw-page-";
-        
-          function pagination() {
-            scrolling = true;
-        
-            $(pgPrefix + curPage).removeClass("inactive").addClass("active");
-            $(pgPrefix + (curPage - 1)).addClass("inactive");
-            $(pgPrefix + (curPage + 1)).removeClass("active");
-        
-            setTimeout(function() {
-              scrolling = false;
-            }, animTime);
-          };
-        
-          function navigateUp() {
-            if (curPage === 1) return;
-            curPage--;
-            pagination();
-          };
-        
-          function navigateDown() {
-            if (curPage === numOfPages) return;
-            curPage++;
-            pagination();
-          };
-        
-          $(document).on("mousewheel DOMMouseScroll", function(e) {
-            if (scrolling) return;
-            if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
-              navigateUp();
-            } else { 
-              navigateDown();
-            }
-          });
-        
-          $(document).on("keydown", function(e) {
-            if (scrolling) return;
-            if (e.which === 38) {
-              navigateUp();
-            } else if (e.which === 40) {
-              navigateDown();
-            }
-          });
-        
+        var curPage = 1;
+        var numOfPages = $(".skw-page").length;
+        var animTime = 1000;
+        var scrolling = false;
+        var pgPrefix = ".skw-page-";
+      
+        function pagination() {
+          scrolling = true;
+      
+          $(pgPrefix + curPage).removeClass("inactive").addClass("active");
+          $(pgPrefix + (curPage - 1)).addClass("inactive");
+          $(pgPrefix + (curPage + 1)).removeClass("active");
+      
+          setTimeout(function() {
+            scrolling = false;
+          }, animTime);
+        };
+      
+        function navigateUp() {
+          if (curPage === 1) return;
+          curPage--;
+          pagination();
+        };
+      
+        function navigateDown() {
+          if (curPage === numOfPages) return;
+          curPage++;
+          pagination();
+        };
+      
+        $(document).on("mousewheel DOMMouseScroll", function(e) {
+          if (scrolling) return;
+          if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
+            navigateUp();
+          } else { 
+            navigateDown();
+          }
+        });
+      
+        $(document).on("keydown", function(e) {
+          if (scrolling) return;
+          if (e.which === 38) {
+            navigateUp();
+          } else if (e.which === 40) {
+            navigateDown();
+          }
         });
     },[]);
   return (
@@ -112,61 +108,7 @@ function Home() {
         <Nav />
       </main>
       <div className='flex justify-between z-40'>
-        {loginVisible ? (
-        <>
-        <div class="screen ml-20">
-            <div class="screen__content">
-              <form class="login">
-                <div class="login__field">
-                  <i class="login__icon fas fa-user"></i>
-                  <input type="text" class="login__input" placeholder="Nome do Usuário/ Email" />
-                </div>
-                <div class="login__field">
-                  <i class="login__icon fas fa-lock"></i>
-                  <input type="password" class="login__input" placeholder="Senha" />
-                </div>
-                <button class="button login__submit">
-                  <span class="button__text">Fazer Login</span>
-                  <i class="button__icon fas fa-chevron-right"></i>
-                </button>				
-              </form>
-              <div class="social-login">
-                <h3>Login</h3>
-                <div class="social-icons">
-                  <a href="#" class="social-login__icon fab fa-instagram"></a>
-                  <a href="#" class="social-login__icon fab fa-facebook"></a>
-                  <a href="#" class="social-login__icon fab fa-twitter"></a>
-                </div>
-              </div>
-            </div>
-            <div class="screen__background">
-              <span class="screen__background__shape screen__background__shape4"></span>
-              <span class="screen__background__shape screen__background__shape3"></span>		
-              <span class="screen__background__shape screen__background__shape2"></span>
-              <span class="screen__background__shape screen__background__shape1"></span>
-            </div>
-            <div className='text-black text-center mt-4'>
-              <p>Para ternar a sua experiencia de organizacao de Evento temos uma equipa pronta para lhe apoiar, 
-                em todos os aspectos, incluindo <a href="#" className='text-orange-500'>criar o conceito</a> do seu evento!</p>
-            </div>	
-          </div>
-        </>
-        ):(
-        <>
-          <div className='w-[500px] text-black bg-orange-400 p-4 mx-4 text-center'>            
-            <p className='text-black text-lg'>
-              Nos somos o parceiro ideal na organizacao do seu Evento, temos solucoes a medida das suas necessidades, 
-              simplificando processos, proporcionando conforto e elegancia que a organizacao do seu Evento merece...
-            </p>
-            <a href="#" className='text-black text-lg'>Comece agora a planificar o seu Evento!</a>
-            <Link href={"/logInPage"}>
-              Log In
-            </Link>
-          </div>
-        </>
-        )}
-          
-          <div class="overflow-hidden ml-4 w-full">
+          <div class="overflow-hidden w-full">
               <div className='text-justify'>
               {/* <p className='text-black text-lg'>Nos somos o parceiro ideal na organizacao do seu Evento, temos solucoes a medida das suas necessidades, 
                   simplificando processos, proporcionando conforto e elegancia que a organizacao do seu Evento merece...</p>

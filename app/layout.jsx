@@ -19,6 +19,7 @@ function RootLayout({children}) {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
         <script src="https://assets.codepen.io/11614/iro.min.js"></script>  
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <body>
             <ToastContainer />
             <Provider>

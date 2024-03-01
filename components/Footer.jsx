@@ -7,8 +7,9 @@ function Footer() {
         <div class="container">
             <div class="aboutus">
             <h2>About Us</h2>
-            <p>
-                ZARSA business concept is to offer fashion and quality at the best price in a sustainable way. ZARSA has since it was founded in 1977 grown into one of the world's leading fashion companies.
+            <p className='text-black text-lg'>
+              Nos somos o parceiro ideal na organizacao do seu Evento, temos solucoes a medida das suas necessidades, 
+              simplificando processos, proporcionando conforto e elegancia que a organizacao do seu Evento merece...
             </p>
             </div>
             <div class="link-supp">
