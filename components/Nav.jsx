@@ -132,7 +132,23 @@ function Nav() {
   }
   function inspiracao() {
     if (session?.user) {
-      router.push('/inspiracao');
+      // router.push('/inspiracao');
+      toast.info(`Em manutenção`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      toast.error(`Faça o LogIn e Desfrute dos Nossos Serviços!`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    
+  }
+  function dicas() {
+    if (session?.user) {
+      // router.push('/inspiracao');
+      toast.info(`Em manutenção`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     } else {
       toast.error(`Faça o LogIn e Desfrute dos Nossos Serviços!`, {
         position: toast.POSITION.TOP_RIGHT,
@@ -217,7 +233,7 @@ function Nav() {
               </ol>
             </li>
             <li class="menu-item">
-              <h2 href="#0" className='text-sm my-1 mx-1 cursor-pointer'>Dicas</h2>
+              <h2 onClick={() =>  dicas()} className='text-sm my-1 mx-1 cursor-pointer'>Dicas</h2>
               <ol class="sub-menu">
                 <li class="menu-item"><h2 className='text-white text-sm my-1 cursor-pointer'>Newslater</h2></li>
               </ol>
